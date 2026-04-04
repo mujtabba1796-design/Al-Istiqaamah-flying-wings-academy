@@ -20,7 +20,6 @@
             transform: translateY(-5px);
             box-shadow: 0 20px 25px -12px rgba(0,0,0,0.15);
         }
-        /* modal styling */
         .modal {
             position: fixed;
             top: 0;
@@ -61,7 +60,7 @@
 </head>
 <body class="bg-gray-50">
 
-    <!-- ======================= LANDING PAGE (visible by default) ======================= -->
+    <!-- ======================= LANDING PAGE ======================= -->
     <div id="landingPage" class="min-h-screen">
         <!-- Hero Section -->
         <div class="hero-pattern text-white relative overflow-hidden">
@@ -149,72 +148,84 @@
         <footer class="bg-slate-900 text-gray-400 py-8 text-center text-sm"><p>© 2025 Al‑Istiqaamah Flying Wings Academy — No. 10 Federal Government Layout, Samaru, Zaria, Kaduna State. RC: 1983033</p></footer>
     </div>
 
-    <!-- ======================= LOGIN MODAL (floating card) ======================= -->
+    <!-- LOGIN MODAL -->
     <div id="loginScreen" class="fixed inset-0 z-50 flex items-center justify-center p-4" style="display: none; background: rgba(0,0,0,0.7);">
         <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 relative">
-            <div class="text-center mb-6"><i class="fas fa-dove text-5xl text-amber-600"></i><h2 class="text-2xl font-bold mt-3">Al-Istigaamah Portal</h2><p class="text-gray-500">Integrated School Management</p></div>
-            <form id="loginForm" class="space-y-4">
-                <div><label class="block text-sm font-medium">Select Role</label><select id="loginRole" class="w-full border rounded-lg px-4 py-2"><option value="dg_ceo">DG/CEO (Full Access)</option><option value="director">Director (DAF/DRPA/DSR/DO)</option><option value="headteacher">Head Teacher (Section Manager)</option><option value="teacher">Teacher (Class)</option><option value="parent">Parent (View Children)</option></select></div>
-                <div><label>Username / Email</label><input type="text" id="loginUsername" placeholder="demo@istigaamah.edu" class="w-full border rounded-lg px-4 py-2"></div>
-                <div><label>Password</label><input type="password" id="loginPassword" placeholder="••••••" class="w-full border rounded-lg px-4 py-2"></div>
-                <button type="submit" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-semibold py-2 rounded-lg">Login → Dashboard</button>
+            <div class="text-center mb-4"><i class="fas fa-dove text-5xl text-amber-600"></i><h2 class="text-2xl font-bold">Staff / Parent Login</h2><p class="text-xs text-gray-500">Demo: any non-empty password</p></div>
+            <form id="loginForm">
+                <div><label class="font-medium">Role</label><select id="loginRole" class="w-full border rounded-lg p-2 mb-3"><option value="dg_ceo">DG/CEO</option><option value="director">Director (DAF/DRPA)</option><option value="headteacher">Head Teacher</option><option value="teacher">Teacher</option><option value="parent">Parent</option></select></div>
+                <div><label class="font-medium">Username / Email</label><input type="text" id="loginUsername" class="w-full border rounded-lg p-2 mb-3" placeholder="any text"></div>
+                <div><label class="font-medium">Password</label><input type="password" id="loginPassword" class="w-full border rounded-lg p-2 mb-4" placeholder="any password"></div>
+                <button type="submit" class="w-full bg-amber-600 text-white py-2 rounded-lg font-bold">Login</button>
             </form>
-            <div class="mt-4 text-xs text-center border-t pt-4"><p class="font-semibold">Demo Credentials:</p><p>DG/CEO: dg@istigaamah / any | Director: director@istigaamah / any</p><p>Head Teacher: head_ri@istigaamah / any | Teacher: teacher@istigaamah / any</p><p>Parent: parent@istigaamah / any</p></div>
             <button id="closeLoginBtn" class="absolute top-3 right-4 text-gray-400 text-2xl">&times;</button>
         </div>
     </div>
 
-    <!-- ======================= MAIN APP DASHBOARD (hidden until login) ======================= -->
+    <!-- DASHBOARD APP -->
     <div id="appContainer" class="hidden flex h-screen w-full fixed inset-0 z-40 bg-white overflow-hidden">
-        <aside class="sidebar text-white flex flex-col shadow-2xl overflow-y-auto" style="width: 280px;">
-            <div class="p-5 border-b border-amber-700/30"><div class="flex items-center space-x-3"><i class="fas fa-dove text-3xl text-amber-400"></i><div><span class="text-lg font-bold">Al-Istigaamah</span><span class="block text-xs text-amber-300">Flying Wings</span></div></div><p class="text-[11px] text-slate-300 mt-2">Role: <span id="userRoleDisplay" class="font-semibold text-amber-300"></span></p><p class="text-[11px] text-slate-300">Welcome, <span id="userNameDisplay"></span></p></div>
-            <nav id="dynamicNav" class="flex-1 px-3 py-5 space-y-1"></nav>
-            <div class="p-4 border-t border-white/20"><button id="logoutBtn" class="w-full bg-red-600/80 hover:bg-red-700 py-2 rounded-lg text-sm flex justify-center gap-2"><i class="fas fa-sign-out-alt"></i> Logout</button></div>
+        <aside class="sidebar text-white w-80 flex flex-col">
+            <div class="p-5 border-b border-white/20">
+                <p class="text-sm"><i class="fas fa-user-tie"></i> Role: <span id="userRoleDisplay" class="font-bold"></span></p>
+                <p class="text-lg font-semibold mt-1">Welcome, <span id="userNameDisplay"></span></p>
+            </div>
+            <nav id="dynamicNav" class="flex-1 px-3 mt-4 space-y-1"></nav>
+            <div class="p-4 border-t border-white/20"><button id="logoutBtn" class="w-full bg-red-700 hover:bg-red-800 py-2 rounded-lg transition"><i class="fas fa-sign-out-alt mr-2"></i>Logout</button></div>
         </aside>
-        <main class="flex-1 overflow-y-auto bg-gray-100 p-6 md:p-8" id="mainContent"></main>
+        <main class="flex-1 overflow-auto bg-gray-100 p-6" id="mainContent"></main>
     </div>
 
     <!-- MODALS for add student/teacher -->
     <div id="addStudentModal" class="modal" style="display: none;"><div class="modal-content"><span onclick="closeModal('addStudentModal')" class="close">&times;</span><h2 class="text-2xl font-bold mb-4">Enroll New Student</h2><input type="text" id="newStudentName" placeholder="Full Name" class="w-full border rounded-xl p-2 mb-2"><select id="newStudentSection" class="w-full border rounded-xl p-2 mb-2"><option value="Regular Islamiya">Regular Islamiya</option><option value="Regular Memorization">Regular Memorization</option><option value="Intensive Program">Intensive Program</option><option value="Islamic Integration">Islamic Integration</option><option value="Advanced Class">Advanced Class</option><option value="Women Class">Women Class</option></select><input type="number" id="newStudentLevel" placeholder="Level (1-6)" class="w-full border rounded-xl p-2 mb-2"><select id="newPaymentStatus" class="w-full border rounded-xl p-2 mb-2"><option value="Paid">Paid</option><option value="Pending">Pending</option></select><select id="newBoardingStatus" class="w-full border rounded-xl p-2 mb-2"><option value="false">Day Scholar</option><option value="true">Boarder</option></select><button onclick="addNewStudent()" class="w-full bg-blue-600 text-white py-2 rounded-xl">Register</button></div></div>
-    <div id="addTeacherModal" class="modal" style="display: none;"><div class="modal-content"><span onclick="closeModal('addTeacherModal')" class="close">&times;</span><h2 class="text-2xl font-bold mb-4">Add Teacher</h2><input type="text" id="newTeacherName" placeholder="Teacher Name" class="w-full border rounded-xl p-2 mb-2"><input type="text" id="newTeacherSection" placeholder="Section" class="w-full border rounded-xl p-2 mb-2"><input type="text" id="newTeacherSubject" placeholder="Subject" class="w-full border rounded-xl p-2 mb-2"><button onclick="addNewTeacher()" class="w-full bg-teal-600 text-white py-2 rounded-xl">Add Faculty</button></div></div>
+    <div id="addTeacherModal" class="modal" style="display: none;"><div class="modal-content"><span onclick="closeModal('addTeacherModal')" class="close">&times;</span><h2 class="text-2xl font-bold mb-4">Add Teacher</h2><input type="text" id="newTeacherName" placeholder="Teacher Name" class="w-full border rounded-xl p-2 mb-2"><input type="text" id="newTeacherSection" placeholder="Section (e.g., Regular Islamiya)" class="w-full border rounded-xl p-2 mb-2"><input type="text" id="newTeacherSubject" placeholder="Subject" class="w-full border rounded-xl p-2 mb-2"><button onclick="addNewTeacher()" class="w-full bg-teal-600 text-white py-2 rounded-xl">Add Faculty</button></div></div>
 
     <script>
-        // ---------- GLOBAL DATA ----------
+        // ======================= GLOBAL DATA =======================
         let schoolData = {
             students: [],
             feeTransactions: [],
             teachers: [],
-            teacherAppraisals: [],
             boarderDorms: { "Al-Furqan Hall": { capacity: 45, occupied: 0 }, "Al-Hikmah Dorm": { capacity: 35, occupied: 0 }, "Nur Women Hostel": { capacity: 30, occupied: 0 } }
         };
         let currentUser = null;
 
-        // users DB
-        const usersDB = {
-            dg_ceo: { id: "dg1", name: "Dr. Mahmoud DG/CEO", role: "dg_ceo", password: "any", permissions: ["all"] },
-            director_daf: { id: "dir1", name: "Director DAF (Finance)", role: "director", department: "DAF", password: "any", permissions: ["finance"] },
-            director_drpa: { id: "dir2", name: "Director DRPA (Academics)", role: "director", department: "DRPA", password: "any", permissions: ["academics"] },
-            headteacher_ri: { id: "ht1", name: "Head Teacher - Regular Islamiya", role: "headteacher", section: "Regular Islamiya", password: "any", permissions: ["manage_section"] },
-            teacher: { id: "tch1", name: "Ustadh Abdur-Rahman", role: "teacher", assignedSection: "Regular Islamiya", password: "any", permissions: ["teach_section"] },
-            parent: { id: "parent1", name: "Parent Guardian", role: "parent", linkedChildren: ["STU1001", "STU1002"], password: "any", permissions: ["view_children"] }
-        };
+        // Demo users (no external json)
+        const usersDatabase = [
+            { id: "dg1", name: "Dr. Mahmoud DG/CEO", role: "dg_ceo", password: "any", permissions: ["all"] },
+            { id: "dir1", name: "Director DAF (Finance)", role: "director", department: "DAF", password: "any" },
+            { id: "ht1", name: "Head Teacher - Regular Islamiya", role: "headteacher", section: "Regular Islamiya", password: "any" },
+            { id: "tch1", name: "Ustadh Abdur-Rahman", role: "teacher", assignedSection: "Regular Islamiya", password: "any" },
+            { id: "parent1", name: "Fatima Abdullah (Parent)", role: "parent", linkedChildren: ["STU1001", "STU1003"], password: "any" }
+        ];
 
+        // Helper: update dorm occupancy based on boarders
+        function updateDormOccupancy() {
+            let boarders = schoolData.students.filter(s => s.boarding);
+            let halls = Object.keys(schoolData.boarderDorms);
+            halls.forEach((hall, idx) => { 
+                let allot = Math.floor(boarders.length / halls.length) + (idx < boarders.length % halls.length ? 1 : 0); 
+                schoolData.boarderDorms[hall].occupied = Math.min(allot, schoolData.boarderDorms[hall].capacity); 
+            });
+        }
+
+        // Generate rich mock data
         function generateMockData() {
             const sections = ["Regular Islamiya", "Regular Memorization", "Intensive Program", "Islamic Integration", "Advanced Class", "Women Class"];
             let students = [];
-            let idx = 1;
-            for(let s of sections) {
-                let levels = (s === "Advanced Class") ? 1 : (s === "Intensive Program" ? 3 : 5);
-                for(let lvl=1; lvl<=levels; lvl++) {
-                    let count = s.includes("Women") ? 5 : 8;
-                    for(let i=1;i<=count;i++) {
-                        let names = ["Aisha", "Hafsa", "Zayd", "Ibrahim", "Maryam", "Yusuf", "Khadija"];
-                        let name = names[Math.floor(Math.random()*names.length)] + ` ${s.substring(0,3)}${lvl}`;
+            let idCounter = 1001;
+            for (let sec of sections) {
+                let levels = (sec === "Advanced Class") ? 2 : (sec === "Intensive Program" ? 2 : 4);
+                for (let lvl = 1; lvl <= levels; lvl++) {
+                    let count = sec.includes("Women") ? 3 : 6;
+                    for (let i = 1; i <= count; i++) {
+                        let names = ["Aisha", "Hafsa", "Zayd", "Ibrahim", "Maryam", "Yusuf", "Khadija", "Abdullah"];
+                        let name = names[(idCounter % names.length)] + ` ${sec.substring(0,3)}${lvl}`;
+                        let boarding = (sec === "Intensive Program" && lvl === 2) ? Math.random() > 0.6 : false;
+                        let feeStatus = Math.random() > 0.3 ? "Paid" : "Pending";
                         students.push({
-                            id: `STU${1000+idx++}`, name, section: s, level: lvl, classLabel: `${s} L${lvl}`,
-                            boarding: Math.random() > 0.7, feeStatus: Math.random() > 0.3 ? "Paid" : "Pending",
-                            attendance: 65 + Math.floor(Math.random() * 30), parentContact: "+23480XXXX",
-                            grades: { Math: 60+Math.floor(Math.random()*35), English: 65+Math.random()*30, Islamic: 75+Math.random()*25 }
+                            id: `STU${idCounter++}`, name, section: sec, level: lvl, classLabel: `${sec} L${lvl}`,
+                            boarding: boarding, feeStatus: feeStatus, attendance: 60 + Math.floor(Math.random() * 35),
+                            parentContact: "+23480XXXX", grades: { Math: 55+Math.floor(Math.random()*40), English: 60+Math.random()*35, Islamic: 70+Math.random()*28 }
                         });
                     }
                 }
@@ -223,60 +234,227 @@
             schoolData.teachers = [
                 { empId: "TCH001", name: "Ustadh Abdur-Rahman", section: "Regular Islamiya", subject: "Quran/Tajweed", rating: "Excellent" },
                 { empId: "TCH002", name: "Ustadha Khadija", section: "Women Class", subject: "Fiqh", rating: "Excellent" },
-                { empId: "TCH003", name: "Mawlana Yusuf", section: "Regular Memorization", subject: "Tahfeez", rating: "Satisfactory" }
+                { empId: "TCH003", name: "Mawlana Yusuf", section: "Regular Memorization", subject: "Tahfeez", rating: "Satisfactory" },
+                { empId: "TCH004", name: "Dr. Amina", section: "Islamic Integration", subject: "Seerah", rating: "Good" }
             ];
-            schoolData.feeTransactions = schoolData.students.filter(s=>s.feeStatus==="Paid").slice(0,10).map(s=>({ id:"TRX"+Date.now()+Math.random(), studentId:s.id, studentName:s.name, date:new Date().toISOString().slice(0,10), amount:25000, receiptId:"REC"+Math.random() }));
+            schoolData.feeTransactions = schoolData.students.filter(s => s.feeStatus === "Paid").slice(0, 15).map(s => ({ 
+                id: "TRX"+Date.now()+Math.random(), studentId: s.id, studentName: s.name, date: new Date().toISOString().slice(0,10), amount: 25000, receiptId: "REC"+Math.random() 
+            }));
             updateDormOccupancy();
         }
-        function updateDormOccupancy() {
-            let boarders = schoolData.students.filter(s=>s.boarding);
-            let halls = Object.keys(schoolData.boarderDorms);
-            halls.forEach((hall,idx)=>{ let allot = Math.floor(boarders.length / halls.length) + (idx < boarders.length % halls.length ? 1 : 0); schoolData.boarderDorms[hall].occupied = Math.min(allot, schoolData.boarderDorms[hall].capacity); });
-        }
-        function payFeeAction(studentId) { let s = schoolData.students.find(s=>s.id===studentId); if(s && s.feeStatus !== "Paid") { s.feeStatus="Paid"; schoolData.feeTransactions.push({ id:"TRX"+Date.now(), studentId:s.id, studentName:s.name, date:new Date().toISOString().slice(0,10), amount:25000, receiptId:"REC"+Date.now() }); alert("Payment recorded"); refreshCurrentView(); } else alert("Already paid or invalid"); }
-        function addNewStudent() { let name=document.getElementById('newStudentName').value, section=document.getElementById('newStudentSection').value, level=parseInt(document.getElementById('newStudentLevel').value), payment=document.getElementById('newPaymentStatus').value, boarding=document.getElementById('newBoardingStatus').value==='true'; if(!name||isNaN(level)){alert("Complete fields");return;} let newStu={ id:`STU${Date.now()}`, name, section, level, classLabel:`${section} L${level}`, boarding, feeStatus:payment, attendance:80, grades:{Math:70,English:75,Islamic:85} }; schoolData.students.push(newStu); if(payment==="Paid") payFeeAction(newStu.id); updateDormOccupancy(); closeModal('addStudentModal'); refreshCurrentView(); alert("Student added!"); }
-        function addNewTeacher() { let name=document.getElementById('newTeacherName').value, section=document.getElementById('newTeacherSection').value, subject=document.getElementById('newTeacherSubject').value; if(!name) return; schoolData.teachers.push({ empId:`TCH${Date.now()}`, name, section, subject, rating:"Good"}); closeModal('addTeacherModal'); refreshCurrentView(); alert("Teacher added"); }
-        function handleLogin(role, uname, pwd) { if(role==="dg_ceo") currentUser = {...usersDB.dg_ceo, role}; else if(role==="director") currentUser = {...usersDB.director_daf, role, department:"DAF"}; else if(role==="headteacher") currentUser = {...usersDB.headteacher_ri, role}; else if(role==="teacher") currentUser = {...usersDB.teacher, role}; else if(role==="parent") currentUser = {...usersDB.parent, role}; else return false; return true; }
 
-        // Navigation & Rendering
-        function getNavItems() { if(currentUser.role==="dg_ceo") return ["dashboard","students","fees","boarding","teachers","payment-report"]; if(currentUser.role==="director") return ["dashboard","fees","teachers"]; if(currentUser.role==="headteacher") return ["dashboard","section-students","section-fees"]; if(currentUser.role==="teacher") return ["dashboard","my-class","grade-students"]; if(currentUser.role==="parent") return ["my-children","payment-history"]; return ["dashboard"]; }
-        function renderNav() { const labels={dashboard:"Dashboard",students:"All Students",fees:"Fee Mgt",boarding:"Boarding",teachers:"Teachers","payment-report":"Payments","section-students":"My Section","section-fees":"Section Fees","my-class":"My Class","grade-students":"Grade Students","my-children":"My Children","payment-history":"Payment History"}; let items=getNavItems(); let html=items.map(v=>`<a href="#" data-view="${v}" class="nav-link flex items-center space-x-3 px-4 py-2.5 rounded-lg text-slate-200 hover:bg-white/10 transition"><i class="fas ${v==='dashboard'?'fa-tachometer-alt':v==='students'?'fa-users':v==='fees'?'fa-coins':v==='boarding'?'fa-bed':'fa-folder'} w-5"></i><span>${labels[v]||v}</span></a>`).join(''); document.getElementById("dynamicNav").innerHTML=html; document.querySelectorAll('.nav-link').forEach(link=>{ link.addEventListener('click',(e)=>{ e.preventDefault(); let view=link.getAttribute('data-view'); renderContentView(view); document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('bg-white/10','border-l-4','border-amber-400')); link.classList.add('bg-white/10','border-l-4','border-amber-400'); }); }); }
-        function renderContentView(view) { if(view==="dashboard") renderDashboard(); else if(view==="students") renderAllStudents(); else if(view==="fees") renderFeeManagement(); else if(view==="boarding") renderBoarding(); else if(view==="teachers") renderTeachers(); else if(view==="payment-report") renderPaymentReport(); else if(view==="section-students") renderHeadTeacherSection(); else if(view==="section-fees") renderHeadTeacherFees(); else if(view==="my-class") renderTeacherClass(); else if(view==="grade-students") renderGradeStudents(); else if(view==="my-children") renderParentChildren(); else if(view==="payment-history") renderParentPayments(); else renderDashboard(); }
-        function renderDashboard() { let total= schoolData.students.length, pendingFees=schoolData.students.filter(s=>s.feeStatus==="Pending").length, boarders=schoolData.students.filter(s=>s.boarding).length; document.getElementById("mainContent").innerHTML=`<div class="space-y-6"><h1 class="text-2xl font-bold">Welcome, ${currentUser.name}</h1><div class="grid grid-cols-1 md:grid-cols-4 gap-5"><div class="bg-white p-5 rounded-xl shadow">📚 Total Students<br><span class="text-3xl font-bold">${total}</span></div><div class="bg-white p-5 rounded-xl shadow">💰 Pending Fees<br><span class="text-2xl font-bold text-red-600">${pendingFees}</span></div><div class="bg-white p-5 rounded-xl shadow">🏠 Boarders<br><span class="text-2xl font-bold">${boarders}</span></div><div class="bg-white p-5 rounded-xl shadow">👩‍🏫 Teachers<br><span class="text-2xl">${schoolData.teachers.length}</span></div></div></div>`; }
-        function renderAllStudents() { let html=`<div class="bg-white rounded-xl shadow p-5"><div class="flex justify-between"><h2 class="text-xl font-bold">All Students</h2>${currentUser.role==="dg_ceo"? '<button onclick="openModal(\'addStudentModal\')" class="bg-blue-600 text-white px-4 py-2 rounded">+ Add Student</button>' : ''}</div><table class="w-full mt-4"><thead class="bg-gray-100"><tr><th>Name</th><th>Section</th><th>Level</th><th>Fee</th><th>Attendance</th></tr></thead><tbody>${schoolData.students.map(s=>`<tr class="border-b"><td class="p-2">${s.name}</td><td>${s.section}</td><td>${s.level}</td><td class="${s.feeStatus==='Paid'?'text-green-600':'text-red-600'}">${s.feeStatus}</td><td>${s.attendance}%</td></tr>`).join('')}</tbody></table></div>`; document.getElementById("mainContent").innerHTML=html; }
-        function renderFeeManagement() { let pending=schoolData.students.filter(s=>s.feeStatus==="Pending"); document.getElementById("mainContent").innerHTML=`<div class="bg-white p-5 rounded-xl shadow"><h2 class="text-xl font-bold">Fee Management</h2><div class="my-3">Pending: ${pending.length}</div><ul>${pending.map(s=>`<li class="flex justify-between py-2 border-b"><span>${s.name}</span><button onclick="payFeeAction('${s.id}')" class="bg-amber-600 text-white px-3 py-1 rounded text-sm">Pay Now</button></li>`).join('')}</ul></div>`; }
-        function renderBoarding() { let boarders=schoolData.students.filter(s=>s.boarding); let html=`<div class="bg-white p-5 rounded-xl shadow"><h2 class="text-xl font-bold">Boarding Stats</h2><p>Total Boarders: ${boarders.length}</p><div>${Object.entries(schoolData.boarderDorms).map(([h,d])=>`<div><div class="flex justify-between"><span>${h}</span><span>${d.occupied}/${d.capacity}</span></div><div class="w-full bg-gray-200 h-2 rounded-full"><div class="bg-amber-600 h-2 rounded-full" style="width:${(d.occupied/d.capacity)*100}%"></div></div></div>`).join('')}</div></div>`; document.getElementById("mainContent").innerHTML=html; }
-        function renderTeachers() { let html=`<div class="bg-white p-5 rounded-xl shadow"><div class="flex justify-between"><h2>Teachers</h2>${currentUser.role==="dg_ceo"? '<button onclick="openModal(\'addTeacherModal\')" class="bg-teal-600 text-white px-3 py-1 rounded">+ Add Teacher</button>':''}</div><table class="w-full mt-3"><thead><tr><th>Name</th><th>Section</th><th>Subject</th><th>Rating</th></tr></thead><tbody>${schoolData.teachers.map(t=>`<tr><td>${t.name}</td><td>${t.section}</td><td>${t.subject}</td><td class="text-green-600">${t.rating}</td></tr>`).join('')}</tbody>}</div>`; document.getElementById("mainContent").innerHTML=html; }
-        function renderPaymentReport() { let html=`<div class="bg-white p-5 rounded-xl shadow"><h2>Transactions</h2><table class="w-full"><thead><tr><th>Student</th><th>Date</th><th>Amount</th></tr></thead><tbody>${schoolData.feeTransactions.map(t=>`<tr><td>${t.studentName}</td><td>${t.date}</td><td>₦${t.amount}</td></tr>`).join('')}</tbody></table></div>`; document.getElementById("mainContent").innerHTML=html; }
-        function renderHeadTeacherSection() { let section = currentUser.section; let students = schoolData.students.filter(s=>s.section===section); document.getElementById("mainContent").innerHTML=`<div class="bg-white p-5 rounded-xl"><h2 class="text-xl font-bold">${section} (${students.length})</h2><table class="w-full"><thead><tr><th>Name</th><th>Level</th><th>Attendance</th></tr></thead><tbody>${students.map(s=>`<tr><td>${s.name}</td><td>${s.level}</td><td>${s.attendance}%</td></tr>`).join('')}</tbody></table></div>`; }
-        function renderHeadTeacherFees() { let section = currentUser.section; let pending = schoolData.students.filter(s=>s.section===section && s.feeStatus==="Pending"); document.getElementById("mainContent").innerHTML=`<div class="bg-white p-5 rounded-xl"><h2>Pending Fees - ${section}</h2><ul>${pending.map(s=>`<li>${s.name} - ${s.parentContact}</li>`).join('')}</ul></div>`; }
-        function renderTeacherClass() { let myStudents = schoolData.students.filter(s=>s.section===currentUser.assignedSection); document.getElementById("mainContent").innerHTML=`<div class="bg-white p-5 rounded-xl"><h2>My Class: ${currentUser.assignedSection}</h2><table class="w-full"><thead><tr><th>Name</th><th>Islamic Grade</th></tr></thead><tbody>${myStudents.map(s=>`<tr><td>${s.name}</td><td>${s.grades.Islamic}</td></tr>`).join('')}</tbody></table></div>`; }
-        function renderGradeStudents() { let myStudents = schoolData.students.filter(s=>s.section===currentUser.assignedSection); let html=`<div class="bg-white p-5 rounded-xl"><h2>Grade Students</h2>${myStudents.map(s=>`<div class="border-b py-3"><span class="font-bold">${s.name}</span><div class="grid grid-cols-3 gap-2 mt-1"><label>Math: <input id="math_${s.id}" value="${s.grades.Math}" class="border w-16 p-1"></label><label>English: <input id="eng_${s.id}" value="${s.grades.English}" class="border w-16 p-1"></label><label>Islamic: <input id="isl_${s.id}" value="${s.grades.Islamic}" class="border w-16 p-1"></label></div><button onclick="saveGrade('${s.id}')" class="bg-blue-500 text-white px-3 py-1 rounded mt-2">Save</button></div>`).join('')}</div>`; document.getElementById("mainContent").innerHTML=html; window.saveGrade=(sid)=>{ let stu=schoolData.students.find(s=>s.id===sid); if(stu){ stu.grades.Math=parseInt(document.getElementById(`math_${sid}`).value); stu.grades.English=parseInt(document.getElementById(`eng_${sid}`).value); stu.grades.Islamic=parseInt(document.getElementById(`isl_${sid}`).value); alert("Grades updated"); refreshCurrentView(); } }; }
-        function renderParentChildren() { let childrenIds = currentUser.linkedChildren || []; let children = schoolData.students.filter(s=>childrenIds.includes(s.id)); document.getElementById("mainContent").innerHTML=`<div class="bg-white p-5 rounded-xl"><h2>My Children</h2>${children.map(c=>`<div class="border p-3 mb-3 rounded"><h3 class="font-bold">${c.name}</h3><p>Section: ${c.section} Level ${c.level}</p><p>Attendance: ${c.attendance}% | Fee: ${c.feeStatus}</p><p>Islamic Grade: ${c.grades.Islamic}</p></div>`).join('')}</div>`; }
-        function renderParentPayments() { let childrenIds = currentUser.linkedChildren || []; let payments = schoolData.feeTransactions.filter(t=>childrenIds.includes(t.studentId)); document.getElementById("mainContent").innerHTML=`<div class="bg-white p-5 rounded-xl"><h2>Payment History</h2><table class="w-full"><thead><tr><th>Student</th><th>Date</th><th>Receipt</th></tr></thead><tbody>${payments.map(p=>`<tr><td>${p.studentName}</td><td>${p.date}</td><td>${p.receiptId}</td></tr>`).join('')}</tbody></table></div>`; }
-        function refreshCurrentView() { let active = document.querySelector('.nav-link.bg-white\\/10'); let view = active ? active.getAttribute('data-view') : "dashboard"; renderContentView(view); }
+        // Payments & helpers
+        function payFeeAction(studentId) {
+            let s = schoolData.students.find(s => s.id === studentId);
+            if (s && s.feeStatus !== "Paid") {
+                s.feeStatus = "Paid";
+                schoolData.feeTransactions.push({ 
+                    id: "TRX"+Date.now(), studentId: s.id, studentName: s.name, 
+                    date: new Date().toISOString().slice(0,10), amount: 25000, receiptId: "REC"+Date.now() 
+                });
+                alert("✅ Payment recorded successfully!");
+                refreshCurrentView();
+            } else if(s) alert("Fee already paid or invalid.");
+            else alert("Student not found.");
+        }
+
+        function addNewStudent() {
+            let name = document.getElementById('newStudentName').value;
+            let section = document.getElementById('newStudentSection').value;
+            let level = parseInt(document.getElementById('newStudentLevel').value);
+            let payment = document.getElementById('newPaymentStatus').value;
+            let boarding = document.getElementById('newBoardingStatus').value === 'true';
+            if(!name || isNaN(level) || level < 1 || level > 6) { alert("Please fill valid name and level (1-6)"); return; }
+            let newStu = { id: `STU${Date.now()}`, name, section, level, classLabel: `${section} L${level}`, boarding, feeStatus: payment, attendance: 85, parentContact: "+234", grades: { Math: 70, English: 75, Islamic: 85 } };
+            schoolData.students.push(newStu);
+            if(payment === "Paid") payFeeAction(newStu.id);
+            updateDormOccupancy();
+            closeModal('addStudentModal');
+            refreshCurrentView();
+            alert(`Student ${name} enrolled!`);
+        }
+
+        function addNewTeacher() {
+            let name = document.getElementById('newTeacherName').value;
+            let section = document.getElementById('newTeacherSection').value;
+            let subject = document.getElementById('newTeacherSubject').value;
+            if(!name) { alert("Teacher name required"); return; }
+            schoolData.teachers.push({ empId: `TCH${Date.now()}`, name, section: section || "General", subject: subject || "Islamic Studies", rating: "Good" });
+            closeModal('addTeacherModal');
+            refreshCurrentView();
+            alert("Teacher added successfully");
+        }
+
+        // Login handler
+        function handleLogin(role, username, pwd) {
+            const user = usersDatabase.find(u => u.role === role);
+            if (user && pwd && pwd.trim() !== "") {
+                currentUser = { ...user, role: user.role };
+                if(role === "teacher") currentUser.assignedSection = user.assignedSection || "Regular Islamiya";
+                if(role === "headteacher") currentUser.section = user.section || "Regular Islamiya";
+                return true;
+            }
+            return false;
+        }
+
+        // Navigation permissions
+        function getNavItems() {
+            if(currentUser.role === "dg_ceo") return ["dashboard","students","fees","boarding","teachers","payment-report"];
+            if(currentUser.role === "director") return ["dashboard","fees","teachers"];
+            if(currentUser.role === "headteacher") return ["dashboard","section-students","section-fees"];
+            if(currentUser.role === "teacher") return ["dashboard","my-class","grade-students"];
+            if(currentUser.role === "parent") return ["my-children","payment-history"];
+            return ["dashboard"];
+        }
+
+        // Render functions (all view logic)
+        function renderDashboard() {
+            let total = schoolData.students.length, pending = schoolData.students.filter(s=>s.feeStatus==="Pending").length, boarders = schoolData.students.filter(s=>s.boarding).length;
+            document.getElementById("mainContent").innerHTML = `<div class="space-y-6"><h1 class="text-2xl font-bold">📊 Dashboard - ${currentUser.name}</h1><div class="grid grid-cols-1 md:grid-cols-4 gap-5"><div class="bg-white p-5 rounded-xl shadow">📚 Total Students<br><span class="text-3xl font-bold">${total}</span></div><div class="bg-white p-5 rounded-xl shadow">💰 Pending Fees<br><span class="text-2xl font-bold text-red-600">${pending}</span></div><div class="bg-white p-5 rounded-xl shadow">🏠 Boarders<br><span class="text-2xl font-bold">${boarders}</span></div><div class="bg-white p-5 rounded-xl shadow">👩‍🏫 Teachers<br><span class="text-2xl">${schoolData.teachers.length}</span></div></div></div>`;
+        }
+        function renderAllStudents() {
+            let html = `<div class="bg-white rounded-xl shadow p-5"><div class="flex justify-between"><h2 class="text-xl font-bold">All Students</h2>${currentUser.role === "dg_ceo" ? '<button onclick="openModal(\'addStudentModal\')" class="bg-blue-600 text-white px-4 py-2 rounded">+ Add Student</button>' : ''}</div><div class="overflow-x-auto"><table class="w-full mt-4"><thead class="bg-gray-100"><tr><th>Name</th><th>Section</th><th>Level</th><th>Fee</th><th>Attendance</th></tr></thead><tbody>${schoolData.students.map(s => `<tr class="border-b"><td class="p-2">${s.name}</td><td>${s.section}</td><td>${s.level}</td><td class="${s.feeStatus==='Paid'?'text-green-600':'text-red-600'}">${s.feeStatus}</td><td>${s.attendance}%</td></tr>`).join('')}</tbody></table></div></div>`;
+            document.getElementById("mainContent").innerHTML = html;
+        }
+        function renderFeeManagement() {
+            let pending = schoolData.students.filter(s => s.feeStatus === "Pending");
+            document.getElementById("mainContent").innerHTML = `<div class="bg-white p-5 rounded-xl shadow"><h2 class="text-xl font-bold">💰 Fee Management</h2><p class="my-2">Pending: ${pending.length}</p><ul>${pending.map(s => `<li class="flex justify-between py-2 border-b"><span>${s.name} (${s.section})</span><button onclick="payFeeAction('${s.id}')" class="bg-amber-600 text-white px-3 py-1 rounded text-sm">Record Payment</button></li>`).join('')}</ul></div>`;
+        }
+        function renderBoarding() {
+            let boarders = schoolData.students.filter(s=>s.boarding);
+            let html = `<div class="bg-white p-5 rounded-xl shadow"><h2 class="text-xl font-bold">🏠 Boarding Management</h2><p>Total Boarders: ${boarders.length}</p>${Object.entries(schoolData.boarderDorms).map(([h,d])=>`<div class="mt-3"><div class="flex justify-between"><span>${h}</span><span>${d.occupied}/${d.capacity}</span></div><div class="w-full bg-gray-200 h-2 rounded-full"><div class="bg-amber-600 h-2 rounded-full" style="width:${(d.occupied/d.capacity)*100}%"></div></div></div>`).join('')}</div>`;
+            document.getElementById("mainContent").innerHTML = html;
+        }
+        function renderTeachers() {
+            let html = `<div class="bg-white p-5 rounded-xl shadow"><div class="flex justify-between"><h2 class="text-xl font-bold">Faculty</h2>${currentUser.role === "dg_ceo" ? '<button onclick="openModal(\'addTeacherModal\')" class="bg-teal-600 text-white px-3 py-1 rounded">+ Add Teacher</button>' : ''}</div><table class="w-full mt-3"><thead><tr><th>Name</th><th>Section</th><th>Subject</th><th>Rating</th></tr></thead><tbody>${schoolData.teachers.map(t => `<tr class="border-b"><td class="p-2">${t.name}</td><td>${t.section}</td><td>${t.subject}</td><td class="text-green-600">${t.rating}</td></tr>`).join('')}</tbody></table></div>`;
+            document.getElementById("mainContent").innerHTML = html;
+        }
+        function renderPaymentReport() {
+            let html = `<div class="bg-white p-5 rounded-xl shadow"><h2 class="text-xl font-bold">📄 Payment History</h2><table class="w-full mt-3"><thead><tr><th>Student</th><th>Date</th><th>Amount</th><th>Receipt</th></tr></thead><tbody>${schoolData.feeTransactions.map(t => `<tr><td>${t.studentName}</td><td>${t.date}</td><td>₦${t.amount}</td><td>${t.receiptId.slice(0,8)}</td></tr>`).join('')}</tbody></table></div>`;
+            document.getElementById("mainContent").innerHTML = html;
+        }
+        function renderHeadTeacherSection() {
+            let section = currentUser.section;
+            let students = schoolData.students.filter(s => s.section === section);
+            document.getElementById("mainContent").innerHTML = `<div class="bg-white p-5 rounded-xl"><h2 class="text-xl font-bold">${section} Students (${students.length})</h2><table class="w-full"><thead><tr><th>Name</th><th>Level</th><th>Attendance</th><th>Fee</th></tr></thead><tbody>${students.map(s=>`<tr><td>${s.name}</td><td>${s.level}</td><td>${s.attendance}%</td><td>${s.feeStatus}</td></tr>`).join('')}</tbody></table></div>`;
+        }
+        function renderHeadTeacherFees() {
+            let section = currentUser.section;
+            let pending = schoolData.students.filter(s => s.section === section && s.feeStatus === "Pending");
+            document.getElementById("mainContent").innerHTML = `<div class="bg-white p-5 rounded-xl"><h2>Pending Fees - ${section}</h2><ul class="list-disc pl-5">${pending.map(s=>`<li>${s.name} - ${s.parentContact}</li>`).join('')}</ul></div>`;
+        }
+        function renderTeacherClass() {
+            let myStudents = schoolData.students.filter(s => s.section === currentUser.assignedSection);
+            document.getElementById("mainContent").innerHTML = `<div class="bg-white p-5 rounded-xl"><h2>My Class: ${currentUser.assignedSection}</h2><table class="w-full"><thead><tr><th>Name</th><th>Islamic Grade</th><th>Attendance</th></tr></thead><tbody>${myStudents.map(s=>`<tr><td>${s.name}</td><td>${s.grades.Islamic}</td><td>${s.attendance}%</td></tr>`).join('')}</tbody></table></div>`;
+        }
+        function renderGradeStudents() {
+            let myStudents = schoolData.students.filter(s => s.section === currentUser.assignedSection);
+            let html = `<div class="bg-white p-5 rounded-xl"><h2>Grade Students (${currentUser.assignedSection})</h2>${myStudents.map(s=>`<div class="border-b py-3"><span class="font-bold">${s.name}</span><div class="grid grid-cols-3 gap-2 mt-1"><label>Math: <input id="math_${s.id}" value="${s.grades.Math}" class="border w-20 p-1 rounded"></label><label>English: <input id="eng_${s.id}" value="${s.grades.English}" class="border w-20 p-1 rounded"></label><label>Islamic: <input id="isl_${s.id}" value="${s.grades.Islamic}" class="border w-20 p-1 rounded"></label></div><button onclick="saveGrade('${s.id}')" class="bg-blue-500 text-white px-3 py-1 rounded mt-2 text-sm">Save Grades</button></div>`).join('')}</div>`;
+            document.getElementById("mainContent").innerHTML = html;
+            window.saveGrade = (sid) => {
+                let stu = schoolData.students.find(s => s.id === sid);
+                if(stu) {
+                    stu.grades.Math = parseInt(document.getElementById(`math_${sid}`).value) || stu.grades.Math;
+                    stu.grades.English = parseInt(document.getElementById(`eng_${sid}`).value) || stu.grades.English;
+                    stu.grades.Islamic = parseInt(document.getElementById(`isl_${sid}`).value) || stu.grades.Islamic;
+                    alert("Grades updated!");
+                    refreshCurrentView();
+                }
+            };
+        }
+        function renderParentChildren() {
+            let childrenIds = currentUser.linkedChildren || [];
+            let children = schoolData.students.filter(s => childrenIds.includes(s.id));
+            document.getElementById("mainContent").innerHTML = `<div class="bg-white p-5 rounded-xl"><h2>My Children</h2>${children.map(c=>`<div class="border p-3 mb-3 rounded shadow-sm"><h3 class="font-bold text-lg">${c.name}</h3><p>Section: ${c.section} | Level ${c.level}</p><p>Attendance: ${c.attendance}% | Fee: ${c.feeStatus}</p><p>Islamic Grade: ${c.grades.Islamic}</p></div>`).join('')}</div>`;
+        }
+        function renderParentPayments() {
+            let childrenIds = currentUser.linkedChildren || [];
+            let payments = schoolData.feeTransactions.filter(t => childrenIds.includes(t.studentId));
+            document.getElementById("mainContent").innerHTML = `<div class="bg-white p-5 rounded-xl"><h2>Payment History</h2><table class="w-full"><thead><tr><th>Student</th><th>Date</th><th>Receipt</th><th>Amount</th></tr></thead><tbody>${payments.map(p=>`<tr><td>${p.studentName}</td><td>${p.date}</td><td>${p.receiptId.slice(0,8)}</td><td>₦${p.amount}</td></tr>`).join('')}</tbody></table></div>`;
+        }
+
+        function renderContentView(view) {
+            const views = { dashboard: renderDashboard, students: renderAllStudents, fees: renderFeeManagement, boarding: renderBoarding, teachers: renderTeachers, "payment-report": renderPaymentReport, "section-students": renderHeadTeacherSection, "section-fees": renderHeadTeacherFees, "my-class": renderTeacherClass, "grade-students": renderGradeStudents, "my-children": renderParentChildren, "payment-history": renderParentPayments };
+            (views[view] || renderDashboard)();
+        }
+
+        function renderNav() {
+            const labels = { dashboard:"Dashboard", students:"All Students", fees:"Fee Mgt", boarding:"Boarding", teachers:"Teachers", "payment-report":"Payments", "section-students":"My Section", "section-fees":"Section Fees", "my-class":"My Class", "grade-students":"Grade Students", "my-children":"My Children", "payment-history":"Payment History" };
+            let items = getNavItems();
+            let html = items.map(v => `<a href="#" data-view="${v}" class="nav-link flex items-center space-x-3 px-4 py-2.5 rounded-lg text-slate-200 hover:bg-white/10 transition"><i class="fas ${v==='dashboard'?'fa-tachometer-alt':v==='students'?'fa-users':v==='fees'?'fa-coins':v==='boarding'?'fa-bed':'fa-folder'} w-5"></i><span>${labels[v]||v}</span></a>`).join('');
+            document.getElementById("dynamicNav").innerHTML = html;
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    let view = link.getAttribute('data-view');
+                    renderContentView(view);
+                    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('bg-white/10', 'border-l-4', 'border-amber-400'));
+                    link.classList.add('bg-white/10', 'border-l-4', 'border-amber-400');
+                });
+            });
+            if(items.length) renderContentView(items[0]);
+        }
+
+        function refreshCurrentView() {
+            let active = document.querySelector('.nav-link.bg-white\\/10');
+            let view = active ? active.getAttribute('data-view') : "dashboard";
+            renderContentView(view);
+        }
+
+        // Global UI helpers
         window.openModal = (id) => document.getElementById(id).style.display = 'flex';
         window.closeModal = (id) => document.getElementById(id).style.display = 'none';
         window.payFeeAction = payFeeAction;
         window.addNewStudent = addNewStudent;
         window.addNewTeacher = addNewTeacher;
 
-        // LIVE TIME & WEATHER
-        async function updateDateTime() { let now=new Date(); document.getElementById('liveTime') && (document.getElementById('liveTime').innerText=now.toLocaleTimeString('en-NG')); document.getElementById('liveDate') && (document.getElementById('liveDate').innerText=now.toLocaleDateString('en-NG',{weekday:'long',year:'numeric',month:'long',day:'numeric'})); }
+        // Time & Weather
+        function updateDateTime() { let now = new Date(); if(document.getElementById('liveTime')) document.getElementById('liveTime').innerText = now.toLocaleTimeString('en-NG'); if(document.getElementById('liveDate')) document.getElementById('liveDate').innerText = now.toLocaleDateString('en-NG',{weekday:'long',year:'numeric',month:'long',day:'numeric'}); }
         setInterval(updateDateTime,1000); updateDateTime();
-        if(navigator.geolocation) { navigator.geolocation.getCurrentPosition(async(pos)=>{ try{ let res=await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${pos.coords.latitude}&longitude=${pos.coords.longitude}&current_weather=true`); let data=await res.json(); if(document.getElementById('weatherTemp')) document.getElementById('weatherTemp').innerText=Math.round(data.current_weather.temperature); let code=data.current_weather.weathercode; let desc=code>50?"Rainy":"Clear"; document.getElementById('weatherDesc') && (document.getElementById('weatherDesc').innerText=desc); }catch(e){} }); }
+        if(navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(async(pos)=>{
+                try {
+                    let res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${pos.coords.latitude}&longitude=${pos.coords.longitude}&current_weather=true`);
+                    let data = await res.json();
+                    if(document.getElementById('weatherTemp')) document.getElementById('weatherTemp').innerText = Math.round(data.current_weather.temperature);
+                    let desc = data.current_weather.weathercode > 60 ? "Rainy" : (data.current_weather.weathercode === 0 ? "Clear" : "Cloudy");
+                    if(document.getElementById('weatherDesc')) document.getElementById('weatherDesc').innerText = desc;
+                    if(document.getElementById('userLocation')) document.getElementById('userLocation').innerText = `${pos.coords.latitude.toFixed(2)}°, ${pos.coords.longitude.toFixed(2)}°`;
+                } catch(e) {}
+            });
+        }
 
-        // LOGIC: switch from landing to login
-        const landingDiv = document.getElementById('landingPage');
-        const loginScreen = document.getElementById('loginScreen');
-        const appContainer = document.getElementById('appContainer');
-        function showLoginModal() { landingDiv.style.display = 'none'; loginScreen.style.display = 'flex'; }
-        document.getElementById('loginBtnHero')?.addEventListener('click', showLoginModal);
-        document.getElementById('loginBtnFooter')?.addEventListener('click', showLoginModal);
-        document.getElementById('closeLoginBtn')?.addEventListener('click', ()=>{ loginScreen.style.display='none'; landingDiv.style.display='block'; });
-        document.getElementById('loginForm')?.addEventListener('submit', (e)=>{ e.preventDefault(); let role = document.getElementById('loginRole').value; let uname = document.getElementById('loginUsername').value; let pwd = document.getElementById('loginPassword').value; if(handleLogin(role, uname, pwd)) { loginScreen.style.display='none'; landingDiv.style.display='none'; appContainer.classList.remove('hidden'); document.getElementById('userRoleDisplay').innerText = currentUser.role.toUpperCase(); document.getElementById('userNameDisplay').innerText = currentUser.name; generateMockData(); renderNav(); renderContentView('dashboard'); document.querySelector('.nav-link')?.classList.add('bg-white/10','border-l-4','border-amber-400'); } else alert('Invalid credentials'); });
-        document.getElementById('logoutBtn')?.addEventListener('click', ()=>{ currentUser=null; appContainer.classList.add('hidden'); landingDiv.style.display='block'; loginScreen.style.display='none'; });
-        generateMockData();
+        // App bootstrap
+        function initApp() {
+            generateMockData();
+            const landing = document.getElementById('landingPage');
+            const loginScreen = document.getElementById('loginScreen');
+            const appContainer = document.getElementById('appContainer');
+            document.getElementById('loginBtnHero')?.addEventListener('click', ()=>{ landing.style.display = 'none'; loginScreen.style.display = 'flex'; });
+            document.getElementById('loginBtnFooter')?.addEventListener('click', ()=>{ landing.style.display = 'none'; loginScreen.style.display = 'flex'; });
+            document.getElementById('closeLoginBtn')?.addEventListener('click', ()=>{ loginScreen.style.display = 'none'; landing.style.display = 'block'; });
+            document.getElementById('loginForm')?.addEventListener('submit', (e)=>{
+                e.preventDefault();
+                let role = document.getElementById('loginRole').value;
+                let uname = document.getElementById('loginUsername').value;
+                let pwd = document.getElementById('loginPassword').value;
+                if(handleLogin(role, uname, pwd)) {
+                    loginScreen.style.display = 'none';
+                    landing.style.display = 'none';
+                    appContainer.classList.remove('hidden');
+                    document.getElementById('userRoleDisplay').innerText = currentUser.role.toUpperCase();
+                    document.getElementById('userNameDisplay').innerText = currentUser.name;
+                    renderNav();
+                } else alert("Invalid credentials (use any non-empty password)");
+            });
+            document.getElementById('logoutBtn')?.addEventListener('click', ()=>{
+                currentUser = null;
+                appContainer.classList.add('hidden');
+                landing.style.display = 'block';
+                loginScreen.style.display = 'none';
+            });
+        }
+        initApp();
     </script>
 </body>
 </html>
