@@ -56,6 +56,12 @@
             background: rgba(255,255,255,0.1);
             border-left: 4px solid #f59e0b;
         }
+        .attendance-checkbox {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: #10b981;
+        }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -153,7 +159,13 @@
         <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 relative">
             <div class="text-center mb-4"><i class="fas fa-dove text-5xl text-amber-600"></i><h2 class="text-2xl font-bold">Staff / Parent Login</h2><p class="text-xs text-gray-500">Demo: any non-empty password</p></div>
             <form id="loginForm">
-                <div><label class="font-medium">Role</label><select id="loginRole" class="w-full border rounded-lg p-2 mb-3"><option value="dg_ceo">DG/CEO</option><option value="director">Director (DAF/DRPA)</option><option value="headteacher">Head Teacher</option><option value="teacher">Teacher</option><option value="parent">Parent</option></select></div>
+                <div><label class="font-medium">Role</label><select id="loginRole" class="w-full border rounded-lg p-2 mb-3">
+                    <option value="dg_ceo">DG/CEO</option>
+                    <option value="director">Director (DAF/DRPA)</option>
+                    <option value="headteacher">Head Teacher</option>
+                    <option value="teacher">Teacher</option>
+                    <option value="parent">Parent</option>
+                </select></div>
                 <div><label class="font-medium">Username / Email</label><input type="text" id="loginUsername" class="w-full border rounded-lg p-2 mb-3" placeholder="any text"></div>
                 <div><label class="font-medium">Password</label><input type="password" id="loginPassword" class="w-full border rounded-lg p-2 mb-4" placeholder="any password"></div>
                 <button type="submit" class="w-full bg-amber-600 text-white py-2 rounded-lg font-bold">Login</button>
@@ -175,8 +187,8 @@
         <main class="flex-1 overflow-auto bg-gray-100 p-6" id="mainContent"></main>
     </div>
 
-    <!-- MODALS for add student/teacher -->
-    <div id="addStudentModal" class="modal" style="display: none;"><div class="modal-content"><span onclick="closeModal('addStudentModal')" class="close">&times;</span><h2 class="text-2xl font-bold mb-4">Enroll New Student</h2><input type="text" id="newStudentName" placeholder="Full Name" class="w-full border rounded-xl p-2 mb-2"><select id="newStudentSection" class="w-full border rounded-xl p-2 mb-2"><option value="Regular Islamiya">Regular Islamiya</option><option value="Regular Memorization">Regular Memorization</option><option value="Intensive Program">Intensive Program</option><option value="Islamic Integration">Islamic Integration</option><option value="Advanced Class">Advanced Class</option><option value="Women Class">Women Class</option></select><input type="number" id="newStudentLevel" placeholder="Level (1-6)" class="w-full border rounded-xl p-2 mb-2"><select id="newPaymentStatus" class="w-full border rounded-xl p-2 mb-2"><option value="Paid">Paid</option><option value="Pending">Pending</option></select><select id="newBoardingStatus" class="w-full border rounded-xl p-2 mb-2"><option value="false">Day Scholar</option><option value="true">Boarder</option></select><button onclick="addNewStudent()" class="w-full bg-blue-600 text-white py-2 rounded-xl">Register</button></div></div>
+    <!-- MODALS for add student/teacher (keep for DG/CEO) but headteacher will use inline form -->
+    <div id="addStudentModal" class="modal" style="display: none;"><div class="modal-content"><span onclick="closeModal('addStudentModal')" class="close">&times;</span><h2 class="text-2xl font-bold mb-4">Enroll New Student</h2><input type="text" id="newStudentName" placeholder="Full Name" class="w-full border rounded-xl p-2 mb-2"><select id="newStudentSection" class="w-full border rounded-xl p-2 mb-2"><option value="Regular Islamiya">Regular Islamiya</option><option value="Regular Memorization">Regular Memorization</option><option value="Intensive Program">Intensive Program</option><option value="Islamic Integration">Islamic Integration</option><option value="Advanced Class">Advanced Class</option><option value="Women Class">Women Class</option></select><input type="number" id="newStudentLevel" placeholder="Level (1-6)" class="w-full border rounded-xl p-2 mb-2"><select id="newPaymentStatus" class="w-full border rounded-xl p-2 mb-2"><option value="Paid">Paid</option><option value="Pending">Pending</option></select><select id="newBoardingStatus" class="w-full border rounded-xl p-2 mb-2"><option value="false">Day Scholar</option><option value="true">Boarder</option></select><button onclick="addNewStudentGlobal()" class="w-full bg-blue-600 text-white py-2 rounded-xl">Register</button></div></div>
     <div id="addTeacherModal" class="modal" style="display: none;"><div class="modal-content"><span onclick="closeModal('addTeacherModal')" class="close">&times;</span><h2 class="text-2xl font-bold mb-4">Add Teacher</h2><input type="text" id="newTeacherName" placeholder="Teacher Name" class="w-full border rounded-xl p-2 mb-2"><input type="text" id="newTeacherSection" placeholder="Section (e.g., Regular Islamiya)" class="w-full border rounded-xl p-2 mb-2"><input type="text" id="newTeacherSubject" placeholder="Subject" class="w-full border rounded-xl p-2 mb-2"><button onclick="addNewTeacher()" class="w-full bg-teal-600 text-white py-2 rounded-xl">Add Faculty</button></div></div>
 
     <script>
@@ -185,20 +197,20 @@
             students: [],
             feeTransactions: [],
             teachers: [],
+            attendanceRecords: [],
             boarderDorms: { "Al-Furqan Hall": { capacity: 45, occupied: 0 }, "Al-Hikmah Dorm": { capacity: 35, occupied: 0 }, "Nur Women Hostel": { capacity: 30, occupied: 0 } }
         };
         let currentUser = null;
 
-        // Demo users (no external json)
         const usersDatabase = [
             { id: "dg1", name: "Dr. Mahmoud DG/CEO", role: "dg_ceo", password: "any", permissions: ["all"] },
             { id: "dir1", name: "Director DAF (Finance)", role: "director", department: "DAF", password: "any" },
             { id: "ht1", name: "Head Teacher - Regular Islamiya", role: "headteacher", section: "Regular Islamiya", password: "any" },
+            { id: "ht2", name: "Head Teacher - Regular Memorization", role: "headteacher", section: "Regular Memorization", password: "any" },
             { id: "tch1", name: "Ustadh Abdur-Rahman", role: "teacher", assignedSection: "Regular Islamiya", password: "any" },
             { id: "parent1", name: "Fatima Abdullah (Parent)", role: "parent", linkedChildren: ["STU1001", "STU1003"], password: "any" }
         ];
 
-        // Helper: update dorm occupancy based on boarders
         function updateDormOccupancy() {
             let boarders = schoolData.students.filter(s => s.boarding);
             let halls = Object.keys(schoolData.boarderDorms);
@@ -208,7 +220,32 @@
             });
         }
 
-        // Generate rich mock data
+        function updateStudentAttendancePercent(studentId) {
+            const records = schoolData.attendanceRecords.filter(r => r.studentId === studentId);
+            const total = records.length;
+            const present = records.filter(r => r.status === 'present').length;
+            const percent = total === 0 ? 0 : Math.round((present / total) * 100);
+            const student = schoolData.students.find(s => s.id === studentId);
+            if (student) student.attendance = percent;
+        }
+
+        function markAttendanceToday(attendanceMap) {
+            const today = new Date().toISOString().slice(0,10);
+            const teacherSection = currentUser.assignedSection;
+            const studentsInSection = schoolData.students.filter(s => s.section === teacherSection);
+            schoolData.attendanceRecords = schoolData.attendanceRecords.filter(rec => {
+                const student = schoolData.students.find(s => s.id === rec.studentId);
+                return !(student && student.section === teacherSection && rec.date === today);
+            });
+            for (let student of studentsInSection) {
+                const status = attendanceMap[student.id] ? 'present' : 'absent';
+                schoolData.attendanceRecords.push({ studentId: student.id, date: today, status: status });
+            }
+            studentsInSection.forEach(s => updateStudentAttendancePercent(s));
+            alert(`✅ Attendance recorded for ${studentsInSection.length} students (${today})`);
+            refreshCurrentView();
+        }
+
         function generateMockData() {
             const sections = ["Regular Islamiya", "Regular Memorization", "Intensive Program", "Islamic Integration", "Advanced Class", "Women Class"];
             let students = [];
@@ -224,13 +261,24 @@
                         let feeStatus = Math.random() > 0.3 ? "Paid" : "Pending";
                         students.push({
                             id: `STU${idCounter++}`, name, section: sec, level: lvl, classLabel: `${sec} L${lvl}`,
-                            boarding: boarding, feeStatus: feeStatus, attendance: 60 + Math.floor(Math.random() * 35),
+                            boarding: boarding, feeStatus: feeStatus, attendance: 75,
                             parentContact: "+23480XXXX", grades: { Math: 55+Math.floor(Math.random()*40), English: 60+Math.random()*35, Islamic: 70+Math.random()*28 }
                         });
                     }
                 }
             }
             schoolData.students = students;
+            const today = new Date().toISOString().slice(0,10);
+            for (let i = 1; i <= 10; i++) {
+                let date = new Date();
+                date.setDate(date.getDate() - i);
+                let dateStr = date.toISOString().slice(0,10);
+                for (let student of students) {
+                    let isPresent = Math.random() > 0.2;
+                    schoolData.attendanceRecords.push({ studentId: student.id, date: dateStr, status: isPresent ? 'present' : 'absent' });
+                }
+            }
+            students.forEach(s => updateStudentAttendancePercent(s));
             schoolData.teachers = [
                 { empId: "TCH001", name: "Ustadh Abdur-Rahman", section: "Regular Islamiya", subject: "Quran/Tajweed", rating: "Excellent" },
                 { empId: "TCH002", name: "Ustadha Khadija", section: "Women Class", subject: "Fiqh", rating: "Excellent" },
@@ -243,7 +291,6 @@
             updateDormOccupancy();
         }
 
-        // Payments & helpers
         function payFeeAction(studentId) {
             let s = schoolData.students.find(s => s.id === studentId);
             if (s && s.feeStatus !== "Paid") {
@@ -258,20 +305,31 @@
             else alert("Student not found.");
         }
 
-        function addNewStudent() {
+        // Unified student enrollment (used by both DG/CEO modal and headteacher form)
+        function addStudentLogic(name, section, level, payment, boarding) {
+            if(!name || isNaN(level) || level < 1 || level > 6) { alert("Please fill valid name and level (1-6)"); return false; }
+            let newStu = { 
+                id: `STU${Date.now()}`, name, section, level, classLabel: `${section} L${level}`, 
+                boarding, feeStatus: payment, attendance: 0, parentContact: "+234", 
+                grades: { Math: 70, English: 75, Islamic: 85 } 
+            };
+            schoolData.students.push(newStu);
+            if(payment === "Paid") payFeeAction(newStu.id);
+            updateDormOccupancy();
+            alert(`Student ${name} enrolled successfully in ${section}!`);
+            return true;
+        }
+
+        function addNewStudentGlobal() {
             let name = document.getElementById('newStudentName').value;
             let section = document.getElementById('newStudentSection').value;
             let level = parseInt(document.getElementById('newStudentLevel').value);
             let payment = document.getElementById('newPaymentStatus').value;
             let boarding = document.getElementById('newBoardingStatus').value === 'true';
-            if(!name || isNaN(level) || level < 1 || level > 6) { alert("Please fill valid name and level (1-6)"); return; }
-            let newStu = { id: `STU${Date.now()}`, name, section, level, classLabel: `${section} L${level}`, boarding, feeStatus: payment, attendance: 85, parentContact: "+234", grades: { Math: 70, English: 75, Islamic: 85 } };
-            schoolData.students.push(newStu);
-            if(payment === "Paid") payFeeAction(newStu.id);
-            updateDormOccupancy();
-            closeModal('addStudentModal');
-            refreshCurrentView();
-            alert(`Student ${name} enrolled!`);
+            if(addStudentLogic(name, section, level, payment, boarding)) {
+                closeModal('addStudentModal');
+                refreshCurrentView();
+            }
         }
 
         function addNewTeacher() {
@@ -285,7 +343,6 @@
             alert("Teacher added successfully");
         }
 
-        // Login handler
         function handleLogin(role, username, pwd) {
             const user = usersDatabase.find(u => u.role === role);
             if (user && pwd && pwd.trim() !== "") {
@@ -297,23 +354,107 @@
             return false;
         }
 
-        // Navigation permissions
+        // Navigation: Headteacher now gets "enroll-student" tab
         function getNavItems() {
             if(currentUser.role === "dg_ceo") return ["dashboard","students","fees","boarding","teachers","payment-report"];
             if(currentUser.role === "director") return ["dashboard","fees","teachers"];
-            if(currentUser.role === "headteacher") return ["dashboard","section-students","section-fees"];
-            if(currentUser.role === "teacher") return ["dashboard","my-class","grade-students"];
+            if(currentUser.role === "headteacher") return ["dashboard","section-students","section-fees","enroll-student"];
+            if(currentUser.role === "teacher") return ["dashboard","my-class","grade-students","attendance"];
             if(currentUser.role === "parent") return ["my-children","payment-history"];
             return ["dashboard"];
         }
 
-        // Render functions (all view logic)
+        // ========== HEADTEACHER ENROLL STUDENT VIEW ==========
+        function renderHeadTeacherEnroll() {
+            const mySection = currentUser.section;
+            const html = `
+                <div class="bg-white rounded-xl shadow p-6 max-w-2xl mx-auto">
+                    <div class="flex items-center gap-3 mb-6 border-b pb-3">
+                        <i class="fas fa-user-plus text-3xl text-emerald-600"></i>
+                        <h2 class="text-2xl font-bold">Enroll New Student - ${mySection}</h2>
+                    </div>
+                    <form id="headTeacherEnrollForm">
+                        <div class="mb-4">
+                            <label class="block font-semibold mb-1">Full Name *</label>
+                            <input type="text" id="htStudentName" class="w-full border rounded-lg p-2" placeholder="e.g., Amina Bello">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block font-semibold mb-1">Section (Auto-locked to your section)</label>
+                            <input type="text" value="${mySection}" disabled class="w-full bg-gray-100 border rounded-lg p-2">
+                            <input type="hidden" id="htStudentSection" value="${mySection}">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block font-semibold mb-1">Level (1-6) *</label>
+                            <input type="number" id="htStudentLevel" min="1" max="6" class="w-full border rounded-lg p-2">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block font-semibold mb-1">Fee Status</label>
+                            <select id="htPaymentStatus" class="w-full border rounded-lg p-2">
+                                <option value="Pending">Pending</option>
+                                <option value="Paid">Paid</option>
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block font-semibold mb-1">Boarding Status</label>
+                            <select id="htBoardingStatus" class="w-full border rounded-lg p-2">
+                                <option value="false">Day Scholar</option>
+                                <option value="true">Boarder</option>
+                            </select>
+                        </div>
+                        <div class="flex justify-end gap-3 mt-6">
+                            <button type="button" id="cancelEnrollBtn" class="px-4 py-2 border rounded-lg text-gray-600">Cancel</button>
+                            <button type="submit" class="bg-emerald-600 text-white px-6 py-2 rounded-lg shadow hover:bg-emerald-700">✅ Register Student</button>
+                        </div>
+                    </form>
+                </div>
+            `;
+            document.getElementById("mainContent").innerHTML = html;
+            document.getElementById("headTeacherEnrollForm").addEventListener("submit", (e) => {
+                e.preventDefault();
+                const name = document.getElementById("htStudentName").value;
+                const section = document.getElementById("htStudentSection").value;
+                const level = parseInt(document.getElementById("htStudentLevel").value);
+                const payment = document.getElementById("htPaymentStatus").value;
+                const boarding = document.getElementById("htBoardingStatus").value === 'true';
+                if(addStudentLogic(name, section, level, payment, boarding)) {
+                    document.getElementById("headTeacherEnrollForm").reset();
+                    refreshCurrentView();
+                }
+            });
+            document.getElementById("cancelEnrollBtn").addEventListener("click", () => {
+                renderContentView("section-students");
+            });
+        }
+
+        // Attendance and other views (keep existing)
+        function renderAttendanceView() {
+            const teacherSection = currentUser.assignedSection;
+            const students = schoolData.students.filter(s => s.section === teacherSection);
+            const today = new Date().toISOString().slice(0,10);
+            const todayRecords = schoolData.attendanceRecords.filter(r => r.date === today);
+            const attendanceStatus = {};
+            for (let rec of todayRecords) attendanceStatus[rec.studentId] = rec.status === 'present';
+            let html = `<div class="bg-white rounded-xl shadow p-6"><div class="flex justify-between items-center mb-4"><h2 class="text-2xl font-bold">📋 Mark Attendance - ${teacherSection}</h2><span class="text-sm text-gray-500"><i class="far fa-calendar-alt"></i> ${today}</span></div><p class="text-gray-600 mb-4">Tick the checkbox for students <strong>PRESENT</strong> today. Unticked = Absent.</p><div class="overflow-x-auto"><table class="w-full border-collapse"><thead class="bg-gray-100"><tr><th class="p-3 text-left">Student Name</th><th class="p-3 text-left">Level</th><th class="p-3 text-center">Present ✅</th></tr></thead><tbody>`;
+            for (let student of students) {
+                const isChecked = attendanceStatus[student.id] === true;
+                html += `<tr class="border-b hover:bg-gray-50"><td class="p-3 font-medium">${student.name}</td><td class="p-3">Level ${student.level}</td><td class="p-3 text-center"><input type="checkbox" class="attendance-checkbox" data-id="${student.id}" ${isChecked ? 'checked' : ''}></td></tr>`;
+            }
+            html += `</tbody></table></div><div class="mt-6 flex justify-end"><button id="submitAttendanceBtn" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-2 rounded-lg shadow"><i class="fas fa-save mr-2"></i> Save Today's Attendance</button></div></div>`;
+            document.getElementById("mainContent").innerHTML = html;
+            document.getElementById("submitAttendanceBtn")?.addEventListener("click", () => {
+                const checkboxes = document.querySelectorAll('.attendance-checkbox');
+                const attendanceMap = {};
+                checkboxes.forEach(cb => { attendanceMap[cb.getAttribute('data-id')] = cb.checked; });
+                markAttendanceToday(attendanceMap);
+            });
+        }
+
         function renderDashboard() {
             let total = schoolData.students.length, pending = schoolData.students.filter(s=>s.feeStatus==="Pending").length, boarders = schoolData.students.filter(s=>s.boarding).length;
             document.getElementById("mainContent").innerHTML = `<div class="space-y-6"><h1 class="text-2xl font-bold">📊 Dashboard - ${currentUser.name}</h1><div class="grid grid-cols-1 md:grid-cols-4 gap-5"><div class="bg-white p-5 rounded-xl shadow">📚 Total Students<br><span class="text-3xl font-bold">${total}</span></div><div class="bg-white p-5 rounded-xl shadow">💰 Pending Fees<br><span class="text-2xl font-bold text-red-600">${pending}</span></div><div class="bg-white p-5 rounded-xl shadow">🏠 Boarders<br><span class="text-2xl font-bold">${boarders}</span></div><div class="bg-white p-5 rounded-xl shadow">👩‍🏫 Teachers<br><span class="text-2xl">${schoolData.teachers.length}</span></div></div></div>`;
         }
         function renderAllStudents() {
-            let html = `<div class="bg-white rounded-xl shadow p-5"><div class="flex justify-between"><h2 class="text-xl font-bold">All Students</h2>${currentUser.role === "dg_ceo" ? '<button onclick="openModal(\'addStudentModal\')" class="bg-blue-600 text-white px-4 py-2 rounded">+ Add Student</button>' : ''}</div><div class="overflow-x-auto"><table class="w-full mt-4"><thead class="bg-gray-100"><tr><th>Name</th><th>Section</th><th>Level</th><th>Fee</th><th>Attendance</th></tr></thead><tbody>${schoolData.students.map(s => `<tr class="border-b"><td class="p-2">${s.name}</td><td>${s.section}</td><td>${s.level}</td><td class="${s.feeStatus==='Paid'?'text-green-600':'text-red-600'}">${s.feeStatus}</td><td>${s.attendance}%</td></tr>`).join('')}</tbody></table></div></div>`;
+            let html = `<div class="bg-white rounded-xl shadow p-5"><div class="flex justify-between"><h2 class="text-xl font-bold">All Students</h2>${currentUser.role === "dg_ceo" ? '<button onclick="openModal(\'addStudentModal\')" class="bg-blue-600 text-white px-4 py-2 rounded">+ Add Student</button>' : ''}</div><div class="overflow-x-auto"><table class="w-full mt-4"><thead class="bg-gray-100"><tr><th>Name</th><th>Section</th><th>Level</th><th>Fee</th><th>Attendance %</th></tr></thead><tbody>${schoolData.students.map(s => `<tr class="border-b"><td class="p-2">${s.name}</td><td>${s.section}</td><td>${s.level}</td><td class="${s.feeStatus==='Paid'?'text-green-600':'text-red-600'}">${s.feeStatus}</td><td><div class="w-full bg-gray-200 rounded-full h-2.5"><div class="bg-emerald-600 h-2.5 rounded-full" style="width:${s.attendance}%"></div></div><span class="text-xs">${s.attendance}%</span></td></tr>`).join('')}</tbody></table></div></div>`;
             document.getElementById("mainContent").innerHTML = html;
         }
         function renderFeeManagement() {
@@ -345,7 +486,7 @@
         }
         function renderTeacherClass() {
             let myStudents = schoolData.students.filter(s => s.section === currentUser.assignedSection);
-            document.getElementById("mainContent").innerHTML = `<div class="bg-white p-5 rounded-xl"><h2>My Class: ${currentUser.assignedSection}</h2><table class="w-full"><thead><tr><th>Name</th><th>Islamic Grade</th><th>Attendance</th></tr></thead><tbody>${myStudents.map(s=>`<tr><td>${s.name}</td><td>${s.grades.Islamic}</td><td>${s.attendance}%</td></tr>`).join('')}</tbody></table></div>`;
+            document.getElementById("mainContent").innerHTML = `<div class="bg-white p-5 rounded-xl"><h2>My Class: ${currentUser.assignedSection}</h2><table class="w-full"><thead><tr><th>Name</th><th>Islamic Grade</th><th>Attendance %</th></tr></thead><tbody>${myStudents.map(s=>`<tr><td>${s.name}</td><td>${s.grades.Islamic}</td><td><div class="w-24 bg-gray-200 rounded-full h-2"><div class="bg-emerald-600 h-2 rounded-full" style="width:${s.attendance}%"></div></div> ${s.attendance}%</td></tr>`).join('')}</tbody></table></div>`;
         }
         function renderGradeStudents() {
             let myStudents = schoolData.students.filter(s => s.section === currentUser.assignedSection);
@@ -374,14 +515,21 @@
         }
 
         function renderContentView(view) {
-            const views = { dashboard: renderDashboard, students: renderAllStudents, fees: renderFeeManagement, boarding: renderBoarding, teachers: renderTeachers, "payment-report": renderPaymentReport, "section-students": renderHeadTeacherSection, "section-fees": renderHeadTeacherFees, "my-class": renderTeacherClass, "grade-students": renderGradeStudents, "my-children": renderParentChildren, "payment-history": renderParentPayments };
+            const views = { 
+                dashboard: renderDashboard, students: renderAllStudents, fees: renderFeeManagement, 
+                boarding: renderBoarding, teachers: renderTeachers, "payment-report": renderPaymentReport,
+                "section-students": renderHeadTeacherSection, "section-fees": renderHeadTeacherFees,
+                "my-class": renderTeacherClass, "grade-students": renderGradeStudents,
+                "my-children": renderParentChildren, "payment-history": renderParentPayments,
+                attendance: renderAttendanceView, "enroll-student": renderHeadTeacherEnroll
+            };
             (views[view] || renderDashboard)();
         }
 
         function renderNav() {
-            const labels = { dashboard:"Dashboard", students:"All Students", fees:"Fee Mgt", boarding:"Boarding", teachers:"Teachers", "payment-report":"Payments", "section-students":"My Section", "section-fees":"Section Fees", "my-class":"My Class", "grade-students":"Grade Students", "my-children":"My Children", "payment-history":"Payment History" };
+            const labels = { dashboard:"Dashboard", students:"All Students", fees:"Fee Mgt", boarding:"Boarding", teachers:"Teachers", "payment-report":"Payments", "section-students":"My Section", "section-fees":"Section Fees", "my-class":"My Class", "grade-students":"Grade Students", "my-children":"My Children", "payment-history":"Payment History", attendance:"📝 Mark Attendance", "enroll-student":"🎓 Enroll Student" };
             let items = getNavItems();
-            let html = items.map(v => `<a href="#" data-view="${v}" class="nav-link flex items-center space-x-3 px-4 py-2.5 rounded-lg text-slate-200 hover:bg-white/10 transition"><i class="fas ${v==='dashboard'?'fa-tachometer-alt':v==='students'?'fa-users':v==='fees'?'fa-coins':v==='boarding'?'fa-bed':'fa-folder'} w-5"></i><span>${labels[v]||v}</span></a>`).join('');
+            let html = items.map(v => `<a href="#" data-view="${v}" class="nav-link flex items-center space-x-3 px-4 py-2.5 rounded-lg text-slate-200 hover:bg-white/10 transition"><i class="fas ${v==='dashboard'?'fa-tachometer-alt':v==='students'?'fa-users':v==='fees'?'fa-coins':v==='boarding'?'fa-bed':v==='attendance'?'fa-check-circle':v==='enroll-student'?'fa-user-plus':'fa-folder'} w-5"></i><span>${labels[v]||v}</span></a>`).join('');
             document.getElementById("dynamicNav").innerHTML = html;
             document.querySelectorAll('.nav-link').forEach(link => {
                 link.addEventListener('click', (e) => {
@@ -401,14 +549,12 @@
             renderContentView(view);
         }
 
-        // Global UI helpers
         window.openModal = (id) => document.getElementById(id).style.display = 'flex';
         window.closeModal = (id) => document.getElementById(id).style.display = 'none';
         window.payFeeAction = payFeeAction;
-        window.addNewStudent = addNewStudent;
+        window.addNewStudentGlobal = addNewStudentGlobal;
         window.addNewTeacher = addNewTeacher;
 
-        // Time & Weather
         function updateDateTime() { let now = new Date(); if(document.getElementById('liveTime')) document.getElementById('liveTime').innerText = now.toLocaleTimeString('en-NG'); if(document.getElementById('liveDate')) document.getElementById('liveDate').innerText = now.toLocaleDateString('en-NG',{weekday:'long',year:'numeric',month:'long',day:'numeric'}); }
         setInterval(updateDateTime,1000); updateDateTime();
         if(navigator.geolocation) {
@@ -424,7 +570,6 @@
             });
         }
 
-        // App bootstrap
         function initApp() {
             generateMockData();
             const landing = document.getElementById('landingPage');
