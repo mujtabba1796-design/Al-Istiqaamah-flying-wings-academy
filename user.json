@@ -1,1 +1,44 @@
 
+{
+  "users": [
+    {
+      "id": "dg1",
+      "name": "Dr. Mahmoud DG/CEO",
+      "role": "dg_ceo",
+      "password": "any",
+      "permissions": ["all"]
+    },
+    {
+      "id": "dir1",
+      "name": "Director DAF (Finance)",
+      "role": "director",
+      "department": "DAF",
+      "password": "any",
+      "permissions": ["finance"]
+    },
+    {
+      "id": "ht1",
+      "name": "Head Teacher - Regular Islamiya",
+      "role": "headteacher",
+      "section": "Regular Islamiya",
+      "password": "any",
+      "permissions": ["manage_section"]
+    },
+    {
+      "id": "tch1",
+      "name": "Ustadh Abdur-Rahman",
+      "role": "teacher",
+      "assignedSection": "Regular Islamiya",
+      "password": "any",
+      "permissions": ["teach_section"]
+    },
+    {
+      "id": "parent1",
+      "name": "Parent Guardian",
+      "role": "parent",
+      "linkedChildren": ["STU1001", "STU1002"],
+      "password": "any",
+      "permissions": ["view_children"]
+    }
+  ]
+}
