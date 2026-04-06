@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Al‑Istiqaamah Flying Wings Academy | Integrated Portal</title>
+    <title>Al‑Istiqaamah Flying Wings Academy | Official Portal</title>
     <!-- Tailwind CSS + Font Awesome -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -62,11 +62,26 @@
             cursor: pointer;
             accent-color: #10b981;
         }
+        /* Carousel Styles */
+        .carousel-slide {
+            transition: opacity 0.5s ease-in-out;
+        }
+        .carousel-btn {
+            background: rgba(0,0,0,0.5);
+            transition: all 0.2s;
+        }
+        .carousel-btn:hover {
+            background: rgba(0,0,0,0.8);
+        }
+        .dot {
+            transition: all 0.2s;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body class="bg-gray-50">
 
-    <!-- ======================= LANDING PAGE ======================= -->
+    <!-- ======================= LANDING PAGE (Complete School Profile + Slideshow) ======================= -->
     <div id="landingPage" class="min-h-screen">
         <!-- Hero Section -->
         <div class="hero-pattern text-white relative overflow-hidden">
@@ -78,7 +93,12 @@
                             <i class="fas fa-school text-4xl text-amber-400"></i>
                             <h1 class="text-3xl md:text-4xl font-bold">Al‑Istiqaamah <span class="text-amber-300">Flying Wings Academy</span></h1>
                         </div>
-                        <p class="text-lg text-gray-200 mb-2 leading-relaxed">"The best of mankind are those who are most beneficial to humanity"</p>
+                        <!-- Motto -->
+                        <div class="bg-amber-900/30 border-l-4 border-amber-400 p-3 rounded-r-xl mb-3">
+                            <p class="text-sm italic">“The best of mankind are those who are most beneficial to humanity.”</p>
+                            <p class="text-xs text-amber-200">— Prophetic Saying (Ṣaḥīḥ al-Jāmiʿ, 3289)</p>
+                            <p class="text-sm font-semibold mt-1"><i class="fas fa-feather-alt"></i> Sub-Motto: Faith • Knowledge • Leadership</p>
+                        </div>
                         <p class="text-amber-200 text-sm mt-1"><i class="fas fa-map-marker-alt mr-1"></i> No. 10 Federal Government Layout (Behind SG), Samaru, Zaria, Kaduna State, Nigeria</p>
                         <div class="flex flex-wrap gap-4 mt-4 text-sm">
                             <span><i class="fas fa-phone-alt text-amber-300 mr-1"></i> 08067990749, 08084816590</span>
@@ -108,48 +128,100 @@
             </div>
         </div>
 
-        <!-- Mission & Vision -->
-        <div class="container mx-auto px-6 py-16">
+        <!-- ======================= PHOTO SLIDESHOW (SHOUT SLIDE SHOW) ======================= -->
+        <div class="container mx-auto px-6 py-12">
+            <div class="text-center mb-6">
+                <h2 class="text-3xl font-bold text-gray-800">📸 Our Campus <span class="text-amber-600">in Focus</span></h2>
+                <p class="text-gray-500">Glimpses of faith, learning, and community</p>
+            </div>
+            <div class="relative rounded-2xl overflow-hidden shadow-2xl bg-gray-900">
+                <!-- Slides container -->
+                <div id="slidesContainer" class="relative h-96 md:h-[500px] w-full">
+                    <!-- Slides will be injected via JS -->
+                </div>
+                <!-- Navigation Buttons -->
+                <button id="prevSlide" class="carousel-btn absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-3xl p-2 rounded-full w-10 h-10 flex items-center justify-center z-10">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button id="nextSlide" class="carousel-btn absolute right-4 top-1/2 transform -translate-y-1/2 text-white text-3xl p-2 rounded-full w-10 h-10 flex items-center justify-center z-10">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                <!-- Dots indicator -->
+                <div id="dotsContainer" class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-10"></div>
+            </div>
+        </div>
+
+        <!-- Vision & Mission -->
+        <div class="container mx-auto px-6 py-10">
             <div class="grid md:grid-cols-2 gap-10">
                 <div class="bg-white rounded-2xl shadow-xl p-8 card-hover border-t-8 border-emerald-600">
-                    <div class="text-emerald-600 text-4xl mb-4"><i class="fas fa-bullhorn"></i></div>
-                    <h2 class="text-2xl font-bold text-gray-800 mb-3">📖 Our Mission</h2>
-                    <p class="text-gray-700 leading-relaxed">Al‑Istiqaamah strives to develop an enriched learning environment that promotes academic achievement, leadership and Islamic values, nurturing learners who live by the Qur’an and the Sunnah while contributing positively to society.</p>
+                    <div class="text-emerald-600 text-4xl mb-4"><i class="fas fa-eye"></i></div>
+                    <h2 class="text-2xl font-bold text-gray-800 mb-3">🌙 Vision Statement</h2>
+                    <p class="text-gray-700 leading-relaxed italic">To cultivate a crystal community of believers and learners who embody faith, knowledge, and inspiration — becoming beacons of guidance, excellence, and service to humanity.</p>
                 </div>
                 <div class="bg-white rounded-2xl shadow-xl p-8 card-hover border-t-8 border-amber-500">
-                    <div class="text-amber-500 text-4xl mb-4"><i class="fas fa-eye"></i></div>
-                    <h2 class="text-2xl font-bold text-gray-800 mb-3">✨ Our Vision</h2>
-                    <p class="text-gray-700 leading-relaxed">To cultivate a crystal community of believers and learners who embody faith, knowledge, and inspiration — becoming beacons of guidance, excellence, and service to humanity.</p>
+                    <div class="text-amber-500 text-4xl mb-4"><i class="fas fa-bullhorn"></i></div>
+                    <h2 class="text-2xl font-bold text-gray-800 mb-3">🌿 Mission Statement</h2>
+                    <p class="text-gray-700 leading-relaxed">Al-Istiqaamah strives to develop an enriched learning environment that promotes academic achievement, leadership, and Islamic values, nurturing learners who live by the Qur’an and the Sunnah while contributing positively to society.</p>
                 </div>
             </div>
         </div>
 
-        <!-- Academic Programmes -->
+        <!-- Core Objectives (6 points) -->
         <div class="bg-gray-100 py-16">
             <div class="container mx-auto px-6">
-                <h2 class="text-3xl font-bold text-center text-gray-800 mb-4">Our <span class="text-amber-600">Holistic Programmes</span></h2>
-                <p class="text-center text-gray-600 max-w-2xl mx-auto mb-12">Tailored tracks that integrate Islamic knowledge, Qur’anic memorization, and academic excellence.</p>
-                <div class="grid md:grid-cols-3 gap-8">
-                    <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover"><div class="bg-emerald-700 p-4 text-white"><h3 class="text-xl font-bold"><i class="fas fa-quran mr-2"></i> Regular Islamiyyah (RI)</h3></div><div class="p-5"><p class="text-gray-600 text-sm mb-3">To enrich minds, souls, and bodies with authentic Qur’anic and Prophetic Knowledge.</p><div class="border-t pt-3 text-sm space-y-1"><p><i class="far fa-clock text-amber-600 w-5"></i> <strong>Timing:</strong> 4:00pm - 5:45pm (Mon - Wed)</p><p><i class="fas fa-child text-amber-600 w-5"></i> <strong>Age/Gender:</strong> From 3+ / All</p><p><i class="fas fa-book text-amber-600 w-5"></i> <strong>Subjects:</strong> Qur’an, Hadith, Fiqh, Tawhid, Seerah</p></div></div></div>
-                    <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover"><div class="bg-amber-700 p-4 text-white"><h3 class="text-xl font-bold"><i class="fas fa-mosque mr-2"></i> Regular Memorization (RM)</h3></div><div class="p-5"><p class="text-gray-600 text-sm mb-3">Foster a joyful discipline of Qur’anic memorization within a nurturing environment.</p><div class="border-t pt-3 text-sm space-y-1"><p><i class="far fa-clock text-amber-600 w-5"></i> <strong>Timing:</strong> 8:00am - 4:00pm (Sat & Sun)</p><p><i class="fas fa-child text-amber-600 w-5"></i> <strong>Age/Gender:</strong> From 3+ / All</p><p><i class="fas fa-book-open text-amber-600 w-5"></i> <strong>Focus:</strong> Qur’an, Tahdid, Tajweed</p></div></div></div>
-                    <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover"><div class="bg-amber-800 p-4 text-white"><h3 class="text-xl font-bold"><i class="fas fa-star-of-life mr-2"></i> Intensive Memorization (IM)</h3></div><div class="p-5"><p class="text-gray-600 text-sm mb-3">Develop confident leaders through mastery of Qur’an and authentic Islamic teachings.</p><div class="border-t pt-3 text-sm space-y-1"><p><i class="far fa-clock text-amber-600 w-5"></i> <strong>Timing:</strong> 8:00am - 4:00pm (Sat & Sun, excl. Fri)</p><p><i class="fas fa-child text-amber-600 w-5"></i> <strong>Age/Gender:</strong> From 5+ / specialised track</p><p><i class="fas fa-graduation-cap text-amber-600 w-5"></i> <strong>Subjects:</strong> Qur’an, Hadith, Seerah, Sciences of Qur’an</p></div></div></div>
+                <h2 class="text-3xl font-bold text-center text-gray-800 mb-4">🌸 Core <span class="text-amber-600">Objectives</span></h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+                    <div class="bg-white p-5 rounded-xl shadow-md flex gap-3"><i class="fas fa-quran text-emerald-600 text-2xl"></i><p class="text-sm">📖 Enrich minds, souls, and bodies with authentic Qur’anic and Prophetic knowledge.</p></div>
+                    <div class="bg-white p-5 rounded-xl shadow-md flex gap-3"><i class="fas fa-book-open text-emerald-600 text-2xl"></i><p class="text-sm">🎓 Foster joyful Qur’anic memorization in a nurturing Islamic environment.</p></div>
+                    <div class="bg-white p-5 rounded-xl shadow-md flex gap-3"><i class="fas fa-crown text-emerald-600 text-2xl"></i><p class="text-sm">🌟 Develop confident, principled leaders through mastery of the Qur’an.</p></div>
+                    <div class="bg-white p-5 rounded-xl shadow-md flex gap-3"><i class="fas fa-brain text-emerald-600 text-2xl"></i><p class="text-sm">⚖️ Produce balanced, forward-thinking Qur’anic scholars for modern challenges.</p></div>
+                    <div class="bg-white p-5 rounded-xl shadow-md flex gap-3"><i class="fas fa-chalkboard-user text-emerald-600 text-2xl"></i><p class="text-sm">📚 Prepare young adults for the Islamic teaching profession with integrity.</p></div>
+                    <div class="bg-white p-5 rounded-xl shadow-md flex gap-3"><i class="fas fa-female text-emerald-600 text-2xl"></i><p class="text-sm">👩‍🏫 Empower women through Islamic education as mentors and nurturers.</p></div>
                 </div>
             </div>
         </div>
 
-        <!-- Admission Overview -->
+        <!-- Core Values -->
         <div class="container mx-auto px-6 py-16">
-            <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
-                <div class="bg-gradient-to-r from-slate-800 to-slate-700 p-6 text-white"><h2 class="text-2xl font-bold"><i class="fas fa-file-alt mr-2"></i> Admission & Registration Overview</h2></div>
-                <div class="p-6 md:p-8">
-                    <div class="grid md:grid-cols-2 gap-8">
-                        <div><h3 class="font-bold text-lg text-emerald-700"><i class="fas fa-user-graduate"></i> Applicant Info</h3><ul class="list-disc pl-5 text-gray-600 text-sm space-y-1"><li>Full name, gender, date of birth, nationality</li><li>Previous school & last class completed</li><li>Special education needs (if any)</li></ul><h3 class="font-bold text-lg text-emerald-700 mt-4"><i class="fas fa-heartbeat"></i> Health & Parent Info</h3><ul class="list-disc pl-5 text-gray-600 text-sm"><li>Blood group, allergies, immunization status</li><li>Father/Mother/Guardian contacts</li></ul></div>
-                        <div><h3 class="font-bold text-lg text-amber-700"><i class="fas fa-hands-praying"></i> Religious & Boarding</h3><ul class="list-disc pl-5 text-gray-600 text-sm"><li>Qur’an reading ability, memorization level</li><li>Boarding or day student, bus pick‑up point</li><li>Parent/Guardian declaration</li></ul><h3 class="font-bold text-lg text-amber-700 mt-4"><i class="fas fa-paperclip"></i> Required Attachments</h3><ul class="list-disc pl-5 text-gray-600 text-sm"><li>Birth Certificate, previous school report</li><li>Medical report, 2 passport photos</li></ul></div>
-                    </div>
+            <div class="bg-gradient-to-r from-emerald-800 to-emerald-900 rounded-2xl shadow-xl p-8 text-white">
+                <h2 class="text-3xl font-bold text-center mb-8">🌿 Core Values</h2>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 text-center">
+                    <div><i class="fas fa-praying-hands text-3xl text-amber-300 mb-2 block"></i><span class="font-bold">Taqwā</span><p class="text-xs">God-consciousness</p></div>
+                    <div><i class="fas fa-graduation-cap text-3xl text-amber-300 mb-2 block"></i><span class="font-bold">ʿIlm</span><p class="text-xs">Knowledge with sincerity</p></div>
+                    <div><i class="fas fa-heart text-3xl text-amber-300 mb-2 block"></i><span class="font-bold">Ikhlāṣ</span><p class="text-xs">Sincerity for Allah</p></div>
+                    <div><i class="fas fa-handshake text-3xl text-amber-300 mb-2 block"></i><span class="font-bold">Akhlaq</span><p class="text-xs">Good character</p></div>
+                    <div><i class="fas fa-shield-alt text-3xl text-amber-300 mb-2 block"></i><span class="font-bold">Amānah</span><p class="text-xs">Trustworthiness</p></div>
+                    <div><i class="fas fa-users text-3xl text-amber-300 mb-2 block"></i><span class="font-bold">Leadership</span><p class="text-xs">Service & humility</p></div>
                 </div>
             </div>
         </div>
 
+        <!-- Section Commitments (Detailed) -->
+        <div class="bg-gray-100 py-16">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">🌺 Our <span class="text-amber-600">Section Commitments</span></h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover"><div class="bg-emerald-700 p-4 text-white"><h3 class="text-xl font-bold"><i class="fas fa-quran mr-2"></i> Islamiyyah Section</h3></div><div class="p-5"><p class="text-gray-700 text-sm">To enrich minds, souls, and bodies with authentic Qur’anic and Prophetic knowledge that inspires faith, strengthens moral character, and equips learners to apply Islamic principles in daily life.</p></div></div>
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover"><div class="bg-amber-700 p-4 text-white"><h3 class="text-xl font-bold"><i class="fas fa-mosque mr-2"></i> Regular Memorization</h3></div><div class="p-5"><p class="text-gray-700 text-sm">To foster a joyful and disciplined culture of Qur’anic memorization within a nurturing and secure Islamic environment that promotes respect, compassion, and excellence.</p></div></div>
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover"><div class="bg-amber-800 p-4 text-white"><h3 class="text-xl font-bold"><i class="fas fa-star-of-life mr-2"></i> Intensive Memorization</h3></div><div class="p-5"><p class="text-gray-700 text-sm">To develop young learners into confident, principled leaders through mastery of the Qur’an, understanding of authentic Islamic teachings, and the sincere practice of Islamic values in society.</p></div></div>
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover"><div class="bg-teal-700 p-4 text-white"><h3 class="text-xl font-bold"><i class="fas fa-chalkboard mr-2"></i> Integrated Islamic-based</h3></div><div class="p-5"><p class="text-gray-700 text-sm">To produce balanced, forward-thinking Qur’anic scholars who are spiritually grounded, intellectually capable, and physically strong — prepared to meet modern challenges through an integrated Islamic educational system.</p></div></div>
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover"><div class="bg-indigo-700 p-4 text-white"><h3 class="text-xl font-bold"><i class="fas fa-rocket mr-2"></i> Advance Section</h3></div><div class="p-5"><p class="text-gray-700 text-sm">To prepare young adults for the Islamic teaching profession by nurturing in them the virtues, discipline, and integrity needed to serve as role models and educators within the Ummah.</p></div></div>
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover"><div class="bg-pink-700 p-4 text-white"><h3 class="text-xl font-bold"><i class="fas fa-female mr-2"></i> Women Section</h3></div><div class="p-5"><p class="text-gray-700 text-sm">To empower women through Islamic education so they become enlightened teachers, mentors, and nurturers who uphold knowledge, virtue, and service to humanity.</p></div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Our Commitment Statement -->
+        <div class="container mx-auto px-6 py-12">
+            <div class="bg-emerald-50 rounded-2xl p-8 text-center border border-emerald-200">
+                <i class="fas fa-leaf text-5xl text-emerald-600 mb-3"></i>
+                <p class="text-gray-800 italic max-w-3xl mx-auto">"At Al-Istiqaamah, we strive to nurture hearts that love Allah, minds that seek beneficial knowledge, and hands that serve humanity — all guided by the light of the Noble Qur’an and the Sunnah of the Prophet ﷺ."</p>
+                <p class="mt-3 font-semibold text-emerald-700">— Our Commitment</p>
+            </div>
+        </div>
+
+        <!-- Admission CTA -->
         <div class="bg-emerald-900 text-white py-12 text-center"><div class="container mx-auto px-6"><h2 class="text-3xl font-bold mb-3">Begin Your Child's Journey of Faith & Excellence</h2><p class="mb-6">Admissions open for all tracks. Contact our admission office for prospectus.</p><div class="flex flex-wrap justify-center gap-4"><a href="tel:08067990749" class="bg-amber-500 hover:bg-amber-600 text-gray-900 px-6 py-3 rounded-full inline-flex gap-2"><i class="fas fa-phone-alt"></i> Call Us</a><button id="loginBtnFooter" class="border-2 border-amber-400 hover:bg-amber-400 hover:text-gray-900 px-6 py-3 rounded-full font-semibold"><i class="fas fa-chalkboard-user"></i> Staff Dashboard</button></div></div></div>
         <footer class="bg-slate-900 text-gray-400 py-8 text-center text-sm"><p>© 2025 Al‑Istiqaamah Flying Wings Academy — No. 10 Federal Government Layout, Samaru, Zaria, Kaduna State. RC: 1983033</p></footer>
     </div>
@@ -160,11 +232,7 @@
             <div class="text-center mb-4"><i class="fas fa-dove text-5xl text-amber-600"></i><h2 class="text-2xl font-bold">Staff / Parent Login</h2><p class="text-xs text-gray-500">Demo: any non-empty password</p></div>
             <form id="loginForm">
                 <div><label class="font-medium">Role</label><select id="loginRole" class="w-full border rounded-lg p-2 mb-3">
-                    <option value="dg_ceo">DG/CEO</option>
-                    <option value="director">Director (DAF/DRPA)</option>
-                    <option value="headteacher">Head Teacher</option>
-                    <option value="teacher">Teacher</option>
-                    <option value="parent">Parent</option>
+                    <option value="dg_ceo">DG/CEO</option><option value="director">Director (DAF/DRPA)</option><option value="headteacher">Head Teacher</option><option value="teacher">Teacher</option><option value="parent">Parent</option>
                 </select></div>
                 <div><label class="font-medium">Username / Email</label><input type="text" id="loginUsername" class="w-full border rounded-lg p-2 mb-3" placeholder="any text"></div>
                 <div><label class="font-medium">Password</label><input type="password" id="loginPassword" class="w-full border rounded-lg p-2 mb-4" placeholder="any password"></div>
@@ -187,174 +255,135 @@
         <main class="flex-1 overflow-auto bg-gray-100 p-6" id="mainContent"></main>
     </div>
 
-    <!-- MODALS for add student/teacher (keep for DG/CEO) but headteacher will use inline form -->
+    <!-- MODALS for add student/teacher -->
     <div id="addStudentModal" class="modal" style="display: none;"><div class="modal-content"><span onclick="closeModal('addStudentModal')" class="close">&times;</span><h2 class="text-2xl font-bold mb-4">Enroll New Student</h2><input type="text" id="newStudentName" placeholder="Full Name" class="w-full border rounded-xl p-2 mb-2"><select id="newStudentSection" class="w-full border rounded-xl p-2 mb-2"><option value="Regular Islamiya">Regular Islamiya</option><option value="Regular Memorization">Regular Memorization</option><option value="Intensive Program">Intensive Program</option><option value="Islamic Integration">Islamic Integration</option><option value="Advanced Class">Advanced Class</option><option value="Women Class">Women Class</option></select><input type="number" id="newStudentLevel" placeholder="Level (1-6)" class="w-full border rounded-xl p-2 mb-2"><select id="newPaymentStatus" class="w-full border rounded-xl p-2 mb-2"><option value="Paid">Paid</option><option value="Pending">Pending</option></select><select id="newBoardingStatus" class="w-full border rounded-xl p-2 mb-2"><option value="false">Day Scholar</option><option value="true">Boarder</option></select><button onclick="addNewStudentGlobal()" class="w-full bg-blue-600 text-white py-2 rounded-xl">Register</button></div></div>
-    <div id="addTeacherModal" class="modal" style="display: none;"><div class="modal-content"><span onclick="closeModal('addTeacherModal')" class="close">&times;</span><h2 class="text-2xl font-bold mb-4">Add Teacher</h2><input type="text" id="newTeacherName" placeholder="Teacher Name" class="w-full border rounded-xl p-2 mb-2"><input type="text" id="newTeacherSection" placeholder="Section (e.g., Regular Islamiya)" class="w-full border rounded-xl p-2 mb-2"><input type="text" id="newTeacherSubject" placeholder="Subject" class="w-full border rounded-xl p-2 mb-2"><button onclick="addNewTeacher()" class="w-full bg-teal-600 text-white py-2 rounded-xl">Add Faculty</button></div></div>
+    <div id="addTeacherModal" class="modal" style="display: none;"><div class="modal-content"><span onclick="closeModal('addTeacherModal')" class="close">&times;</span><h2 class="text-2xl font-bold mb-4">Add Teacher</h2><input type="text" id="newTeacherName" placeholder="Teacher Name" class="w-full border rounded-xl p-2 mb-2"><input type="text" id="newTeacherSection" placeholder="Section" class="w-full border rounded-xl p-2 mb-2"><input type="text" id="newTeacherSubject" placeholder="Subject" class="w-full border rounded-xl p-2 mb-2"><button onclick="addNewTeacher()" class="w-full bg-teal-600 text-white py-2 rounded-xl">Add Faculty</button></div></div>
 
     <script>
-        // ======================= GLOBAL DATA =======================
+        // ======================= SLIDESHOW IMPLEMENTATION =======================
+        const slidesData = [
+            { url: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200&h=500&fit=crop", caption: "📚 Modern Classrooms & Interactive Learning" },
+            { url: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&h=500&fit=crop", caption: "🧕 Girls' Islamic Education & Empowerment" },
+            { url: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=1200&h=500&fit=crop", caption: "🕌 Qur’an Memorization Circles" },
+            { url: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1200&h=500&fit=crop", caption: "👩‍🏫 Dedicated Teachers & Mentors" },
+            { url: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1200&h=500&fit=crop", caption: "🎓 Graduation & Leadership Ceremonies" }
+        ];
+        let currentIndex = 0;
+        let slideInterval;
+
+        function buildSlideshow() {
+            const container = document.getElementById('slidesContainer');
+            const dotsContainer = document.getElementById('dotsContainer');
+            if (!container) return;
+            container.innerHTML = '';
+            dotsContainer.innerHTML = '';
+            slidesData.forEach((slide, idx) => {
+                const slideDiv = document.createElement('div');
+                slideDiv.className = `carousel-slide absolute inset-0 w-full h-full transition-opacity duration-500 ${idx === currentIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'}`;
+                slideDiv.style.backgroundImage = `linear-gradient(0deg, rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url('${slide.url}')`;
+                slideDiv.style.backgroundSize = 'cover';
+                slideDiv.style.backgroundPosition = 'center';
+                const captionDiv = document.createElement('div');
+                captionDiv.className = 'absolute bottom-0 left-0 right-0 bg-black/60 text-white p-4 text-center text-lg md:text-xl font-semibold';
+                captionDiv.innerText = slide.caption;
+                slideDiv.appendChild(captionDiv);
+                container.appendChild(slideDiv);
+                // Dot
+                const dot = document.createElement('button');
+                dot.className = `dot w-3 h-3 rounded-full mx-1 ${idx === currentIndex ? 'bg-amber-400 w-4' : 'bg-white/60'}`;
+                dot.setAttribute('data-index', idx);
+                dot.addEventListener('click', () => goToSlide(idx));
+                dotsContainer.appendChild(dot);
+            });
+        }
+
+        function goToSlide(index) {
+            if (index < 0) index = slidesData.length - 1;
+            if (index >= slidesData.length) index = 0;
+            const slides = document.querySelectorAll('#slidesContainer .carousel-slide');
+            const dots = document.querySelectorAll('#dotsContainer .dot');
+            if (!slides.length) return;
+            slides[currentIndex].classList.remove('opacity-100', 'z-10');
+            slides[currentIndex].classList.add('opacity-0', 'z-0');
+            slides[index].classList.remove('opacity-0', 'z-0');
+            slides[index].classList.add('opacity-100', 'z-10');
+            if (dots[currentIndex]) dots[currentIndex].classList.remove('bg-amber-400', 'w-4');
+            if (dots[currentIndex]) dots[currentIndex].classList.add('bg-white/60');
+            if (dots[index]) dots[index].classList.remove('bg-white/60');
+            if (dots[index]) dots[index].classList.add('bg-amber-400', 'w-4');
+            currentIndex = index;
+            resetAutoSlide();
+        }
+
+        function nextSlide() { goToSlide(currentIndex + 1); }
+        function prevSlide() { goToSlide(currentIndex - 1); }
+        function resetAutoSlide() {
+            if (slideInterval) clearInterval(slideInterval);
+            slideInterval = setInterval(() => nextSlide(), 5000);
+        }
+
+        // ======================= GLOBAL DATA & FUNCTIONS (Dashboard, Attendance, Enroll) =======================
         let schoolData = {
-            students: [],
-            feeTransactions: [],
-            teachers: [],
-            attendanceRecords: [],
+            students: [], feeTransactions: [], teachers: [], attendanceRecords: [],
             boarderDorms: { "Al-Furqan Hall": { capacity: 45, occupied: 0 }, "Al-Hikmah Dorm": { capacity: 35, occupied: 0 }, "Nur Women Hostel": { capacity: 30, occupied: 0 } }
         };
         let currentUser = null;
-
         const usersDatabase = [
-            { id: "dg1", name: "Dr. Mahmoud DG/CEO", role: "dg_ceo", password: "any", permissions: ["all"] },
-            { id: "dir1", name: "Director DAF (Finance)", role: "director", department: "DAF", password: "any" },
+            { id: "dg1", name: "Dr. Mahmoud DG/CEO", role: "dg_ceo", password: "any" },
+            { id: "dir1", name: "Director DAF", role: "director", password: "any" },
             { id: "ht1", name: "Head Teacher - Regular Islamiya", role: "headteacher", section: "Regular Islamiya", password: "any" },
-            { id: "ht2", name: "Head Teacher - Regular Memorization", role: "headteacher", section: "Regular Memorization", password: "any" },
             { id: "tch1", name: "Ustadh Abdur-Rahman", role: "teacher", assignedSection: "Regular Islamiya", password: "any" },
-            { id: "parent1", name: "Fatima Abdullah (Parent)", role: "parent", linkedChildren: ["STU1001", "STU1003"], password: "any" }
+            { id: "parent1", name: "Parent Guardian", role: "parent", linkedChildren: ["STU1001"], password: "any" }
         ];
 
         function updateDormOccupancy() {
             let boarders = schoolData.students.filter(s => s.boarding);
             let halls = Object.keys(schoolData.boarderDorms);
-            halls.forEach((hall, idx) => { 
-                let allot = Math.floor(boarders.length / halls.length) + (idx < boarders.length % halls.length ? 1 : 0); 
-                schoolData.boarderDorms[hall].occupied = Math.min(allot, schoolData.boarderDorms[hall].capacity); 
-            });
+            halls.forEach((hall, idx) => { let allot = Math.floor(boarders.length / halls.length) + (idx < boarders.length % halls.length ? 1 : 0); schoolData.boarderDorms[hall].occupied = Math.min(allot, schoolData.boarderDorms[hall].capacity); });
         }
-
         function updateStudentAttendancePercent(studentId) {
             const records = schoolData.attendanceRecords.filter(r => r.studentId === studentId);
-            const total = records.length;
             const present = records.filter(r => r.status === 'present').length;
-            const percent = total === 0 ? 0 : Math.round((present / total) * 100);
+            const percent = records.length === 0 ? 0 : Math.round((present / records.length) * 100);
             const student = schoolData.students.find(s => s.id === studentId);
             if (student) student.attendance = percent;
         }
-
-        function markAttendanceToday(attendanceMap) {
-            const today = new Date().toISOString().slice(0,10);
-            const teacherSection = currentUser.assignedSection;
-            const studentsInSection = schoolData.students.filter(s => s.section === teacherSection);
-            schoolData.attendanceRecords = schoolData.attendanceRecords.filter(rec => {
-                const student = schoolData.students.find(s => s.id === rec.studentId);
-                return !(student && student.section === teacherSection && rec.date === today);
-            });
-            for (let student of studentsInSection) {
-                const status = attendanceMap[student.id] ? 'present' : 'absent';
-                schoolData.attendanceRecords.push({ studentId: student.id, date: today, status: status });
-            }
-            studentsInSection.forEach(s => updateStudentAttendancePercent(s));
-            alert(`✅ Attendance recorded for ${studentsInSection.length} students (${today})`);
-            refreshCurrentView();
-        }
-
         function generateMockData() {
             const sections = ["Regular Islamiya", "Regular Memorization", "Intensive Program", "Islamic Integration", "Advanced Class", "Women Class"];
-            let students = [];
-            let idCounter = 1001;
+            let students = [], idCounter = 1001;
             for (let sec of sections) {
-                let levels = (sec === "Advanced Class") ? 2 : (sec === "Intensive Program" ? 2 : 4);
+                let levels = (sec === "Advanced Class") ? 2 : 4;
                 for (let lvl = 1; lvl <= levels; lvl++) {
-                    let count = sec.includes("Women") ? 3 : 6;
+                    let count = sec.includes("Women") ? 3 : 5;
                     for (let i = 1; i <= count; i++) {
-                        let names = ["Aisha", "Hafsa", "Zayd", "Ibrahim", "Maryam", "Yusuf", "Khadija", "Abdullah"];
-                        let name = names[(idCounter % names.length)] + ` ${sec.substring(0,3)}${lvl}`;
-                        let boarding = (sec === "Intensive Program" && lvl === 2) ? Math.random() > 0.6 : false;
-                        let feeStatus = Math.random() > 0.3 ? "Paid" : "Pending";
-                        students.push({
-                            id: `STU${idCounter++}`, name, section: sec, level: lvl, classLabel: `${sec} L${lvl}`,
-                            boarding: boarding, feeStatus: feeStatus, attendance: 75,
-                            parentContact: "+23480XXXX", grades: { Math: 55+Math.floor(Math.random()*40), English: 60+Math.random()*35, Islamic: 70+Math.random()*28 }
-                        });
+                        let name = `Student ${sec.substring(0,3)}${lvl}-${i}`;
+                        students.push({ id: `STU${idCounter++}`, name, section: sec, level: lvl, boarding: Math.random() > 0.7, feeStatus: Math.random() > 0.3 ? "Paid" : "Pending", attendance: 70 + Math.floor(Math.random() * 25), grades: { Islamic: 75 + Math.floor(Math.random() * 20) } });
                     }
                 }
             }
             schoolData.students = students;
-            const today = new Date().toISOString().slice(0,10);
             for (let i = 1; i <= 10; i++) {
-                let date = new Date();
-                date.setDate(date.getDate() - i);
+                let date = new Date(); date.setDate(date.getDate() - i);
                 let dateStr = date.toISOString().slice(0,10);
-                for (let student of students) {
-                    let isPresent = Math.random() > 0.2;
-                    schoolData.attendanceRecords.push({ studentId: student.id, date: dateStr, status: isPresent ? 'present' : 'absent' });
-                }
+                students.forEach(s => { schoolData.attendanceRecords.push({ studentId: s.id, date: dateStr, status: Math.random() > 0.2 ? 'present' : 'absent' }); });
             }
             students.forEach(s => updateStudentAttendancePercent(s));
-            schoolData.teachers = [
-                { empId: "TCH001", name: "Ustadh Abdur-Rahman", section: "Regular Islamiya", subject: "Quran/Tajweed", rating: "Excellent" },
-                { empId: "TCH002", name: "Ustadha Khadija", section: "Women Class", subject: "Fiqh", rating: "Excellent" },
-                { empId: "TCH003", name: "Mawlana Yusuf", section: "Regular Memorization", subject: "Tahfeez", rating: "Satisfactory" },
-                { empId: "TCH004", name: "Dr. Amina", section: "Islamic Integration", subject: "Seerah", rating: "Good" }
-            ];
-            schoolData.feeTransactions = schoolData.students.filter(s => s.feeStatus === "Paid").slice(0, 15).map(s => ({ 
-                id: "TRX"+Date.now()+Math.random(), studentId: s.id, studentName: s.name, date: new Date().toISOString().slice(0,10), amount: 25000, receiptId: "REC"+Math.random() 
-            }));
+            schoolData.teachers = [{ empId: "TCH001", name: "Ustadh Abdur-Rahman", section: "Regular Islamiya", subject: "Quran", rating: "Excellent" }];
+            schoolData.feeTransactions = students.filter(s => s.feeStatus === "Paid").slice(0,10).map(s => ({ id: "TRX"+Math.random(), studentId: s.id, studentName: s.name, date: new Date().toISOString().slice(0,10), amount: 25000 }));
             updateDormOccupancy();
         }
-
-        function payFeeAction(studentId) {
-            let s = schoolData.students.find(s => s.id === studentId);
-            if (s && s.feeStatus !== "Paid") {
-                s.feeStatus = "Paid";
-                schoolData.feeTransactions.push({ 
-                    id: "TRX"+Date.now(), studentId: s.id, studentName: s.name, 
-                    date: new Date().toISOString().slice(0,10), amount: 25000, receiptId: "REC"+Date.now() 
-                });
-                alert("✅ Payment recorded successfully!");
-                refreshCurrentView();
-            } else if(s) alert("Fee already paid or invalid.");
-            else alert("Student not found.");
-        }
-
-        // Unified student enrollment (used by both DG/CEO modal and headteacher form)
         function addStudentLogic(name, section, level, payment, boarding) {
-            if(!name || isNaN(level) || level < 1 || level > 6) { alert("Please fill valid name and level (1-6)"); return false; }
-            let newStu = { 
-                id: `STU${Date.now()}`, name, section, level, classLabel: `${section} L${level}`, 
-                boarding, feeStatus: payment, attendance: 0, parentContact: "+234", 
-                grades: { Math: 70, English: 75, Islamic: 85 } 
-            };
+            if(!name || isNaN(level) || level < 1 || level > 6) { alert("Valid name & level 1-6"); return false; }
+            let newStu = { id: `STU${Date.now()}`, name, section, level, boarding, feeStatus: payment, attendance: 0, grades: { Islamic: 75 } };
             schoolData.students.push(newStu);
-            if(payment === "Paid") payFeeAction(newStu.id);
             updateDormOccupancy();
-            alert(`Student ${name} enrolled successfully in ${section}!`);
+            alert(`Student ${name} enrolled in ${section}`);
             return true;
         }
-
-        function addNewStudentGlobal() {
-            let name = document.getElementById('newStudentName').value;
-            let section = document.getElementById('newStudentSection').value;
-            let level = parseInt(document.getElementById('newStudentLevel').value);
-            let payment = document.getElementById('newPaymentStatus').value;
-            let boarding = document.getElementById('newBoardingStatus').value === 'true';
-            if(addStudentLogic(name, section, level, payment, boarding)) {
-                closeModal('addStudentModal');
-                refreshCurrentView();
-            }
-        }
-
-        function addNewTeacher() {
-            let name = document.getElementById('newTeacherName').value;
-            let section = document.getElementById('newTeacherSection').value;
-            let subject = document.getElementById('newTeacherSubject').value;
-            if(!name) { alert("Teacher name required"); return; }
-            schoolData.teachers.push({ empId: `TCH${Date.now()}`, name, section: section || "General", subject: subject || "Islamic Studies", rating: "Good" });
-            closeModal('addTeacherModal');
-            refreshCurrentView();
-            alert("Teacher added successfully");
-        }
-
-        function handleLogin(role, username, pwd) {
-            const user = usersDatabase.find(u => u.role === role);
-            if (user && pwd && pwd.trim() !== "") {
-                currentUser = { ...user, role: user.role };
-                if(role === "teacher") currentUser.assignedSection = user.assignedSection || "Regular Islamiya";
-                if(role === "headteacher") currentUser.section = user.section || "Regular Islamiya";
-                return true;
-            }
-            return false;
-        }
-
-        // Navigation: Headteacher now gets "enroll-student" tab
+        function addNewStudentGlobal() { let n=document.getElementById('newStudentName').value, s=document.getElementById('newStudentSection').value, l=parseInt(document.getElementById('newStudentLevel').value), p=document.getElementById('newPaymentStatus').value, b=document.getElementById('newBoardingStatus').value==='true'; if(addStudentLogic(n,s,l,p,b)) { closeModal('addStudentModal'); refreshCurrentView(); } }
+        function addNewTeacher() { let name=document.getElementById('newTeacherName').value; if(name) { schoolData.teachers.push({ empId:"TCH"+Date.now(), name, section:"General", subject:"Islamic", rating:"Good" }); closeModal('addTeacherModal'); refreshCurrentView(); alert("Teacher added"); } }
+        function payFeeAction(studentId) { let s = schoolData.students.find(s=>s.id===studentId); if(s && s.feeStatus !== "Paid") { s.feeStatus="Paid"; schoolData.feeTransactions.push({ id:"TRX"+Date.now(), studentId:s.id, studentName:s.name, date:new Date().toISOString().slice(0,10), amount:25000 }); alert("Payment recorded"); refreshCurrentView(); } else alert("Already paid or invalid"); }
+        function handleLogin(role, uname, pwd) { let user = usersDatabase.find(u => u.role === role); if(user && pwd && pwd.trim() !== "") { currentUser = { ...user, role: user.role }; if(role === "headteacher") currentUser.section = user.section || "Regular Islamiya"; if(role === "teacher") currentUser.assignedSection = user.assignedSection || "Regular Islamiya"; return true; } return false; }
         function getNavItems() {
             if(currentUser.role === "dg_ceo") return ["dashboard","students","fees","boarding","teachers","payment-report"];
             if(currentUser.role === "director") return ["dashboard","fees","teachers"];
@@ -363,241 +392,72 @@
             if(currentUser.role === "parent") return ["my-children","payment-history"];
             return ["dashboard"];
         }
-
-        // ========== HEADTEACHER ENROLL STUDENT VIEW ==========
-        function renderHeadTeacherEnroll() {
-            const mySection = currentUser.section;
-            const html = `
-                <div class="bg-white rounded-xl shadow p-6 max-w-2xl mx-auto">
-                    <div class="flex items-center gap-3 mb-6 border-b pb-3">
-                        <i class="fas fa-user-plus text-3xl text-emerald-600"></i>
-                        <h2 class="text-2xl font-bold">Enroll New Student - ${mySection}</h2>
-                    </div>
-                    <form id="headTeacherEnrollForm">
-                        <div class="mb-4">
-                            <label class="block font-semibold mb-1">Full Name *</label>
-                            <input type="text" id="htStudentName" class="w-full border rounded-lg p-2" placeholder="e.g., Amina Bello">
-                        </div>
-                        <div class="mb-4">
-                            <label class="block font-semibold mb-1">Section (Auto-locked to your section)</label>
-                            <input type="text" value="${mySection}" disabled class="w-full bg-gray-100 border rounded-lg p-2">
-                            <input type="hidden" id="htStudentSection" value="${mySection}">
-                        </div>
-                        <div class="mb-4">
-                            <label class="block font-semibold mb-1">Level (1-6) *</label>
-                            <input type="number" id="htStudentLevel" min="1" max="6" class="w-full border rounded-lg p-2">
-                        </div>
-                        <div class="mb-4">
-                            <label class="block font-semibold mb-1">Fee Status</label>
-                            <select id="htPaymentStatus" class="w-full border rounded-lg p-2">
-                                <option value="Pending">Pending</option>
-                                <option value="Paid">Paid</option>
-                            </select>
-                        </div>
-                        <div class="mb-4">
-                            <label class="block font-semibold mb-1">Boarding Status</label>
-                            <select id="htBoardingStatus" class="w-full border rounded-lg p-2">
-                                <option value="false">Day Scholar</option>
-                                <option value="true">Boarder</option>
-                            </select>
-                        </div>
-                        <div class="flex justify-end gap-3 mt-6">
-                            <button type="button" id="cancelEnrollBtn" class="px-4 py-2 border rounded-lg text-gray-600">Cancel</button>
-                            <button type="submit" class="bg-emerald-600 text-white px-6 py-2 rounded-lg shadow hover:bg-emerald-700">✅ Register Student</button>
-                        </div>
-                    </form>
-                </div>
-            `;
+        function renderHeadTeacherEnroll() { 
+            let section = currentUser.section;
+            let html = `<div class="bg-white p-6 rounded-xl max-w-2xl mx-auto"><h2 class="text-2xl font-bold mb-4"><i class="fas fa-user-plus text-emerald-600"></i> Enroll Student - ${section}</h2><form id="htForm"><div class="mb-3"><label>Full Name</label><input id="htName" class="w-full border p-2 rounded"></div><div class="mb-3"><label>Level (1-6)</label><input id="htLevel" type="number" class="w-full border p-2 rounded"></div><div class="mb-3"><label>Fee Status</label><select id="htFee" class="w-full border p-2 rounded"><option>Pending</option><option>Paid</option></select></div><div class="mb-3"><label>Boarding</label><select id="htBoard" class="w-full border p-2 rounded"><option value="false">Day</option><option value="true">Boarder</option></select></div><button type="submit" class="bg-emerald-600 text-white px-4 py-2 rounded">Register</button></form></div>`;
             document.getElementById("mainContent").innerHTML = html;
-            document.getElementById("headTeacherEnrollForm").addEventListener("submit", (e) => {
-                e.preventDefault();
-                const name = document.getElementById("htStudentName").value;
-                const section = document.getElementById("htStudentSection").value;
-                const level = parseInt(document.getElementById("htStudentLevel").value);
-                const payment = document.getElementById("htPaymentStatus").value;
-                const boarding = document.getElementById("htBoardingStatus").value === 'true';
-                if(addStudentLogic(name, section, level, payment, boarding)) {
-                    document.getElementById("headTeacherEnrollForm").reset();
-                    refreshCurrentView();
-                }
-            });
-            document.getElementById("cancelEnrollBtn").addEventListener("click", () => {
-                renderContentView("section-students");
-            });
+            document.getElementById("htForm").addEventListener("submit", (e) => { e.preventDefault(); let name = document.getElementById("htName").value, level = parseInt(document.getElementById("htLevel").value), fee = document.getElementById("htFee").value, board = document.getElementById("htBoard").value === 'true'; if(addStudentLogic(name, section, level, fee, board)) refreshCurrentView(); });
         }
-
-        // Attendance and other views (keep existing)
         function renderAttendanceView() {
-            const teacherSection = currentUser.assignedSection;
-            const students = schoolData.students.filter(s => s.section === teacherSection);
-            const today = new Date().toISOString().slice(0,10);
-            const todayRecords = schoolData.attendanceRecords.filter(r => r.date === today);
-            const attendanceStatus = {};
-            for (let rec of todayRecords) attendanceStatus[rec.studentId] = rec.status === 'present';
-            let html = `<div class="bg-white rounded-xl shadow p-6"><div class="flex justify-between items-center mb-4"><h2 class="text-2xl font-bold">📋 Mark Attendance - ${teacherSection}</h2><span class="text-sm text-gray-500"><i class="far fa-calendar-alt"></i> ${today}</span></div><p class="text-gray-600 mb-4">Tick the checkbox for students <strong>PRESENT</strong> today. Unticked = Absent.</p><div class="overflow-x-auto"><table class="w-full border-collapse"><thead class="bg-gray-100"><tr><th class="p-3 text-left">Student Name</th><th class="p-3 text-left">Level</th><th class="p-3 text-center">Present ✅</th></tr></thead><tbody>`;
-            for (let student of students) {
-                const isChecked = attendanceStatus[student.id] === true;
-                html += `<tr class="border-b hover:bg-gray-50"><td class="p-3 font-medium">${student.name}</td><td class="p-3">Level ${student.level}</td><td class="p-3 text-center"><input type="checkbox" class="attendance-checkbox" data-id="${student.id}" ${isChecked ? 'checked' : ''}></td></tr>`;
-            }
-            html += `</tbody></table></div><div class="mt-6 flex justify-end"><button id="submitAttendanceBtn" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-2 rounded-lg shadow"><i class="fas fa-save mr-2"></i> Save Today's Attendance</button></div></div>`;
+            let students = schoolData.students.filter(s => s.section === currentUser.assignedSection);
+            let today = new Date().toISOString().slice(0,10);
+            let existing = schoolData.attendanceRecords.filter(r => r.date === today);
+            let statusMap = {}; existing.forEach(r => statusMap[r.studentId] = r.status === 'present');
+            let html = `<div class="bg-white p-5 rounded-xl"><h2 class="text-xl font-bold">Mark Attendance - ${currentUser.assignedSection}</h2><table class="w-full mt-3"><thead><tr><th>Name</th><th>Present</th></tr></thead><tbody>${students.map(s => `<tr><td>${s.name}</td><td class="text-center"><input type="checkbox" class="att-check" data-id="${s.id}" ${statusMap[s.id] ? 'checked' : ''}></td></tr>`).join('')}</tbody>}消费<button id="saveAttBtn" class="mt-4 bg-emerald-600 text-white px-4 py-2 rounded">Save Attendance</button></div>`;
             document.getElementById("mainContent").innerHTML = html;
-            document.getElementById("submitAttendanceBtn")?.addEventListener("click", () => {
-                const checkboxes = document.querySelectorAll('.attendance-checkbox');
-                const attendanceMap = {};
-                checkboxes.forEach(cb => { attendanceMap[cb.getAttribute('data-id')] = cb.checked; });
-                markAttendanceToday(attendanceMap);
+            document.getElementById("saveAttBtn")?.addEventListener("click", () => {
+                let checks = document.querySelectorAll(".att-check");
+                let map = {}; checks.forEach(cb => map[cb.dataset.id] = cb.checked);
+                schoolData.attendanceRecords = schoolData.attendanceRecords.filter(r => !(r.date === today && students.some(s => s.id === r.studentId)));
+                for(let s of students) { schoolData.attendanceRecords.push({ studentId: s.id, date: today, status: map[s.id] ? 'present' : 'absent' }); }
+                students.forEach(s => updateStudentAttendancePercent(s));
+                alert("Attendance saved"); refreshCurrentView();
             });
         }
-
-        function renderDashboard() {
-            let total = schoolData.students.length, pending = schoolData.students.filter(s=>s.feeStatus==="Pending").length, boarders = schoolData.students.filter(s=>s.boarding).length;
-            document.getElementById("mainContent").innerHTML = `<div class="space-y-6"><h1 class="text-2xl font-bold">📊 Dashboard - ${currentUser.name}</h1><div class="grid grid-cols-1 md:grid-cols-4 gap-5"><div class="bg-white p-5 rounded-xl shadow">📚 Total Students<br><span class="text-3xl font-bold">${total}</span></div><div class="bg-white p-5 rounded-xl shadow">💰 Pending Fees<br><span class="text-2xl font-bold text-red-600">${pending}</span></div><div class="bg-white p-5 rounded-xl shadow">🏠 Boarders<br><span class="text-2xl font-bold">${boarders}</span></div><div class="bg-white p-5 rounded-xl shadow">👩‍🏫 Teachers<br><span class="text-2xl">${schoolData.teachers.length}</span></div></div></div>`;
-        }
-        function renderAllStudents() {
-            let html = `<div class="bg-white rounded-xl shadow p-5"><div class="flex justify-between"><h2 class="text-xl font-bold">All Students</h2>${currentUser.role === "dg_ceo" ? '<button onclick="openModal(\'addStudentModal\')" class="bg-blue-600 text-white px-4 py-2 rounded">+ Add Student</button>' : ''}</div><div class="overflow-x-auto"><table class="w-full mt-4"><thead class="bg-gray-100"><tr><th>Name</th><th>Section</th><th>Level</th><th>Fee</th><th>Attendance %</th></tr></thead><tbody>${schoolData.students.map(s => `<tr class="border-b"><td class="p-2">${s.name}</td><td>${s.section}</td><td>${s.level}</td><td class="${s.feeStatus==='Paid'?'text-green-600':'text-red-600'}">${s.feeStatus}</td><td><div class="w-full bg-gray-200 rounded-full h-2.5"><div class="bg-emerald-600 h-2.5 rounded-full" style="width:${s.attendance}%"></div></div><span class="text-xs">${s.attendance}%</span></td></tr>`).join('')}</tbody></table></div></div>`;
-            document.getElementById("mainContent").innerHTML = html;
-        }
-        function renderFeeManagement() {
-            let pending = schoolData.students.filter(s => s.feeStatus === "Pending");
-            document.getElementById("mainContent").innerHTML = `<div class="bg-white p-5 rounded-xl shadow"><h2 class="text-xl font-bold">💰 Fee Management</h2><p class="my-2">Pending: ${pending.length}</p><ul>${pending.map(s => `<li class="flex justify-between py-2 border-b"><span>${s.name} (${s.section})</span><button onclick="payFeeAction('${s.id}')" class="bg-amber-600 text-white px-3 py-1 rounded text-sm">Record Payment</button></li>`).join('')}</ul></div>`;
-        }
-        function renderBoarding() {
-            let boarders = schoolData.students.filter(s=>s.boarding);
-            let html = `<div class="bg-white p-5 rounded-xl shadow"><h2 class="text-xl font-bold">🏠 Boarding Management</h2><p>Total Boarders: ${boarders.length}</p>${Object.entries(schoolData.boarderDorms).map(([h,d])=>`<div class="mt-3"><div class="flex justify-between"><span>${h}</span><span>${d.occupied}/${d.capacity}</span></div><div class="w-full bg-gray-200 h-2 rounded-full"><div class="bg-amber-600 h-2 rounded-full" style="width:${(d.occupied/d.capacity)*100}%"></div></div></div>`).join('')}</div>`;
-            document.getElementById("mainContent").innerHTML = html;
-        }
-        function renderTeachers() {
-            let html = `<div class="bg-white p-5 rounded-xl shadow"><div class="flex justify-between"><h2 class="text-xl font-bold">Faculty</h2>${currentUser.role === "dg_ceo" ? '<button onclick="openModal(\'addTeacherModal\')" class="bg-teal-600 text-white px-3 py-1 rounded">+ Add Teacher</button>' : ''}</div><table class="w-full mt-3"><thead><tr><th>Name</th><th>Section</th><th>Subject</th><th>Rating</th></tr></thead><tbody>${schoolData.teachers.map(t => `<tr class="border-b"><td class="p-2">${t.name}</td><td>${t.section}</td><td>${t.subject}</td><td class="text-green-600">${t.rating}</td></tr>`).join('')}</tbody></table></div>`;
-            document.getElementById("mainContent").innerHTML = html;
-        }
-        function renderPaymentReport() {
-            let html = `<div class="bg-white p-5 rounded-xl shadow"><h2 class="text-xl font-bold">📄 Payment History</h2><table class="w-full mt-3"><thead><tr><th>Student</th><th>Date</th><th>Amount</th><th>Receipt</th></tr></thead><tbody>${schoolData.feeTransactions.map(t => `<tr><td>${t.studentName}</td><td>${t.date}</td><td>₦${t.amount}</td><td>${t.receiptId.slice(0,8)}</td></tr>`).join('')}</tbody></table></div>`;
-            document.getElementById("mainContent").innerHTML = html;
-        }
-        function renderHeadTeacherSection() {
-            let section = currentUser.section;
-            let students = schoolData.students.filter(s => s.section === section);
-            document.getElementById("mainContent").innerHTML = `<div class="bg-white p-5 rounded-xl"><h2 class="text-xl font-bold">${section} Students (${students.length})</h2><table class="w-full"><thead><tr><th>Name</th><th>Level</th><th>Attendance</th><th>Fee</th></tr></thead><tbody>${students.map(s=>`<tr><td>${s.name}</td><td>${s.level}</td><td>${s.attendance}%</td><td>${s.feeStatus}</td></tr>`).join('')}</tbody></table></div>`;
-        }
-        function renderHeadTeacherFees() {
-            let section = currentUser.section;
-            let pending = schoolData.students.filter(s => s.section === section && s.feeStatus === "Pending");
-            document.getElementById("mainContent").innerHTML = `<div class="bg-white p-5 rounded-xl"><h2>Pending Fees - ${section}</h2><ul class="list-disc pl-5">${pending.map(s=>`<li>${s.name} - ${s.parentContact}</li>`).join('')}</ul></div>`;
-        }
-        function renderTeacherClass() {
-            let myStudents = schoolData.students.filter(s => s.section === currentUser.assignedSection);
-            document.getElementById("mainContent").innerHTML = `<div class="bg-white p-5 rounded-xl"><h2>My Class: ${currentUser.assignedSection}</h2><table class="w-full"><thead><tr><th>Name</th><th>Islamic Grade</th><th>Attendance %</th></tr></thead><tbody>${myStudents.map(s=>`<tr><td>${s.name}</td><td>${s.grades.Islamic}</td><td><div class="w-24 bg-gray-200 rounded-full h-2"><div class="bg-emerald-600 h-2 rounded-full" style="width:${s.attendance}%"></div></div> ${s.attendance}%</td></tr>`).join('')}</tbody></table></div>`;
-        }
-        function renderGradeStudents() {
-            let myStudents = schoolData.students.filter(s => s.section === currentUser.assignedSection);
-            let html = `<div class="bg-white p-5 rounded-xl"><h2>Grade Students (${currentUser.assignedSection})</h2>${myStudents.map(s=>`<div class="border-b py-3"><span class="font-bold">${s.name}</span><div class="grid grid-cols-3 gap-2 mt-1"><label>Math: <input id="math_${s.id}" value="${s.grades.Math}" class="border w-20 p-1 rounded"></label><label>English: <input id="eng_${s.id}" value="${s.grades.English}" class="border w-20 p-1 rounded"></label><label>Islamic: <input id="isl_${s.id}" value="${s.grades.Islamic}" class="border w-20 p-1 rounded"></label></div><button onclick="saveGrade('${s.id}')" class="bg-blue-500 text-white px-3 py-1 rounded mt-2 text-sm">Save Grades</button></div>`).join('')}</div>`;
-            document.getElementById("mainContent").innerHTML = html;
-            window.saveGrade = (sid) => {
-                let stu = schoolData.students.find(s => s.id === sid);
-                if(stu) {
-                    stu.grades.Math = parseInt(document.getElementById(`math_${sid}`).value) || stu.grades.Math;
-                    stu.grades.English = parseInt(document.getElementById(`eng_${sid}`).value) || stu.grades.English;
-                    stu.grades.Islamic = parseInt(document.getElementById(`isl_${sid}`).value) || stu.grades.Islamic;
-                    alert("Grades updated!");
-                    refreshCurrentView();
-                }
-            };
-        }
-        function renderParentChildren() {
-            let childrenIds = currentUser.linkedChildren || [];
-            let children = schoolData.students.filter(s => childrenIds.includes(s.id));
-            document.getElementById("mainContent").innerHTML = `<div class="bg-white p-5 rounded-xl"><h2>My Children</h2>${children.map(c=>`<div class="border p-3 mb-3 rounded shadow-sm"><h3 class="font-bold text-lg">${c.name}</h3><p>Section: ${c.section} | Level ${c.level}</p><p>Attendance: ${c.attendance}% | Fee: ${c.feeStatus}</p><p>Islamic Grade: ${c.grades.Islamic}</p></div>`).join('')}</div>`;
-        }
-        function renderParentPayments() {
-            let childrenIds = currentUser.linkedChildren || [];
-            let payments = schoolData.feeTransactions.filter(t => childrenIds.includes(t.studentId));
-            document.getElementById("mainContent").innerHTML = `<div class="bg-white p-5 rounded-xl"><h2>Payment History</h2><table class="w-full"><thead><tr><th>Student</th><th>Date</th><th>Receipt</th><th>Amount</th></tr></thead><tbody>${payments.map(p=>`<tr><td>${p.studentName}</td><td>${p.date}</td><td>${p.receiptId.slice(0,8)}</td><td>₦${p.amount}</td></tr>`).join('')}</tbody></table></div>`;
-        }
-
-        function renderContentView(view) {
-            const views = { 
-                dashboard: renderDashboard, students: renderAllStudents, fees: renderFeeManagement, 
-                boarding: renderBoarding, teachers: renderTeachers, "payment-report": renderPaymentReport,
-                "section-students": renderHeadTeacherSection, "section-fees": renderHeadTeacherFees,
-                "my-class": renderTeacherClass, "grade-students": renderGradeStudents,
-                "my-children": renderParentChildren, "payment-history": renderParentPayments,
-                attendance: renderAttendanceView, "enroll-student": renderHeadTeacherEnroll
-            };
-            (views[view] || renderDashboard)();
-        }
-
+        function renderDashboard() { let total = schoolData.students.length; document.getElementById("mainContent").innerHTML = `<div class="bg-white p-5 rounded-xl"><h2 class="text-2xl font-bold">Welcome ${currentUser.name}</h2><p>Total Students: ${total}</p><p>Role: ${currentUser.role}</p></div>`; }
+        function renderAllStudents() { let html = `<div class="bg-white p-5 rounded-xl"><h2>All Students</h2><table class="w-full"><tr><th>Name</th><th>Section</th><th>Attendance</th></tr>${schoolData.students.map(s => `<tr><td>${s.name}</td><td>${s.section}</td><td>${s.attendance}%</td></tr>`).join('')}></table></div>`; document.getElementById("mainContent").innerHTML = html; }
+        function renderFeeManagement() { let pending = schoolData.students.filter(s=>s.feeStatus==="Pending"); let html = `<div class="bg-white p-5 rounded-xl"><h2>Fee Pending</h2><ul>${pending.map(s=>`<li>${s.name} <button onclick="payFeeAction('${s.id}')" class="bg-amber-500 text-white px-2 py-1 rounded">Pay</button></li>`).join('')}</ul></div>`; document.getElementById("mainContent").innerHTML = html; }
+        function renderBoarding() { let boarders = schoolData.students.filter(s=>s.boarding); document.getElementById("mainContent").innerHTML = `<div class="bg-white p-5 rounded-xl"><h2>Boarders: ${boarders.length}</h2></div>`; }
+        function renderTeachers() { document.getElementById("mainContent").innerHTML = `<div class="bg-white p-5 rounded-xl"><h2>Teachers</h2><ul>${schoolData.teachers.map(t=>`<li>${t.name} - ${t.section}</li>`).join('')}</ul></div>`; }
+        function renderPaymentReport() { document.getElementById("mainContent").innerHTML = `<div class="bg-white p-5 rounded-xl"><h2>Transactions</h2><ul>${schoolData.feeTransactions.map(t=>`<li>${t.studentName} - ₦${t.amount}</li>`).join('')}</ul></div>`; }
+        function renderHeadTeacherSection() { let section = currentUser.section; let stu = schoolData.students.filter(s=>s.section===section); document.getElementById("mainContent").innerHTML = `<div class="bg-white p-5 rounded-xl"><h2>${section} Students</h2><table>${stu.map(s=>`<tr><td>${s.name}</td><td>Attendance ${s.attendance}%</td></tr>`).join('')}</table></div>`; }
+        function renderHeadTeacherFees() { let pending = schoolData.students.filter(s=>s.section===currentUser.section && s.feeStatus==="Pending"); document.getElementById("mainContent").innerHTML = `<div class="bg-white p-5 rounded-xl"><h2>Pending Fees</h2><ul>${pending.map(s=>`<li>${s.name}</li>`).join('')}</ul></div>`; }
+        function renderTeacherClass() { let stu = schoolData.students.filter(s=>s.section===currentUser.assignedSection); document.getElementById("mainContent").innerHTML = `<div class="bg-white p-5 rounded-xl"><h2>My Class</h2>${stu.map(s=>`<p>${s.name} - Islamic: ${s.grades.Islamic}</p>`).join('')}</div>`; }
+        function renderGradeStudents() { let stu = schoolData.students.filter(s=>s.section===currentUser.assignedSection); let html = `<div class="bg-white p-5 rounded-xl"><h2>Grade Students</h2>${stu.map(s=>`<div>${s.name} <input id="g_${s.id}" value="${s.grades.Islamic}" class="border w-16"><button onclick="saveG('${s.id}')">Save</button></div>`).join('')}</div>`; document.getElementById("mainContent").innerHTML = html; window.saveG = (id) => { let stu = schoolData.students.find(s=>s.id===id); if(stu) { stu.grades.Islamic = parseInt(document.getElementById(`g_${id}`).value); alert("Updated"); refreshCurrentView(); } }; }
+        function renderParentChildren() { let children = schoolData.students.filter(s=>currentUser.linkedChildren?.includes(s.id)); document.getElementById("mainContent").innerHTML = `<div class="bg-white p-5 rounded-xl"><h2>My Children</h2>${children.map(c=>`<p>${c.name} - Grade: ${c.grades.Islamic}</p>`).join('')}</div>`; }
+        function renderParentPayments() { let payments = schoolData.feeTransactions.filter(t=>currentUser.linkedChildren?.includes(t.studentId)); document.getElementById("mainContent").innerHTML = `<div class="bg-white p-5 rounded-xl"><h2>Payments</h2><ul>${payments.map(p=>`<li>${p.studentName} - ₦${p.amount}</li>`).join('')}</ul></div>`; }
+        function renderContentView(view) { const views = { dashboard: renderDashboard, students: renderAllStudents, fees: renderFeeManagement, boarding: renderBoarding, teachers: renderTeachers, "payment-report": renderPaymentReport, "section-students": renderHeadTeacherSection, "section-fees": renderHeadTeacherFees, "my-class": renderTeacherClass, "grade-students": renderGradeStudents, "my-children": renderParentChildren, "payment-history": renderParentPayments, attendance: renderAttendanceView, "enroll-student": renderHeadTeacherEnroll }; (views[view] || renderDashboard)(); }
         function renderNav() {
-            const labels = { dashboard:"Dashboard", students:"All Students", fees:"Fee Mgt", boarding:"Boarding", teachers:"Teachers", "payment-report":"Payments", "section-students":"My Section", "section-fees":"Section Fees", "my-class":"My Class", "grade-students":"Grade Students", "my-children":"My Children", "payment-history":"Payment History", attendance:"📝 Mark Attendance", "enroll-student":"🎓 Enroll Student" };
+            const labels = { dashboard:"Dashboard", students:"All Students", fees:"Fee Mgt", boarding:"Boarding", teachers:"Teachers", "payment-report":"Payments", "section-students":"My Section", "section-fees":"Section Fees", "my-class":"My Class", "grade-students":"Grade Students", "my-children":"My Children", "payment-history":"Payment History", attendance:"📝 Attendance", "enroll-student":"🎓 Enroll" };
             let items = getNavItems();
-            let html = items.map(v => `<a href="#" data-view="${v}" class="nav-link flex items-center space-x-3 px-4 py-2.5 rounded-lg text-slate-200 hover:bg-white/10 transition"><i class="fas ${v==='dashboard'?'fa-tachometer-alt':v==='students'?'fa-users':v==='fees'?'fa-coins':v==='boarding'?'fa-bed':v==='attendance'?'fa-check-circle':v==='enroll-student'?'fa-user-plus':'fa-folder'} w-5"></i><span>${labels[v]||v}</span></a>`).join('');
+            let html = items.map(v => `<a href="#" data-view="${v}" class="nav-link flex items-center space-x-3 px-4 py-2.5 rounded-lg text-slate-200 hover:bg-white/10 transition"><i class="fas ${v==='dashboard'?'fa-tachometer-alt':'fa-folder'} w-5"></i><span>${labels[v]||v}</span></a>`).join('');
             document.getElementById("dynamicNav").innerHTML = html;
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    let view = link.getAttribute('data-view');
-                    renderContentView(view);
-                    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('bg-white/10', 'border-l-4', 'border-amber-400'));
-                    link.classList.add('bg-white/10', 'border-l-4', 'border-amber-400');
-                });
-            });
+            document.querySelectorAll('.nav-link').forEach(link => link.addEventListener('click', (e) => { e.preventDefault(); renderContentView(link.getAttribute('data-view')); document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('bg-white/10','border-l-4','border-amber-400')); link.classList.add('bg-white/10','border-l-4','border-amber-400'); }));
             if(items.length) renderContentView(items[0]);
         }
-
-        function refreshCurrentView() {
-            let active = document.querySelector('.nav-link.bg-white\\/10');
-            let view = active ? active.getAttribute('data-view') : "dashboard";
-            renderContentView(view);
-        }
-
+        function refreshCurrentView() { let active = document.querySelector('.nav-link.bg-white\\/10'); let view = active ? active.getAttribute('data-view') : "dashboard"; renderContentView(view); }
         window.openModal = (id) => document.getElementById(id).style.display = 'flex';
         window.closeModal = (id) => document.getElementById(id).style.display = 'none';
-        window.payFeeAction = payFeeAction;
-        window.addNewStudentGlobal = addNewStudentGlobal;
-        window.addNewTeacher = addNewTeacher;
-
-        function updateDateTime() { let now = new Date(); if(document.getElementById('liveTime')) document.getElementById('liveTime').innerText = now.toLocaleTimeString('en-NG'); if(document.getElementById('liveDate')) document.getElementById('liveDate').innerText = now.toLocaleDateString('en-NG',{weekday:'long',year:'numeric',month:'long',day:'numeric'}); }
+        window.payFeeAction = payFeeAction; window.addNewStudentGlobal = addNewStudentGlobal; window.addNewTeacher = addNewTeacher;
+        
+        function updateDateTime() { let now=new Date(); if(document.getElementById('liveTime')) document.getElementById('liveTime').innerText=now.toLocaleTimeString('en-NG'); if(document.getElementById('liveDate')) document.getElementById('liveDate').innerText=now.toLocaleDateString('en-NG',{weekday:'long',year:'numeric',month:'long',day:'numeric'}); }
         setInterval(updateDateTime,1000); updateDateTime();
-        if(navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(async(pos)=>{
-                try {
-                    let res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${pos.coords.latitude}&longitude=${pos.coords.longitude}&current_weather=true`);
-                    let data = await res.json();
-                    if(document.getElementById('weatherTemp')) document.getElementById('weatherTemp').innerText = Math.round(data.current_weather.temperature);
-                    let desc = data.current_weather.weathercode > 60 ? "Rainy" : (data.current_weather.weathercode === 0 ? "Clear" : "Cloudy");
-                    if(document.getElementById('weatherDesc')) document.getElementById('weatherDesc').innerText = desc;
-                    if(document.getElementById('userLocation')) document.getElementById('userLocation').innerText = `${pos.coords.latitude.toFixed(2)}°, ${pos.coords.longitude.toFixed(2)}°`;
-                } catch(e) {}
-            });
-        }
-
+        if(navigator.geolocation) { navigator.geolocation.getCurrentPosition(async(pos)=>{ try{ let res=await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${pos.coords.latitude}&longitude=${pos.coords.longitude}&current_weather=true`); let data=await res.json(); if(document.getElementById('weatherTemp')) document.getElementById('weatherTemp').innerText=Math.round(data.current_weather.temperature); document.getElementById('weatherDesc') && (document.getElementById('weatherDesc').innerText=data.current_weather.weathercode>60?"Rainy":"Clear"); } catch(e){} }); }
+        
         function initApp() {
             generateMockData();
-            const landing = document.getElementById('landingPage');
-            const loginScreen = document.getElementById('loginScreen');
-            const appContainer = document.getElementById('appContainer');
-            document.getElementById('loginBtnHero')?.addEventListener('click', ()=>{ landing.style.display = 'none'; loginScreen.style.display = 'flex'; });
-            document.getElementById('loginBtnFooter')?.addEventListener('click', ()=>{ landing.style.display = 'none'; loginScreen.style.display = 'flex'; });
-            document.getElementById('closeLoginBtn')?.addEventListener('click', ()=>{ loginScreen.style.display = 'none'; landing.style.display = 'block'; });
-            document.getElementById('loginForm')?.addEventListener('submit', (e)=>{
-                e.preventDefault();
-                let role = document.getElementById('loginRole').value;
-                let uname = document.getElementById('loginUsername').value;
-                let pwd = document.getElementById('loginPassword').value;
-                if(handleLogin(role, uname, pwd)) {
-                    loginScreen.style.display = 'none';
-                    landing.style.display = 'none';
-                    appContainer.classList.remove('hidden');
-                    document.getElementById('userRoleDisplay').innerText = currentUser.role.toUpperCase();
-                    document.getElementById('userNameDisplay').innerText = currentUser.name;
-                    renderNav();
-                } else alert("Invalid credentials (use any non-empty password)");
-            });
-            document.getElementById('logoutBtn')?.addEventListener('click', ()=>{
-                currentUser = null;
-                appContainer.classList.add('hidden');
-                landing.style.display = 'block';
-                loginScreen.style.display = 'none';
-            });
+            // Initialize Slideshow
+            buildSlideshow();
+            document.getElementById('prevSlide')?.addEventListener('click', prevSlide);
+            document.getElementById('nextSlide')?.addEventListener('click', nextSlide);
+            resetAutoSlide();
+            
+            const landing = document.getElementById('landingPage'), loginScreen = document.getElementById('loginScreen'), appContainer = document.getElementById('appContainer');
+            document.getElementById('loginBtnHero')?.addEventListener('click', ()=>{ landing.style.display='none'; loginScreen.style.display='flex'; });
+            document.getElementById('loginBtnFooter')?.addEventListener('click', ()=>{ landing.style.display='none'; loginScreen.style.display='flex'; });
+            document.getElementById('closeLoginBtn')?.addEventListener('click', ()=>{ loginScreen.style.display='none'; landing.style.display='block'; });
+            document.getElementById('loginForm')?.addEventListener('submit', (e)=>{ e.preventDefault(); let role=document.getElementById('loginRole').value, uname=document.getElementById('loginUsername').value, pwd=document.getElementById('loginPassword').value; if(handleLogin(role,uname,pwd)) { loginScreen.style.display='none'; landing.style.display='none'; appContainer.classList.remove('hidden'); document.getElementById('userRoleDisplay').innerText=currentUser.role; document.getElementById('userNameDisplay').innerText=currentUser.name; renderNav(); } else alert("Invalid credentials"); });
+            document.getElementById('logoutBtn')?.addEventListener('click', ()=>{ currentUser=null; appContainer.classList.add('hidden'); landing.style.display='block'; loginScreen.style.display='none'; });
         }
         initApp();
     </script>
