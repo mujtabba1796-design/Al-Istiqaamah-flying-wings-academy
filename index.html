@@ -3,39 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    
-    <!-- SEO & OpenGraph Tags -->
-    <title>Al‑Istiqaamah Flying Wings Academy | Advanced Portal</title>
-    <meta name="description" content="Al‑Istiqaamah Flying Wings Academy – nurturing faith, knowledge, and leadership in Samaru, Zaria, Kaduna State.">
-    <meta property="og:title" content="Al‑Istiqaamah Flying Wings Academy">
-    <meta property="og:description" content="Official portal for staff, parents, and administrators. Academic management, attendance, fees, and multi‑subject grading.">
-    <meta property="og:image" content="https://picsum.photos/id/20/1200/630.jpg"> <!-- Replace with your own logo/cover image URL -->
-    <meta property="og:url" content="https://YOUR_USERNAME.github.io/YOUR_REPO_NAME/">
-    <meta property="og:type" content="website">
-    <meta name="twitter:card" content="summary_large_image">
-    
+    <title>Al‑Istiqaamah Flying Wings Academy | Official Portal</title>
+    <!-- Tailwind CSS + Font Awesome -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&display=swap');
-        * { font-family: 'Inter', sans-serif; }
-        .hero-pattern { background: linear-gradient(135deg, #0a2e2c 0%, #0f3b38 100%); }
-        .card-hover { transition: all 0.3s ease; }
-        .card-hover:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -12px rgba(0,0,0,0.15); }
-        .sidebar { background: #0f2e2c; }
-        .nav-link-active, .nav-link:hover { background: rgba(255,255,255,0.12); border-left: 4px solid #f59e0b; }
-        .att-check { width: 20px; height: 20px; accent-color: #10b981; }
-        .carousel-slide { transition: opacity 0.5s ease-in-out; }
-        .carousel-btn { background: rgba(0,0,0,0.5); transition: all 0.2s; }
-        .carousel-btn:hover { background: rgba(0,0,0,0.8); }
-        .dot { transition: all 0.2s; cursor: pointer; }
-        .grade-input { width: 70px; padding: 4px; border-radius: 6px; border: 1px solid #ccc; text-align: center; }
+        body { font-family: 'Inter', sans-serif; }
+        .hero-pattern {
+            background: linear-gradient(135deg, #0a2e2c 0%, #0f3b38 100%);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -12px rgba(0,0,0,0.15);
+        }
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 1.5rem;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+        }
+        .close {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #6b7280;
+        }
+        .sidebar {
+            background: #0f2e2c;
+            transition: all 0.2s;
+        }
+        .nav-link-active, .nav-link:hover {
+            background: rgba(255,255,255,0.1);
+            border-left: 4px solid #f59e0b;
+        }
+        .attendance-checkbox {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: #10b981;
+        }
+        /* Carousel Styles */
+        .carousel-slide {
+            transition: opacity 0.5s ease-in-out;
+        }
+        .carousel-btn {
+            background: rgba(0,0,0,0.5);
+            transition: all 0.2s;
+        }
+        .carousel-btn:hover {
+            background: rgba(0,0,0,0.8);
+        }
+        .dot {
+            transition: all 0.2s;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body class="bg-gray-50">
 
-    <!-- LANDING PAGE -->
+    <!-- ======================= LANDING PAGE (Complete School Profile + Slideshow) ======================= -->
     <div id="landingPage" class="min-h-screen">
+        <!-- Hero Section -->
         <div class="hero-pattern text-white relative overflow-hidden">
             <div class="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.2"%3E%3Cpath d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]"></div>
             <div class="relative container mx-auto px-6 py-20 md:py-28">
@@ -45,12 +93,13 @@
                             <i class="fas fa-school text-4xl text-amber-400"></i>
                             <h1 class="text-3xl md:text-4xl font-bold">Al‑Istiqaamah <span class="text-amber-300">Flying Wings Academy</span></h1>
                         </div>
+                        <!-- Motto -->
                         <div class="bg-amber-900/30 border-l-4 border-amber-400 p-3 rounded-r-xl mb-3">
                             <p class="text-sm italic">“The best of mankind are those who are most beneficial to humanity.”</p>
                             <p class="text-xs text-amber-200">— Prophetic Saying (Ṣaḥīḥ al-Jāmiʿ, 3289)</p>
                             <p class="text-sm font-semibold mt-1"><i class="fas fa-feather-alt"></i> Sub-Motto: Faith • Knowledge • Leadership</p>
                         </div>
-                        <p class="text-amber-200 text-sm mt-1"><i class="fas fa-map-marker-alt mr-1"></i> No. 10 Federal Government Layout (Behind SG), Samaru, Zaria, Kaduna State</p>
+                        <p class="text-amber-200 text-sm mt-1"><i class="fas fa-map-marker-alt mr-1"></i> No. 10 Federal Government Layout (Behind SG), Samaru, Zaria, Kaduna State, Nigeria</p>
                         <div class="flex flex-wrap gap-4 mt-4 text-sm">
                             <span><i class="fas fa-phone-alt text-amber-300 mr-1"></i> 08067990749, 08084816590</span>
                             <span><i class="fas fa-envelope text-amber-300 mr-1"></i> alistiqaamah.gi@outlook.com</span>
@@ -59,15 +108,18 @@
                             <i class="fas fa-chalkboard-user"></i> Staff / Admin Login
                         </button>
                     </div>
+                    <!-- Live Weather & Time Widget -->
                     <div class="bg-white/10 backdrop-blur-md rounded-2xl p-5 shadow-xl border border-white/20 w-80">
                         <div class="flex items-center justify-between border-b border-white/20 pb-2 mb-3">
                             <span class="text-amber-200"><i class="fas fa-clock"></i> Local Time</span>
                             <span id="liveTime" class="font-mono text-xl font-bold">--:--:--</span>
                         </div>
                         <div class="flex items-center justify-between">
-                            <div><p class="text-sm opacity-80"><i class="fas fa-calendar-alt mr-1"></i> <span id="liveDate"></span></p>
-                            <p class="text-3xl font-bold mt-1"><span id="weatherTemp">--</span>°C</p>
-                            <p class="text-sm capitalize"><span id="weatherDesc">loading...</span></p></div>
+                            <div>
+                                <p class="text-sm opacity-80"><i class="fas fa-calendar-alt mr-1"></i> <span id="liveDate"></span></p>
+                                <p class="text-3xl font-bold mt-1"><span id="weatherTemp">--</span>°C</p>
+                                <p class="text-sm capitalize"><span id="weatherDesc">loading...</span></p>
+                            </div>
                             <i id="weatherIcon" class="fas fa-cloud-sun text-5xl text-amber-300"></i>
                         </div>
                         <p class="text-xs mt-3 text-center text-gray-200"><i class="fas fa-location-dot"></i> <span id="userLocation">Fetching location...</span></p>
@@ -76,301 +128,333 @@
             </div>
         </div>
 
-        <!-- Slideshow (Images only – place your own images in /images/ folder) -->
-        <div class="container mx-auto px-6 py-12"><div class="text-center mb-6"><h2 class="text-3xl font-bold text-gray-800">📸 Our Campus <span class="text-amber-600">in Focus</span></h2></div>
-        <div class="relative rounded-2xl overflow-hidden shadow-2xl bg-gray-900"><div id="slidesContainer" class="relative h-96 md:h-[500px] w-full"></div>
-        <button id="prevSlide" class="carousel-btn absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-3xl p-2 rounded-full w-10 h-10 flex items-center justify-center z-10"><i class="fas fa-chevron-left"></i></button>
-        <button id="nextSlide" class="carousel-btn absolute right-4 top-1/2 transform -translate-y-1/2 text-white text-3xl p-2 rounded-full w-10 h-10 flex items-center justify-center z-10"><i class="fas fa-chevron-right"></i></button>
-        <div id="dotsContainer" class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-10"></div></div></div>
-        
-        <div class="container mx-auto px-6 py-10"><div class="grid md:grid-cols-2 gap-10"><div class="bg-white rounded-2xl shadow-xl p-8 card-hover border-t-8 border-emerald-600"><div class="text-emerald-600 text-4xl mb-4"><i class="fas fa-eye"></i></div><h2 class="text-2xl font-bold text-gray-800 mb-3">🌙 Vision Statement</h2><p class="text-gray-700 leading-relaxed italic">To cultivate a crystal community of believers and learners who embody faith, knowledge, and inspiration — becoming beacons of guidance, excellence, and service to humanity.</p></div>
-        <div class="bg-white rounded-2xl shadow-xl p-8 card-hover border-t-8 border-amber-500"><div class="text-amber-500 text-4xl mb-4"><i class="fas fa-bullhorn"></i></div><h2 class="text-2xl font-bold text-gray-800 mb-3">🌿 Mission Statement</h2><p class="text-gray-700 leading-relaxed">Al-Istiqaamah strives to develop an enriched learning environment that promotes academic achievement, leadership, and Islamic values, nurturing learners who live by the Qur’an and the Sunnah while contributing positively to society.</p></div></div></div>
-        
-        <div class="bg-gray-100 py-16"><div class="container mx-auto px-6"><h2 class="text-3xl font-bold text-center text-gray-800 mb-4">🌸 Core <span class="text-amber-600">Objectives</span></h2><div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8"><div class="bg-white p-5 rounded-xl shadow-md flex gap-3"><i class="fas fa-quran text-emerald-600 text-2xl"></i><p class="text-sm">📖 Enrich minds, souls, and bodies with authentic Qur’anic and Prophetic knowledge.</p></div><div class="bg-white p-5 rounded-xl shadow-md flex gap-3"><i class="fas fa-book-open text-emerald-600 text-2xl"></i><p class="text-sm">🎓 Foster joyful Qur’anic memorization.</p></div><div class="bg-white p-5 rounded-xl shadow-md flex gap-3"><i class="fas fa-crown text-emerald-600 text-2xl"></i><p class="text-sm">🌟 Develop confident, principled leaders.</p></div></div></div></div>
-        
-        <div class="bg-emerald-900 text-white py-12 text-center"><div class="container mx-auto px-6"><h2 class="text-3xl font-bold mb-3">Begin Your Child's Journey of Faith & Excellence</h2><p class="mb-6">Admissions open for all tracks. Contact our admission office.</p><div class="flex flex-wrap justify-center gap-4"><a href="tel:08067990749" class="bg-amber-500 hover:bg-amber-600 text-gray-900 px-6 py-3 rounded-full inline-flex gap-2"><i class="fas fa-phone-alt"></i> Call Us</a><button id="loginBtnFooter" class="border-2 border-amber-400 hover:bg-amber-400 hover:text-gray-900 px-6 py-3 rounded-full font-semibold"><i class="fas fa-chalkboard-user"></i> Staff Dashboard</button></div></div></div>
+        <!-- ======================= PHOTO SLIDESHOW (SHOUT SLIDE SHOW) ======================= -->
+        <div class="container mx-auto px-6 py-12">
+            <div class="text-center mb-6">
+                <h2 class="text-3xl font-bold text-gray-800">📸 Our Campus <span class="text-amber-600">in Focus</span></h2>
+                <p class="text-gray-500">Glimpses of faith, learning, and community</p>
+            </div>
+            <div class="relative rounded-2xl overflow-hidden shadow-2xl bg-gray-900">
+                <!-- Slides container -->
+                <div id="slidesContainer" class="relative h-96 md:h-[500px] w-full">
+                    <!-- Slides will be injected via JS -->
+                </div>
+                <!-- Navigation Buttons -->
+                <button id="prevSlide" class="carousel-btn absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-3xl p-2 rounded-full w-10 h-10 flex items-center justify-center z-10">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button id="nextSlide" class="carousel-btn absolute right-4 top-1/2 transform -translate-y-1/2 text-white text-3xl p-2 rounded-full w-10 h-10 flex items-center justify-center z-10">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                <!-- Dots indicator -->
+                <div id="dotsContainer" class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-10"></div>
+            </div>
+        </div>
+
+        <!-- Vision & Mission -->
+        <div class="container mx-auto px-6 py-10">
+            <div class="grid md:grid-cols-2 gap-10">
+                <div class="bg-white rounded-2xl shadow-xl p-8 card-hover border-t-8 border-emerald-600">
+                    <div class="text-emerald-600 text-4xl mb-4"><i class="fas fa-eye"></i></div>
+                    <h2 class="text-2xl font-bold text-gray-800 mb-3">🌙 Vision Statement</h2>
+                    <p class="text-gray-700 leading-relaxed italic">To cultivate a crystal community of believers and learners who embody faith, knowledge, and inspiration — becoming beacons of guidance, excellence, and service to humanity.</p>
+                </div>
+                <div class="bg-white rounded-2xl shadow-xl p-8 card-hover border-t-8 border-amber-500">
+                    <div class="text-amber-500 text-4xl mb-4"><i class="fas fa-bullhorn"></i></div>
+                    <h2 class="text-2xl font-bold text-gray-800 mb-3">🌿 Mission Statement</h2>
+                    <p class="text-gray-700 leading-relaxed">Al-Istiqaamah strives to develop an enriched learning environment that promotes academic achievement, leadership, and Islamic values, nurturing learners who live by the Qur’an and the Sunnah while contributing positively to society.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Core Objectives (6 points) -->
+        <div class="bg-gray-100 py-16">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl font-bold text-center text-gray-800 mb-4">🌸 Core <span class="text-amber-600">Objectives</span></h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+                    <div class="bg-white p-5 rounded-xl shadow-md flex gap-3"><i class="fas fa-quran text-emerald-600 text-2xl"></i><p class="text-sm">📖 Enrich minds, souls, and bodies with authentic Qur’anic and Prophetic knowledge.</p></div>
+                    <div class="bg-white p-5 rounded-xl shadow-md flex gap-3"><i class="fas fa-book-open text-emerald-600 text-2xl"></i><p class="text-sm">🎓 Foster joyful Qur’anic memorization in a nurturing Islamic environment.</p></div>
+                    <div class="bg-white p-5 rounded-xl shadow-md flex gap-3"><i class="fas fa-crown text-emerald-600 text-2xl"></i><p class="text-sm">🌟 Develop confident, principled leaders through mastery of the Qur’an.</p></div>
+                    <div class="bg-white p-5 rounded-xl shadow-md flex gap-3"><i class="fas fa-brain text-emerald-600 text-2xl"></i><p class="text-sm">⚖️ Produce balanced, forward-thinking Qur’anic scholars for modern challenges.</p></div>
+                    <div class="bg-white p-5 rounded-xl shadow-md flex gap-3"><i class="fas fa-chalkboard-user text-emerald-600 text-2xl"></i><p class="text-sm">📚 Prepare young adults for the Islamic teaching profession with integrity.</p></div>
+                    <div class="bg-white p-5 rounded-xl shadow-md flex gap-3"><i class="fas fa-female text-emerald-600 text-2xl"></i><p class="text-sm">👩‍🏫 Empower women through Islamic education as mentors and nurturers.</p></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Core Values -->
+        <div class="container mx-auto px-6 py-16">
+            <div class="bg-gradient-to-r from-emerald-800 to-emerald-900 rounded-2xl shadow-xl p-8 text-white">
+                <h2 class="text-3xl font-bold text-center mb-8">🌿 Core Values</h2>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 text-center">
+                    <div><i class="fas fa-praying-hands text-3xl text-amber-300 mb-2 block"></i><span class="font-bold">Taqwā</span><p class="text-xs">God-consciousness</p></div>
+                    <div><i class="fas fa-graduation-cap text-3xl text-amber-300 mb-2 block"></i><span class="font-bold">ʿIlm</span><p class="text-xs">Knowledge with sincerity</p></div>
+                    <div><i class="fas fa-heart text-3xl text-amber-300 mb-2 block"></i><span class="font-bold">Ikhlāṣ</span><p class="text-xs">Sincerity for Allah</p></div>
+                    <div><i class="fas fa-handshake text-3xl text-amber-300 mb-2 block"></i><span class="font-bold">Akhlaq</span><p class="text-xs">Good character</p></div>
+                    <div><i class="fas fa-shield-alt text-3xl text-amber-300 mb-2 block"></i><span class="font-bold">Amānah</span><p class="text-xs">Trustworthiness</p></div>
+                    <div><i class="fas fa-users text-3xl text-amber-300 mb-2 block"></i><span class="font-bold">Leadership</span><p class="text-xs">Service & humility</p></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section Commitments (Detailed) -->
+        <div class="bg-gray-100 py-16">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">🌺 Our <span class="text-amber-600">Section Commitments</span></h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover"><div class="bg-emerald-700 p-4 text-white"><h3 class="text-xl font-bold"><i class="fas fa-quran mr-2"></i> Islamiyyah Section</h3></div><div class="p-5"><p class="text-gray-700 text-sm">To enrich minds, souls, and bodies with authentic Qur’anic and Prophetic knowledge that inspires faith, strengthens moral character, and equips learners to apply Islamic principles in daily life.</p></div></div>
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover"><div class="bg-amber-700 p-4 text-white"><h3 class="text-xl font-bold"><i class="fas fa-mosque mr-2"></i> Regular Memorization</h3></div><div class="p-5"><p class="text-gray-700 text-sm">To foster a joyful and disciplined culture of Qur’anic memorization within a nurturing and secure Islamic environment that promotes respect, compassion, and excellence.</p></div></div>
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover"><div class="bg-amber-800 p-4 text-white"><h3 class="text-xl font-bold"><i class="fas fa-star-of-life mr-2"></i> Intensive Memorization</h3></div><div class="p-5"><p class="text-gray-700 text-sm">To develop young learners into confident, principled leaders through mastery of the Qur’an, understanding of authentic Islamic teachings, and the sincere practice of Islamic values in society.</p></div></div>
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover"><div class="bg-teal-700 p-4 text-white"><h3 class="text-xl font-bold"><i class="fas fa-chalkboard mr-2"></i> Integrated Islamic-based</h3></div><div class="p-5"><p class="text-gray-700 text-sm">To produce balanced, forward-thinking Qur’anic scholars who are spiritually grounded, intellectually capable, and physically strong — prepared to meet modern challenges through an integrated Islamic educational system.</p></div></div>
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover"><div class="bg-indigo-700 p-4 text-white"><h3 class="text-xl font-bold"><i class="fas fa-rocket mr-2"></i> Advance Section</h3></div><div class="p-5"><p class="text-gray-700 text-sm">To prepare young adults for the Islamic teaching profession by nurturing in them the virtues, discipline, and integrity needed to serve as role models and educators within the Ummah.</p></div></div>
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover"><div class="bg-pink-700 p-4 text-white"><h3 class="text-xl font-bold"><i class="fas fa-female mr-2"></i> Women Section</h3></div><div class="p-5"><p class="text-gray-700 text-sm">To empower women through Islamic education so they become enlightened teachers, mentors, and nurturers who uphold knowledge, virtue, and service to humanity.</p></div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Our Commitment Statement -->
+        <div class="container mx-auto px-6 py-12">
+            <div class="bg-emerald-50 rounded-2xl p-8 text-center border border-emerald-200">
+                <i class="fas fa-leaf text-5xl text-emerald-600 mb-3"></i>
+                <p class="text-gray-800 italic max-w-3xl mx-auto">"At Al-Istiqaamah, we strive to nurture hearts that love Allah, minds that seek beneficial knowledge, and hands that serve humanity — all guided by the light of the Noble Qur’an and the Sunnah of the Prophet ﷺ."</p>
+                <p class="mt-3 font-semibold text-emerald-700">— Our Commitment</p>
+            </div>
+        </div>
+
+        <!-- Admission CTA -->
+        <div class="bg-emerald-900 text-white py-12 text-center"><div class="container mx-auto px-6"><h2 class="text-3xl font-bold mb-3">Begin Your Child's Journey of Faith & Excellence</h2><p class="mb-6">Admissions open for all tracks. Contact our admission office for prospectus.</p><div class="flex flex-wrap justify-center gap-4"><a href="tel:08067990749" class="bg-amber-500 hover:bg-amber-600 text-gray-900 px-6 py-3 rounded-full inline-flex gap-2"><i class="fas fa-phone-alt"></i> Call Us</a><button id="loginBtnFooter" class="border-2 border-amber-400 hover:bg-amber-400 hover:text-gray-900 px-6 py-3 rounded-full font-semibold"><i class="fas fa-chalkboard-user"></i> Staff Dashboard</button></div></div></div>
         <footer class="bg-slate-900 text-gray-400 py-8 text-center text-sm"><p>© 2025 Al‑Istiqaamah Flying Wings Academy — No. 10 Federal Government Layout, Samaru, Zaria, Kaduna State. RC: 1983033</p></footer>
     </div>
 
     <!-- LOGIN MODAL -->
     <div id="loginScreen" class="fixed inset-0 z-50 flex items-center justify-center p-4" style="display: none; background: rgba(0,0,0,0.7);">
         <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 relative">
-            <div class="text-center mb-4"><i class="fas fa-dove text-5xl text-amber-600"></i><h2 class="text-2xl font-bold">Staff / Admin Login</h2><p class="text-xs text-gray-500">Demo: any non-empty password</p></div>
-            <form id="loginForm"><div><label class="font-medium">Role</label><select id="loginRole" class="w-full border rounded-lg p-2 mb-3">
-                <option value="dg_ceo">DG/CEO (Director General)</option><option value="umc">User Management Committee</option>
-                <option value="daf">DAF - Director of Admin & Finance</option><option value="drpa">DRPA - Director of Research & Academics</option>
-                <option value="do">DO - Operations</option><option value="der">DER - Educational Resources</option>
-                <option value="headteacher">Head Teacher</option><option value="teacher">Teacher</option><option value="parent">Parent</option>
-            </select></div>
-            <div><label class="font-medium">Username / Email</label><input type="text" id="loginUsername" class="w-full border rounded-lg p-2 mb-3" placeholder="any text"></div>
-            <div><label class="font-medium">Password</label><input type="password" id="loginPassword" class="w-full border rounded-lg p-2 mb-4" placeholder="any password"></div>
-            <button type="submit" class="w-full bg-amber-600 text-white py-2 rounded-lg font-bold">Login</button></form>
+            <div class="text-center mb-4"><i class="fas fa-dove text-5xl text-amber-600"></i><h2 class="text-2xl font-bold">Staff / Parent Login</h2><p class="text-xs text-gray-500">Demo: any non-empty password</p></div>
+            <form id="loginForm">
+                <div><label class="font-medium">Role</label><select id="loginRole" class="w-full border rounded-lg p-2 mb-3">
+                    <option value="dg_ceo">DG/CEO</option><option value="director">Director (DAF/DRPA)</option><option value="headteacher">Head Teacher</option><option value="teacher">Teacher</option><option value="parent">Parent</option>
+                </select></div>
+                <div><label class="font-medium">Username / Email</label><input type="text" id="loginUsername" class="w-full border rounded-lg p-2 mb-3" placeholder="any text"></div>
+                <div><label class="font-medium">Password</label><input type="password" id="loginPassword" class="w-full border rounded-lg p-2 mb-4" placeholder="any password"></div>
+                <button type="submit" class="w-full bg-amber-600 text-white py-2 rounded-lg font-bold">Login</button>
+            </form>
             <button id="closeLoginBtn" class="absolute top-3 right-4 text-gray-400 text-2xl">&times;</button>
         </div>
     </div>
 
     <!-- DASHBOARD APP -->
     <div id="appContainer" class="hidden flex h-screen w-full fixed inset-0 z-40 bg-white overflow-hidden">
-        <aside class="sidebar text-white w-80 flex flex-col"><div class="p-5 border-b border-white/20"><p class="text-sm"><i class="fas fa-user-tie"></i> Role: <span id="userRoleDisplay" class="font-bold"></span></p><p class="text-lg font-semibold mt-1">Welcome, <span id="userNameDisplay"></span></p></div>
-        <nav id="dynamicNav" class="flex-1 px-3 mt-4 space-y-1"></nav><div class="p-4 border-t border-white/20"><button id="logoutBtn" class="w-full bg-red-700 hover:bg-red-800 py-2 rounded-lg transition"><i class="fas fa-sign-out-alt mr-2"></i>Logout</button></div></aside>
+        <aside class="sidebar text-white w-80 flex flex-col">
+            <div class="p-5 border-b border-white/20">
+                <p class="text-sm"><i class="fas fa-user-tie"></i> Role: <span id="userRoleDisplay" class="font-bold"></span></p>
+                <p class="text-lg font-semibold mt-1">Welcome, <span id="userNameDisplay"></span></p>
+            </div>
+            <nav id="dynamicNav" class="flex-1 px-3 mt-4 space-y-1"></nav>
+            <div class="p-4 border-t border-white/20"><button id="logoutBtn" class="w-full bg-red-700 hover:bg-red-800 py-2 rounded-lg transition"><i class="fas fa-sign-out-alt mr-2"></i>Logout</button></div>
+        </aside>
         <main class="flex-1 overflow-auto bg-gray-100 p-6" id="mainContent"></main>
     </div>
 
+    <!-- MODALS for add student/teacher -->
+    <div id="addStudentModal" class="modal" style="display: none;"><div class="modal-content"><span onclick="closeModal('addStudentModal')" class="close">&times;</span><h2 class="text-2xl font-bold mb-4">Enroll New Student</h2><input type="text" id="newStudentName" placeholder="Full Name" class="w-full border rounded-xl p-2 mb-2"><select id="newStudentSection" class="w-full border rounded-xl p-2 mb-2"><option value="Regular Islamiya">Regular Islamiya</option><option value="Regular Memorization">Regular Memorization</option><option value="Intensive Program">Intensive Program</option><option value="Islamic Integration">Islamic Integration</option><option value="Advanced Class">Advanced Class</option><option value="Women Class">Women Class</option></select><input type="number" id="newStudentLevel" placeholder="Level (1-6)" class="w-full border rounded-xl p-2 mb-2"><select id="newPaymentStatus" class="w-full border rounded-xl p-2 mb-2"><option value="Paid">Paid</option><option value="Pending">Pending</option></select><select id="newBoardingStatus" class="w-full border rounded-xl p-2 mb-2"><option value="false">Day Scholar</option><option value="true">Boarder</option></select><button onclick="addNewStudentGlobal()" class="w-full bg-blue-600 text-white py-2 rounded-xl">Register</button></div></div>
+    <div id="addTeacherModal" class="modal" style="display: none;"><div class="modal-content"><span onclick="closeModal('addTeacherModal')" class="close">&times;</span><h2 class="text-2xl font-bold mb-4">Add Teacher</h2><input type="text" id="newTeacherName" placeholder="Teacher Name" class="w-full border rounded-xl p-2 mb-2"><input type="text" id="newTeacherSection" placeholder="Section" class="w-full border rounded-xl p-2 mb-2"><input type="text" id="newTeacherSubject" placeholder="Subject" class="w-full border rounded-xl p-2 mb-2"><button onclick="addNewTeacher()" class="w-full bg-teal-600 text-white py-2 rounded-xl">Add Faculty</button></div></div>
+
     <script>
-        // ========== SLIDESHOW – uses placeholder images (replace with your own in /images/) ==========
-        // To use local images, change URLs to "./images/slide1.jpg", "./images/slide2.jpg", etc.
-        const slidesData = [
-            { url: "https://picsum.photos/id/20/1200/600", caption: "📚 Modern Classrooms & Interactive Learning" },
-            { url: "https://picsum.photos/id/30/1200/600", caption: "🧕 Girls' Islamic Education & Empowerment" },
-            { url: "https://picsum.photos/id/42/1200/600", caption: "🕌 Qur’an Memorization Circles" },
-            { url: "https://picsum.photos/id/26/1200/600", caption: "👩‍🏫 Dedicated Teachers & Mentors" },
-            { url: "https://picsum.photos/id/62/1200/600", caption: "🎓 Graduation & Leadership Ceremonies" }
-        ];
-        let currentIndex = 0, slideInterval;
-        
+        // ======================= SLIDESHOW IMPLEMENTATION =======================
+       const slidesData = [
+  { url: "./images/03bba16e-7084-4373-8a79-ef566fb65a95.mp4", caption: "Modern Classrooms" },
+  { url: "./images/15961bc0-f18f-4b23-8f1f-9b2c3e01e92c.mp4", caption: "Qur’an Memorization" }
+];        let currentIndex = 0;
+        let slideInterval;
+
         function buildSlideshow() {
             const container = document.getElementById('slidesContainer');
+            const dotsContainer = document.getElementById('dotsContainer');
             if (!container) return;
             container.innerHTML = '';
-            const dotsContainer = document.getElementById('dotsContainer');
             dotsContainer.innerHTML = '';
             slidesData.forEach((slide, idx) => {
-                let div = document.createElement('div');
-                div.className = `carousel-slide absolute inset-0 w-full h-full transition-opacity duration-500 ${idx === currentIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'}`;
-                div.style.backgroundImage = `linear-gradient(0deg, rgba(0,0,0,0.4), rgba(0,0,0,0.2)), url('${slide.url}')`;
-                div.style.backgroundSize = 'cover';
-                div.style.backgroundPosition = 'center';
-                let cap = document.createElement('div');
-                cap.className = 'absolute bottom-0 left-0 right-0 bg-black/60 text-white p-4 text-center text-lg md:text-xl font-semibold';
-                cap.innerText = slide.caption;
-                div.appendChild(cap);
-                container.appendChild(div);
-                
-                let dot = document.createElement('button');
+                const slideDiv = document.createElement('div');
+                slideDiv.className = `carousel-slide absolute inset-0 w-full h-full transition-opacity duration-500 ${idx === currentIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'}`;
+                slideDiv.style.backgroundImage = `linear-gradient(0deg, rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url('${slide.url}')`;
+                slideDiv.style.backgroundSize = 'cover';
+                slideDiv.style.backgroundPosition = 'center';
+                const captionDiv = document.createElement('div');
+                captionDiv.className = 'absolute bottom-0 left-0 right-0 bg-black/60 text-white p-4 text-center text-lg md:text-xl font-semibold';
+                captionDiv.innerText = slide.caption;
+                slideDiv.appendChild(captionDiv);
+                container.appendChild(slideDiv);
+                // Dot
+                const dot = document.createElement('button');
                 dot.className = `dot w-3 h-3 rounded-full mx-1 ${idx === currentIndex ? 'bg-amber-400 w-4' : 'bg-white/60'}`;
                 dot.setAttribute('data-index', idx);
                 dot.addEventListener('click', () => goToSlide(idx));
                 dotsContainer.appendChild(dot);
             });
         }
-        
+
         function goToSlide(index) {
-            let slides = document.querySelectorAll('#slidesContainer .carousel-slide');
-            let dots = document.querySelectorAll('#dotsContainer .dot');
+            if (index < 0) index = slidesData.length - 1;
+            if (index >= slidesData.length) index = 0;
+            const slides = document.querySelectorAll('#slidesContainer .carousel-slide');
+            const dots = document.querySelectorAll('#dotsContainer .dot');
             if (!slides.length) return;
-            if (index < 0) index = slides.length - 1;
-            if (index >= slides.length) index = 0;
             slides[currentIndex].classList.remove('opacity-100', 'z-10');
             slides[currentIndex].classList.add('opacity-0', 'z-0');
             slides[index].classList.remove('opacity-0', 'z-0');
             slides[index].classList.add('opacity-100', 'z-10');
-            if (dots[currentIndex]) {
-                dots[currentIndex].classList.remove('bg-amber-400', 'w-4');
-                dots[currentIndex].classList.add('bg-white/60');
-            }
-            if (dots[index]) {
-                dots[index].classList.remove('bg-white/60');
-                dots[index].classList.add('bg-amber-400', 'w-4');
-            }
+            if (dots[currentIndex]) dots[currentIndex].classList.remove('bg-amber-400', 'w-4');
+            if (dots[currentIndex]) dots[currentIndex].classList.add('bg-white/60');
+            if (dots[index]) dots[index].classList.remove('bg-white/60');
+            if (dots[index]) dots[index].classList.add('bg-amber-400', 'w-4');
             currentIndex = index;
             resetAutoSlide();
         }
-        
+
         function nextSlide() { goToSlide(currentIndex + 1); }
         function prevSlide() { goToSlide(currentIndex - 1); }
-        function resetAutoSlide() { if (slideInterval) clearInterval(slideInterval); slideInterval = setInterval(() => nextSlide(), 5000); }
-        
-        // ======================= DATA MODEL =======================
-        const SUBJECTS = ["Quran", "Fiqh", "Arabic", "English", "Mathematics", "Science"];
+        function resetAutoSlide() {
+            if (slideInterval) clearInterval(slideInterval);
+            slideInterval = setInterval(() => nextSlide(), 5000);
+        }
+
+        // ======================= GLOBAL DATA & FUNCTIONS (Dashboard, Attendance, Enroll) =======================
         let schoolData = {
-            students: [], feeTransactions: [], teachers: [], attendanceRecords: [], operationalBudgets: [{ year:2025, allocation:7500000, spent:3200000 }],
-            boarderDorms: { "Al-Furqan Hall": { capacity:45, occupied:0 }, "Al-Hikmah Dorm": { capacity:35, occupied:0 }, "Nur Women Hostel": { capacity:30, occupied:0 } }
+            students: [], feeTransactions: [], teachers: [], attendanceRecords: [],
+            boarderDorms: { "Al-Furqan Hall": { capacity: 45, occupied: 0 }, "Al-Hikmah Dorm": { capacity: 35, occupied: 0 }, "Nur Women Hostel": { capacity: 30, occupied: 0 } }
         };
         let currentUser = null;
         const usersDatabase = [
-            { id:"dg1", name:"Dr. Mahmoud DG/CEO", role:"dg_ceo", password:"any" }, { id:"umc1", name:"Alh. Idris Committee Chair", role:"umc", password:"any" },
-            { id:"daf1", name:"Hajiya Fatima Abdullahi", role:"daf", password:"any" }, { id:"drpa1", name:"Prof. Suleiman Adam", role:"drpa", password:"any" },
-            { id:"do1", name:"Alh. Umar Farouk", role:"do", password:"any" }, { id:"der1", name:"Prof. Aisha Bello", role:"der", password:"any" },
-            { id:"ht1", name:"Head Teacher - Regular Islamiya", role:"headteacher", section:"Regular Islamiya", password:"any" },
-            { id:"tch1", name:"Ustadh Abdur-Rahman", role:"teacher", assignedSection:"Regular Islamiya", password:"any" },
-            { id:"parent1", name:"Parent Guardian", role:"parent", linkedChildren:["STU1001"], password:"any" }
+            { id: "dg1", name: "Dr. Mahmoud DG/CEO", role: "dg_ceo", password: "any" },
+            { id: "dir1", name: "Director DAF", role: "director", password: "any" },
+            { id: "ht1", name: "Head Teacher - Regular Islamiya", role: "headteacher", section: "Regular Islamiya", password: "any" },
+            { id: "tch1", name: "Ustadh Abdur-Rahman", role: "teacher", assignedSection: "Regular Islamiya", password: "any" },
+            { id: "parent1", name: "Parent Guardian", role: "parent", linkedChildren: ["STU1001"], password: "any" }
         ];
-        
-        function getRandomGrade(){ return 65 + Math.floor(Math.random() * 30); }
-        function generateMockData(){
-            const sections = ["Regular Islamiya","Regular Memorization","Intensive Program","Islamic Integration","Advanced Class","Women Class"];
-            let students=[], idCounter=1001;
-            for(let sec of sections){
-                let levels = (sec==="Advanced Class")?2:4;
-                for(let lvl=1; lvl<=levels; lvl++){
-                    let count = sec.includes("Women")?3:5;
-                    for(let i=1;i<=count;i++){
+
+        function updateDormOccupancy() {
+            let boarders = schoolData.students.filter(s => s.boarding);
+            let halls = Object.keys(schoolData.boarderDorms);
+            halls.forEach((hall, idx) => { let allot = Math.floor(boarders.length / halls.length) + (idx < boarders.length % halls.length ? 1 : 0); schoolData.boarderDorms[hall].occupied = Math.min(allot, schoolData.boarderDorms[hall].capacity); });
+        }
+        function updateStudentAttendancePercent(studentId) {
+            const records = schoolData.attendanceRecords.filter(r => r.studentId === studentId);
+            const present = records.filter(r => r.status === 'present').length;
+            const percent = records.length === 0 ? 0 : Math.round((present / records.length) * 100);
+            const student = schoolData.students.find(s => s.id === studentId);
+            if (student) student.attendance = percent;
+        }
+        function generateMockData() {
+            const sections = ["Regular Islamiya", "Regular Memorization", "Intensive Program", "Islamic Integration", "Advanced Class", "Women Class"];
+            let students = [], idCounter = 1001;
+            for (let sec of sections) {
+                let levels = (sec === "Advanced Class") ? 2 : 4;
+                for (let lvl = 1; lvl <= levels; lvl++) {
+                    let count = sec.includes("Women") ? 3 : 5;
+                    for (let i = 1; i <= count; i++) {
                         let name = `Student ${sec.substring(0,3)}${lvl}-${i}`;
-                        let grades = {};
-                        SUBJECTS.forEach(sub => { grades[sub] = getRandomGrade(); });
-                        students.push({ id:`STU${idCounter++}`, name, section:sec, level:lvl, boarding:Math.random()>0.7, feeStatus:Math.random()>0.3?"Paid":"Pending", attendance:70+Math.floor(Math.random()*25), grades });
+                        students.push({ id: `STU${idCounter++}`, name, section: sec, level: lvl, boarding: Math.random() > 0.7, feeStatus: Math.random() > 0.3 ? "Paid" : "Pending", attendance: 70 + Math.floor(Math.random() * 25), grades: { Islamic: 75 + Math.floor(Math.random() * 20) } });
                     }
                 }
             }
             schoolData.students = students;
-            for(let i=1;i<=10;i++){ let date = new Date(); date.setDate(date.getDate()-i); let dateStr=date.toISOString().slice(0,10);
-                students.forEach(s=>{ schoolData.attendanceRecords.push({ studentId:s.id, date:dateStr, status:Math.random()>0.2?'present':'absent' }); });
+            for (let i = 1; i <= 10; i++) {
+                let date = new Date(); date.setDate(date.getDate() - i);
+                let dateStr = date.toISOString().slice(0,10);
+                students.forEach(s => { schoolData.attendanceRecords.push({ studentId: s.id, date: dateStr, status: Math.random() > 0.2 ? 'present' : 'absent' }); });
             }
-            students.forEach(s=>{ let records = schoolData.attendanceRecords.filter(r=>r.studentId===s.id); let present=records.filter(r=>r.status==='present').length; s.attendance = records.length?Math.round((present/records.length)*100):0; });
-            schoolData.teachers = [
-                { empId:"TCH001", name:"Ustadh Abdur-Rahman", section:"Regular Islamiya", subject:"Quran", rating:"Excellent", salary:120000 },
-                { empId:"TCH002", name:"Ustadha Khadija", section:"Women Class", subject:"Fiqh", rating:"Excellent", salary:115000 },
-                { empId:"TCH003", name:"Dr. Amina Musa", section:"Advanced Class", subject:"Tafsir", rating:"Outstanding", salary:150000 }
-            ];
-            schoolData.feeTransactions = students.filter(s=>s.feeStatus==="Paid").slice(0,12).map(s=>({ id:"TRX"+Math.random(), studentId:s.id, studentName:s.name, date:new Date().toISOString().slice(0,10), amount:25000 }));
+            students.forEach(s => updateStudentAttendancePercent(s));
+            schoolData.teachers = [{ empId: "TCH001", name: "Ustadh Abdur-Rahman", section: "Regular Islamiya", subject: "Quran", rating: "Excellent" }];
+            schoolData.feeTransactions = students.filter(s => s.feeStatus === "Paid").slice(0,10).map(s => ({ id: "TRX"+Math.random(), studentId: s.id, studentName: s.name, date: new Date().toISOString().slice(0,10), amount: 25000 }));
             updateDormOccupancy();
         }
-        function updateDormOccupancy(){ let boarders=schoolData.students.filter(s=>s.boarding); let halls=Object.keys(schoolData.boarderDorms); halls.forEach((hall,idx)=>{ let allot=Math.floor(boarders.length/halls.length)+(idx<boarders.length%halls.length?1:0); schoolData.boarderDorms[hall].occupied=Math.min(allot,schoolData.boarderDorms[hall].capacity); }); }
-        function addStudentLogic(name,section,level,payment,boarding){
-            if(!name||isNaN(level)||level<1||level>6){ alert("Valid name & level 1-6"); return false; }
-            let grades={}; SUBJECTS.forEach(sub=>{ grades[sub]=70; });
-            let newStu={ id:`STU${Date.now()}`, name, section, level, boarding, feeStatus:payment, attendance:0, grades };
-            schoolData.students.push(newStu); updateDormOccupancy(); alert(`✅ Student ${name} enrolled`); return true;
+        function addStudentLogic(name, section, level, payment, boarding) {
+            if(!name || isNaN(level) || level < 1 || level > 6) { alert("Valid name & level 1-6"); return false; }
+            let newStu = { id: `STU${Date.now()}`, name, section, level, boarding, feeStatus: payment, attendance: 0, grades: { Islamic: 75 } };
+            schoolData.students.push(newStu);
+            updateDormOccupancy();
+            alert(`Student ${name} enrolled in ${section}`);
+            return true;
         }
-        function handleLogin(role,uname,pwd){ let user=usersDatabase.find(u=>u.role===role); if(user&&pwd&&pwd.trim()!==""){ currentUser={...user,role:user.role}; if(role==="headteacher") currentUser.section=user.section||"Regular Islamiya"; if(role==="teacher") currentUser.assignedSection=user.assignedSection||"Regular Islamiya"; return true; } return false; }
-        function getNavItems(){
-            if(currentUser.role==="dg_ceo"||currentUser.role==="umc") return ["dashboard","students","enroll-student","teachers","enroll-staff","fees","boarding","payment-report","budget-report","budget-management"];
-            if(currentUser.role==="daf") return ["dashboard","fees","payment-report","teachers-payroll","boarding","budget-report"];
-            if(currentUser.role==="drpa") return ["dashboard","students","academic-performance","section-analysis","research-notes","grade-students"];
-            if(currentUser.role==="do") return ["dashboard","fees","boarding","teachers"];
-            if(currentUser.role==="der") return ["dashboard","students","teachers","section-analysis"];
-            if(currentUser.role==="headteacher") return ["dashboard","section-students","section-fees","enroll-student"];
-            if(currentUser.role==="teacher") return ["dashboard","my-class","grade-students-teacher","attendance"];
-            if(currentUser.role==="parent") return ["my-children","payment-history"];
+        function addNewStudentGlobal() { let n=document.getElementById('newStudentName').value, s=document.getElementById('newStudentSection').value, l=parseInt(document.getElementById('newStudentLevel').value), p=document.getElementById('newPaymentStatus').value, b=document.getElementById('newBoardingStatus').value==='true'; if(addStudentLogic(n,s,l,p,b)) { closeModal('addStudentModal'); refreshCurrentView(); } }
+        function addNewTeacher() { let name=document.getElementById('newTeacherName').value; if(name) { schoolData.teachers.push({ empId:"TCH"+Date.now(), name, section:"General", subject:"Islamic", rating:"Good" }); closeModal('addTeacherModal'); refreshCurrentView(); alert("Teacher added"); } }
+        function payFeeAction(studentId) { let s = schoolData.students.find(s=>s.id===studentId); if(s && s.feeStatus !== "Paid") { s.feeStatus="Paid"; schoolData.feeTransactions.push({ id:"TRX"+Date.now(), studentId:s.id, studentName:s.name, date:new Date().toISOString().slice(0,10), amount:25000 }); alert("Payment recorded"); refreshCurrentView(); } else alert("Already paid or invalid"); }
+        function handleLogin(role, uname, pwd) { let user = usersDatabase.find(u => u.role === role); if(user && pwd && pwd.trim() !== "") { currentUser = { ...user, role: user.role }; if(role === "headteacher") currentUser.section = user.section || "Regular Islamiya"; if(role === "teacher") currentUser.assignedSection = user.assignedSection || "Regular Islamiya"; return true; } return false; }
+        function getNavItems() {
+            if(currentUser.role === "dg_ceo") return ["dashboard","students","fees","boarding","teachers","payment-report"];
+            if(currentUser.role === "director") return ["dashboard","fees","teachers"];
+            if(currentUser.role === "headteacher") return ["dashboard","section-students","section-fees","enroll-student"];
+            if(currentUser.role === "teacher") return ["dashboard","my-class","grade-students","attendance"];
+            if(currentUser.role === "parent") return ["my-children","payment-history"];
             return ["dashboard"];
         }
-        
-        function renderBudgetManagement(){
-            let budget = schoolData.operationalBudgets[0];
-            let html = `<div class="bg-white p-6 rounded-xl shadow-lg max-w-2xl mx-auto"><h2 class="text-2xl font-bold mb-4">✍️ Write School Budget (DG/UMC)</h2>
-            <form id="budgetForm"><div class="mb-4"><label class="font-semibold">Fiscal Year</label><input type="number" id="budgetYear" value="${budget.year}" class="w-full border p-2 rounded"></div>
-            <div class="mb-4"><label class="font-semibold">Total Allocation (₦)</label><input type="number" id="budgetAlloc" value="${budget.allocation}" class="w-full border p-2 rounded"></div>
-            <div class="mb-4"><label class="font-semibold">Total Spent to Date (₦)</label><input type="number" id="budgetSpent" value="${budget.spent}" class="w-full border p-2 rounded"></div>
-            <button type="submit" class="bg-emerald-600 text-white px-6 py-2 rounded-lg font-semibold">Update Budget</button></form>
-            <div class="mt-6 p-4 bg-gray-50 rounded"><h3 class="font-bold">Current Budget Status</h3><p>Remaining: ₦${(budget.allocation - budget.spent).toLocaleString()}</p><div class="w-full bg-gray-200 rounded-full h-2.5 mt-2"><div class="bg-emerald-600 h-2.5 rounded-full" style="width: ${(budget.spent/budget.allocation)*100}%"></div></div></div></div>`;
+        function renderHeadTeacherEnroll() { 
+            let section = currentUser.section;
+            let html = `<div class="bg-white p-6 rounded-xl max-w-2xl mx-auto"><h2 class="text-2xl font-bold mb-4"><i class="fas fa-user-plus text-emerald-600"></i> Enroll Student - ${section}</h2><form id="htForm"><div class="mb-3"><label>Full Name</label><input id="htName" class="w-full border p-2 rounded"></div><div class="mb-3"><label>Level (1-6)</label><input id="htLevel" type="number" class="w-full border p-2 rounded"></div><div class="mb-3"><label>Fee Status</label><select id="htFee" class="w-full border p-2 rounded"><option>Pending</option><option>Paid</option></select></div><div class="mb-3"><label>Boarding</label><select id="htBoard" class="w-full border p-2 rounded"><option value="false">Day</option><option value="true">Boarder</option></select></div><button type="submit" class="bg-emerald-600 text-white px-4 py-2 rounded">Register</button></form></div>`;
             document.getElementById("mainContent").innerHTML = html;
-            document.getElementById("budgetForm").addEventListener("submit", (e)=>{
-                e.preventDefault();
-                let year = parseInt(document.getElementById("budgetYear").value);
-                let alloc = parseInt(document.getElementById("budgetAlloc").value);
-                let spent = parseInt(document.getElementById("budgetSpent").value);
-                if(isNaN(alloc) || isNaN(spent) || alloc<0 || spent<0){ alert("Invalid numbers"); return; }
-                schoolData.operationalBudgets[0] = { year, allocation: alloc, spent: spent };
-                alert("Budget updated successfully!");
-                renderBudgetManagement();
-            });
+            document.getElementById("htForm").addEventListener("submit", (e) => { e.preventDefault(); let name = document.getElementById("htName").value, level = parseInt(document.getElementById("htLevel").value), fee = document.getElementById("htFee").value, board = document.getElementById("htBoard").value === 'true'; if(addStudentLogic(name, section, level, fee, board)) refreshCurrentView(); });
         }
-        
-        function renderGradeStudentsTeacher(){
+        function renderAttendanceView() {
             let students = schoolData.students.filter(s => s.section === currentUser.assignedSection);
-            let html = `<div class="bg-white p-5 rounded-xl shadow"><h2 class="text-xl font-bold mb-4">📝 Grade Students - ${currentUser.assignedSection} (All Subjects)</h2>
-            <div class="overflow-x-auto"><table class="w-full text-sm border"><thead class="bg-gray-100"><tr><th class="p-2">Student</th>${SUBJECTS.map(sub => `<th class="p-2">${sub}</th>`).join('')}<th>Action</th></tr></thead><tbody>`;
-            students.forEach(s => {
-                html += `<tr class="border-b"><td class="p-2 font-medium">${s.name}</td>`;
-                SUBJECTS.forEach(sub => {
-                    let val = s.grades[sub] || 70;
-                    html += `<td class="p-1"><input type="number" min="0" max="100" class="grade-input" data-student="${s.id}" data-subject="${sub}" value="${val}"></td>`;
-                });
-                html += `<td class="p-2"><button onclick="saveAllGradesForStudent('${s.id}')" class="bg-blue-600 text-white px-3 py-1 rounded text-xs">Save All</button></td></tr>`;
-            });
-            html += `</tbody>}</div><div class="mt-4 text-sm text-gray-500">* Modify grades and click "Save All" per student.</div></div>`;
+            let today = new Date().toISOString().slice(0,10);
+            let existing = schoolData.attendanceRecords.filter(r => r.date === today);
+            let statusMap = {}; existing.forEach(r => statusMap[r.studentId] = r.status === 'present');
+            let html = `<div class="bg-white p-5 rounded-xl"><h2 class="text-xl font-bold">Mark Attendance - ${currentUser.assignedSection}</h2><table class="w-full mt-3"><thead><tr><th>Name</th><th>Present</th></tr></thead><tbody>${students.map(s => `<tr><td>${s.name}</td><td class="text-center"><input type="checkbox" class="att-check" data-id="${s.id}" ${statusMap[s.id] ? 'checked' : ''}></td></tr>`).join('')}</tbody>}消费<button id="saveAttBtn" class="mt-4 bg-emerald-600 text-white px-4 py-2 rounded">Save Attendance</button></div>`;
             document.getElementById("mainContent").innerHTML = html;
-            window.saveAllGradesForStudent = (studentId) => {
-                let student = schoolData.students.find(s => s.id === studentId);
-                if(student){
-                    SUBJECTS.forEach(sub => {
-                        let input = document.querySelector(`input[data-student="${studentId}"][data-subject="${sub}"]`);
-                        if(input) student.grades[sub] = parseInt(input.value) || 0;
-                    });
-                    alert(`Grades saved for ${student.name}`);
-                    renderGradeStudentsTeacher();
-                }
-            };
-        }
-        
-        function renderGradeStudentsDRPA(){
-            let html = `<div class="bg-white p-5 rounded-xl shadow"><h2 class="text-xl font-bold mb-3">✏️ Update Student Grades (DRPA / Admin)</h2><div class="overflow-x-auto"><table class="w-full text-sm border"><thead class="bg-gray-100"><tr><th>Student</th><th>Section</th>${SUBJECTS.map(s=>`<th>${s}</th>`).join('')}<th>Save</th></tr></thead><tbody>`;
-            schoolData.students.forEach(s => {
-                html += `<tr><td class="p-1">${s.name}</td><td class="p-1">${s.section}</td>`;
-                SUBJECTS.forEach(sub => {
-                    html += `<td class="p-1"><input type="number" id="g_${s.id}_${sub.replace(/\s/g,'')}" value="${s.grades[sub]||70}" class="grade-input"></td>`;
-                });
-                html += `<td class="p-1"><button onclick="saveGradeAdmin('${s.id}')" class="bg-blue-500 text-white px-2 py-1 rounded text-xs">Save</button></td></tr>`;
+            document.getElementById("saveAttBtn")?.addEventListener("click", () => {
+                let checks = document.querySelectorAll(".att-check");
+                let map = {}; checks.forEach(cb => map[cb.dataset.id] = cb.checked);
+                schoolData.attendanceRecords = schoolData.attendanceRecords.filter(r => !(r.date === today && students.some(s => s.id === r.studentId)));
+                for(let s of students) { schoolData.attendanceRecords.push({ studentId: s.id, date: today, status: map[s.id] ? 'present' : 'absent' }); }
+                students.forEach(s => updateStudentAttendancePercent(s));
+                alert("Attendance saved"); refreshCurrentView();
             });
-            html += `</tbody></table></div></div>`;
-            document.getElementById("mainContent").innerHTML = html;
-            window.saveGradeAdmin = (sid) => {
-                let student = schoolData.students.find(s=>s.id===sid);
-                if(student){
-                    SUBJECTS.forEach(sub => {
-                        let inp = document.getElementById(`g_${sid}_${sub.replace(/\s/g,'')}`);
-                        if(inp) student.grades[sub] = parseInt(inp.value) || 0;
-                    });
-                    alert("Grades updated");
-                    renderGradeStudentsDRPA();
-                }
-            };
         }
-        
-        function renderAllStudents(){
-            let html = `<div class="bg-white p-5 rounded-xl shadow"><h2 class="text-xl font-bold mb-3">📋 All Students (Average Grade)</h2><div class="overflow-x-auto"><table class="w-full text-sm"><thead class="bg-gray-100"><tr><th>Name</th><th>Section</th><th>Level</th><th>Fee</th><th>Attendance</th><th>Avg Grade (%)</th></tr></thead><tbody>`;
-            schoolData.students.forEach(s => {
-                let gradesArr = SUBJECTS.map(sub => s.grades[sub] || 0);
-                let avg = Math.round(gradesArr.reduce((a,b)=>a+b,0)/SUBJECTS.length);
-                html += `<tr class="border-b"><td class="p-2">${s.name}</td><td>${s.section}</td><td>${s.level}</td><td class="${s.feeStatus==='Paid'?'text-green-600':'text-red-500'}">${s.feeStatus}</td><td>${s.attendance}%</td><td>${avg}%</td></tr>`;
-            });
-            html += `</tbody></table></div></div>`;
-            document.getElementById("mainContent").innerHTML = html;
+        function renderDashboard() { let total = schoolData.students.length; document.getElementById("mainContent").innerHTML = `<div class="bg-white p-5 rounded-xl"><h2 class="text-2xl font-bold">Welcome ${currentUser.name}</h2><p>Total Students: ${total}</p><p>Role: ${currentUser.role}</p></div>`; }
+        function renderAllStudents() { let html = `<div class="bg-white p-5 rounded-xl"><h2>All Students</h2><table class="w-full"><tr><th>Name</th><th>Section</th><th>Attendance</th></tr>${schoolData.students.map(s => `<tr><td>${s.name}</td><td>${s.section}</td><td>${s.attendance}%</td></tr>`).join('')}></table></div>`; document.getElementById("mainContent").innerHTML = html; }
+        function renderFeeManagement() { let pending = schoolData.students.filter(s=>s.feeStatus==="Pending"); let html = `<div class="bg-white p-5 rounded-xl"><h2>Fee Pending</h2><ul>${pending.map(s=>`<li>${s.name} <button onclick="payFeeAction('${s.id}')" class="bg-amber-500 text-white px-2 py-1 rounded">Pay</button></li>`).join('')}</ul></div>`; document.getElementById("mainContent").innerHTML = html; }
+        function renderBoarding() { let boarders = schoolData.students.filter(s=>s.boarding); document.getElementById("mainContent").innerHTML = `<div class="bg-white p-5 rounded-xl"><h2>Boarders: ${boarders.length}</h2></div>`; }
+        function renderTeachers() { document.getElementById("mainContent").innerHTML = `<div class="bg-white p-5 rounded-xl"><h2>Teachers</h2><ul>${schoolData.teachers.map(t=>`<li>${t.name} - ${t.section}</li>`).join('')}</ul></div>`; }
+        function renderPaymentReport() { document.getElementById("mainContent").innerHTML = `<div class="bg-white p-5 rounded-xl"><h2>Transactions</h2><ul>${schoolData.feeTransactions.map(t=>`<li>${t.studentName} - ₦${t.amount}</li>`).join('')}</ul></div>`; }
+        function renderHeadTeacherSection() { let section = currentUser.section; let stu = schoolData.students.filter(s=>s.section===section); document.getElementById("mainContent").innerHTML = `<div class="bg-white p-5 rounded-xl"><h2>${section} Students</h2><table>${stu.map(s=>`<tr><td>${s.name}</td><td>Attendance ${s.attendance}%</td></tr>`).join('')}</table></div>`; }
+        function renderHeadTeacherFees() { let pending = schoolData.students.filter(s=>s.section===currentUser.section && s.feeStatus==="Pending"); document.getElementById("mainContent").innerHTML = `<div class="bg-white p-5 rounded-xl"><h2>Pending Fees</h2><ul>${pending.map(s=>`<li>${s.name}</li>`).join('')}</ul></div>`; }
+        function renderTeacherClass() { let stu = schoolData.students.filter(s=>s.section===currentUser.assignedSection); document.getElementById("mainContent").innerHTML = `<div class="bg-white p-5 rounded-xl"><h2>My Class</h2>${stu.map(s=>`<p>${s.name} - Islamic: ${s.grades.Islamic}</p>`).join('')}</div>`; }
+        function renderGradeStudents() { let stu = schoolData.students.filter(s=>s.section===currentUser.assignedSection); let html = `<div class="bg-white p-5 rounded-xl"><h2>Grade Students</h2>${stu.map(s=>`<div>${s.name} <input id="g_${s.id}" value="${s.grades.Islamic}" class="border w-16"><button onclick="saveG('${s.id}')">Save</button></div>`).join('')}</div>`; document.getElementById("mainContent").innerHTML = html; window.saveG = (id) => { let stu = schoolData.students.find(s=>s.id===id); if(stu) { stu.grades.Islamic = parseInt(document.getElementById(`g_${id}`).value); alert("Updated"); refreshCurrentView(); } }; }
+        function renderParentChildren() { let children = schoolData.students.filter(s=>currentUser.linkedChildren?.includes(s.id)); document.getElementById("mainContent").innerHTML = `<div class="bg-white p-5 rounded-xl"><h2>My Children</h2>${children.map(c=>`<p>${c.name} - Grade: ${c.grades.Islamic}</p>`).join('')}</div>`; }
+        function renderParentPayments() { let payments = schoolData.feeTransactions.filter(t=>currentUser.linkedChildren?.includes(t.studentId)); document.getElementById("mainContent").innerHTML = `<div class="bg-white p-5 rounded-xl"><h2>Payments</h2><ul>${payments.map(p=>`<li>${p.studentName} - ₦${p.amount}</li>`).join('')}</ul></div>`; }
+        function renderContentView(view) { const views = { dashboard: renderDashboard, students: renderAllStudents, fees: renderFeeManagement, boarding: renderBoarding, teachers: renderTeachers, "payment-report": renderPaymentReport, "section-students": renderHeadTeacherSection, "section-fees": renderHeadTeacherFees, "my-class": renderTeacherClass, "grade-students": renderGradeStudents, "my-children": renderParentChildren, "payment-history": renderParentPayments, attendance: renderAttendanceView, "enroll-student": renderHeadTeacherEnroll }; (views[view] || renderDashboard)(); }
+        function renderNav() {
+            const labels = { dashboard:"Dashboard", students:"All Students", fees:"Fee Mgt", boarding:"Boarding", teachers:"Teachers", "payment-report":"Payments", "section-students":"My Section", "section-fees":"Section Fees", "my-class":"My Class", "grade-students":"Grade Students", "my-children":"My Children", "payment-history":"Payment History", attendance:"📝 Attendance", "enroll-student":"🎓 Enroll" };
+            let items = getNavItems();
+            let html = items.map(v => `<a href="#" data-view="${v}" class="nav-link flex items-center space-x-3 px-4 py-2.5 rounded-lg text-slate-200 hover:bg-white/10 transition"><i class="fas ${v==='dashboard'?'fa-tachometer-alt':'fa-folder'} w-5"></i><span>${labels[v]||v}</span></a>`).join('');
+            document.getElementById("dynamicNav").innerHTML = html;
+            document.querySelectorAll('.nav-link').forEach(link => link.addEventListener('click', (e) => { e.preventDefault(); renderContentView(link.getAttribute('data-view')); document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('bg-white/10','border-l-4','border-amber-400')); link.classList.add('bg-white/10','border-l-4','border-amber-400'); }));
+            if(items.length) renderContentView(items[0]);
         }
+        function refreshCurrentView() { let active = document.querySelector('.nav-link.bg-white\\/10'); let view = active ? active.getAttribute('data-view') : "dashboard"; renderContentView(view); }
+        window.openModal = (id) => document.getElementById(id).style.display = 'flex';
+        window.closeModal = (id) => document.getElementById(id).style.display = 'none';
+        window.payFeeAction = payFeeAction; window.addNewStudentGlobal = addNewStudentGlobal; window.addNewTeacher = addNewTeacher;
         
-        function renderAcademicPerformance(){
-            let avgAll = 0; let sectionStats = {};
-            schoolData.students.forEach(s => {
-                let gradesArr = SUBJECTS.map(sub => s.grades[sub] || 0);
-                let avg = gradesArr.reduce((a,b)=>a+b,0)/SUBJECTS.length;
-                avgAll += avg;
-                if(!sectionStats[s.section]) sectionStats[s.section] = { total:0, count:0 };
-                sectionStats[s.section].total += avg;
-                sectionStats[s.section].count++;
-            });
-            avgAll = (avgAll/schoolData.students.length).toFixed(1);
-            let html = `<div class="bg-white p-5 rounded-xl shadow"><h2 class="text-xl font-bold mb-3">📈 Academic Performance (Multi-Subject Avg)</h2><p><strong>Overall Average Grade:</strong> ${avgAll}%</p><div><h3 class="font-semibold mt-3">Section-wise Averages</h3><ul>${Object.entries(sectionStats).map(([sec,data])=>`<li>${sec}: ${(data.total/data.count).toFixed(1)}%</li>`).join('')}</ul></div><div class="mt-3 bg-indigo-50 p-3 rounded"><h3 class="font-bold">Research Notes</h3><p>Curriculum enhancement: Integrated Tafsir workshops. Multi-subject tracking active.</p></div></div>`;
-            document.getElementById("mainContent").innerHTML = html;
-        }
-        
-        // Other render functions (unchanged but kept for completeness)
-        function renderDashboard(){ let total=schoolData.students.length, teachers=schoolData.teachers.length; document.getElementById("mainContent").innerHTML=`<div class="bg-white p-6 rounded-xl shadow"><h2 class="text-2xl font-bold">Welcome ${currentUser.name}</h2><div class="grid grid-cols-2 gap-4 mt-6"><div class="p-5 bg-emerald-50 rounded-2xl text-center"><i class="fas fa-users text-3xl text-emerald-600"></i><p class="text-2xl font-bold mt-2">${total}</p><p>Students</p></div><div class="p-5 bg-amber-50 rounded-2xl text-center"><i class="fas fa-chalkboard-user text-3xl text-amber-600"></i><p class="text-2xl font-bold mt-2">${teachers}</p><p>Staff</p></div></div></div>`; }
-        function renderTeachers(){ let html=`<div class="bg-white p-5 rounded-xl shadow"><h2>👥 Staff</h2><table class="w-full"><thead><tr><th>Name</th><th>Section</th><th>Subject</th></tr></thead><tbody>${schoolData.teachers.map(t=>`<tr><td>${t.name}</td><td>${t.section}</td><td>${t.subject}</td></tr>`).join('')}</tbody></table></div>`; document.getElementById("mainContent").innerHTML=html; }
-        function renderFeeManagement(){ let pending=schoolData.students.filter(s=>s.feeStatus==="Pending"); let html=`<div class="bg-white p-5 rounded-xl shadow"><h2>💰 Pending Fees (${pending.length})</h2><ul>${pending.map(s=>`<li class="flex justify-between">${s.name} <button onclick="payFeeAction('${s.id}')" class="bg-amber-500 text-white px-3 py-1 rounded text-sm">Mark Paid</button></li>`).join('')}</ul></div>`; document.getElementById("mainContent").innerHTML=html; }
-        function renderPaymentReport(){ document.getElementById("mainContent").innerHTML=`<div class="bg-white p-5 rounded-xl shadow"><h2>📄 Fee Transactions</h2><ul>${schoolData.feeTransactions.map(t=>`<li>${t.studentName} - ₦${t.amount} on ${t.date}</li>`).join('')}</ul></div>`; }
-        function renderBoarding(){ let boarders=schoolData.students.filter(s=>s.boarding); let html=`<div class="bg-white p-5 rounded-xl shadow"><h2>🏠 Boarding (${boarders.length})</h2><ul>${boarders.map(b=>`<li>${b.name}</li>`).join('')}</ul><h3>Dorms</h3>${Object.entries(schoolData.boarderDorms).map(([n,d])=>`<p>${n}: ${d.occupied}/${d.capacity}</p>`).join('')}</div>`; document.getElementById("mainContent").innerHTML=html; }
-        function renderTeachersPayroll(){ let totalPayroll=schoolData.teachers.reduce((s,t)=>s+(t.salary||100000),0); let html=`<div class="bg-white p-5 rounded-xl shadow"><h2>💰 Payroll</h2><table class="w-full"><thead><tr><th>Name</th><th>Salary</th></tr></thead><tbody>${schoolData.teachers.map(t=>`<tr><td>${t.name}</td><td>₦${(t.salary||100000).toLocaleString()}</td></tr>`).join('')}</tbody></table><div class="mt-2 font-bold">Total: ₦${totalPayroll.toLocaleString()}</div></div>`; document.getElementById("mainContent").innerHTML=html; }
-        function renderBudgetReport(){ let b=schoolData.operationalBudgets[0]; let html=`<div class="bg-white p-5 rounded-xl shadow"><h2>📊 Budget Report</h2><p>Year: ${b.year}</p><p>Allocation: ₦${b.allocation.toLocaleString()}</p><p>Spent: ₦${b.spent.toLocaleString()}</p><p>Remaining: ₦${(b.allocation-b.spent).toLocaleString()}</p><div class="w-full bg-gray-200 rounded-full h-2.5"><div class="bg-emerald-600 h-2.5 rounded-full" style="width:${(b.spent/b.allocation)*100}%"></div></div></div>`; document.getElementById("mainContent").innerHTML=html; }
-        function renderSectionAnalysis(){ let sections={}; schoolData.students.forEach(s=>{ if(!sections[s.section]) sections[s.section]={count:0,sum:0}; let gradesArr=SUBJECTS.map(sub=>s.grades[sub]||0); let avg=gradesArr.reduce((a,b)=>a+b,0)/SUBJECTS.length; sections[s.section].sum+=avg; sections[s.section].count++; }); let html=`<div class="bg-white p-5 rounded-xl shadow"><h2>📊 Section Analysis</h2><table class="w-full"><thead><tr><th>Section</th><th>Count</th><th>Avg Grade</th></tr></thead><tbody>${Object.entries(sections).map(([sec,d])=>`<tr><td>${sec}</td><td>${d.count}</td><td>${(d.sum/d.count).toFixed(1)}%</td></tr>`).join('')}</tbody></table></div>`; document.getElementById("mainContent").innerHTML=html; }
-        function renderResearchNotes(){ document.getElementById("mainContent").innerHTML=`<div class="bg-white p-5 rounded-xl shadow"><h2>📝 Research & Plans</h2><div class="border-l-4 border-emerald-500 pl-3"><p>Ongoing: Blended learning effectiveness, teacher development impact.</p><p>Strategic Plans: STEM-Islamic Integration, International exchange.</p></div></div>`; }
-        function renderTeacherClass(){ let stu=schoolData.students.filter(s=>s.section===currentUser.assignedSection); let html=`<div class="bg-white p-5 rounded-xl shadow"><h2>My Class</h2>${stu.map(s=>`<p>📘 ${s.name} - Avg: ${Math.round(SUBJECTS.reduce((a,sub)=>a+(s.grades[sub]||0),0)/SUBJECTS.length)}%</p>`).join('')}</div>`; document.getElementById("mainContent").innerHTML=html; }
-        function renderAttendanceView(){ let students=schoolData.students.filter(s=>s.section===currentUser.assignedSection); let today=new Date().toISOString().slice(0,10); let existing=schoolData.attendanceRecords.filter(r=>r.date===today); let statusMap={}; existing.forEach(r=>statusMap[r.studentId]=r.status==='present'); let html=`<div class="bg-white p-5 rounded-xl shadow"><h2>📆 Mark Attendance</h2><table class="w-full"><thead><tr><th>Student</th><th>Present</th></tr></thead><tbody>${students.map(s=>`<tr><td>${s.name}</td><td class="text-center"><input type="checkbox" class="att-check" data-id="${s.id}" ${statusMap[s.id]?'checked':''}></td></tr>`).join('')}</tbody></table><button id="saveAttBtn" class="mt-4 bg-emerald-600 text-white px-4 py-2 rounded">Save</button></div>`; document.getElementById("mainContent").innerHTML=html; document.getElementById("saveAttBtn")?.addEventListener("click",()=>{ let checks=document.querySelectorAll(".att-check"); let map={}; checks.forEach(cb=>map[cb.dataset.id]=cb.checked); schoolData.attendanceRecords=schoolData.attendanceRecords.filter(r=>!(r.date===today && students.some(s=>s.id===r.studentId))); students.forEach(s=>{ schoolData.attendanceRecords.push({ studentId:s.id, date:today, status:map[s.id]?'present':'absent' }); }); students.forEach(s=>{ let recs=schoolData.attendanceRecords.filter(r=>r.studentId===s.id); let pres=recs.filter(r=>r.status==='present').length; s.attendance=recs.length?Math.round((pres/recs.length)*100):0; }); alert("Saved"); refreshCurrentView(); }); }
-        function renderHeadTeacherSection(){ let stu=schoolData.students.filter(s=>s.section===currentUser.section); let html=`<div class="bg-white p-5 rounded-xl shadow"><h2>${currentUser.section} Students</h2><table class="w-full"><thead><tr><th>Name</th><th>Avg Grade</th></tr></thead><tbody>${stu.map(s=>{ let avg=Math.round(SUBJECTS.reduce((a,sub)=>a+(s.grades[sub]||0),0)/SUBJECTS.length); return `<tr><td>${s.name}</td><td>${avg}%</td></tr>`; }).join('')}</tbody></table></div>`; document.getElementById("mainContent").innerHTML=html; }
-        function renderHeadTeacherFees(){ let pending=schoolData.students.filter(s=>s.section===currentUser.section && s.feeStatus==="Pending"); document.getElementById("mainContent").innerHTML=`<div class="bg-white p-5 rounded-xl shadow"><h2>Pending Fees</h2><ul>${pending.map(s=>`<li>${s.name}</li>`).join('')}</ul></div>`; }
-        function renderHeadTeacherEnroll(){ let section=currentUser.section; let html=`<div class="bg-white p-6 rounded-xl max-w-2xl mx-auto shadow"><h2>Enroll Student - ${section}</h2><form id="htForm"><div><label>Name</label><input id="htName" class="w-full border p-2 rounded"></div><div><label>Level</label><input id="htLevel" type="number" class="w-full border p-2 rounded"></div><div><label>Fee Status</label><select id="htFee" class="w-full border p-2 rounded"><option>Pending</option><option>Paid</option></select></div><div><label>Boarding</label><select id="htBoard" class="w-full border p-2 rounded"><option value="false">Day</option><option value="true">Boarder</option></select></div><button type="submit" class="mt-3 bg-emerald-600 text-white px-4 py-2 rounded">Register</button></form></div>`; document.getElementById("mainContent").innerHTML=html; document.getElementById("htForm").addEventListener("submit",(e)=>{ e.preventDefault(); let name=document.getElementById("htName").value, level=parseInt(document.getElementById("htLevel").value), fee=document.getElementById("htFee").value, board=document.getElementById("htBoard").value==='true'; if(addStudentLogic(name,section,level,fee,board)) refreshCurrentView(); }); }
-        function renderDGEnrollStudent(){ const sections=["Regular Islamiya","Regular Memorization","Intensive Program","Islamic Integration","Advanced Class","Women Class"]; let html=`<div class="bg-white p-6 rounded-xl max-w-2xl mx-auto shadow"><h2>Enroll Student (Full Access)</h2><form id="dgStudentForm"><div><label>Name</label><input id="dgStName" class="w-full border p-2 rounded"></div><div><label>Section</label><select id="dgStSection" class="w-full border p-2 rounded">${sections.map(s=>`<option>${s}</option>`).join('')}</select></div><div><label>Level</label><input id="dgStLevel" type="number" class="w-full border p-2 rounded"></div><div><label>Fee Status</label><select id="dgStFee" class="w-full border p-2 rounded"><option>Pending</option><option>Paid</option></select></div><div><label>Boarding</label><select id="dgStBoard" class="w-full border p-2 rounded"><option value="false">Day</option><option value="true">Boarder</option></select></div><button type="submit" class="mt-3 bg-emerald-600 text-white px-6 py-2 rounded">Register</button></form></div>`; document.getElementById("mainContent").innerHTML=html; document.getElementById("dgStudentForm").addEventListener("submit",(e)=>{ e.preventDefault(); let name=document.getElementById("dgStName").value, section=document.getElementById("dgStSection").value, level=parseInt(document.getElementById("dgStLevel").value), fee=document.getElementById("dgStFee").value, board=document.getElementById("dgStBoard").value==='true'; if(addStudentLogic(name,section,level,fee,board)) refreshCurrentView(); }); }
-        function renderDGEnrollStaff(){ let html=`<div class="bg-white p-6 rounded-xl max-w-2xl mx-auto shadow"><h2>Enroll Staff</h2><form id="dgStaffForm"><div><label>Name</label><input id="staffName" class="w-full border p-2 rounded"></div><div><label>Section</label><input id="staffSection" class="w-full border p-2 rounded"></div><div><label>Subject</label><input id="staffSubject" class="w-full border p-2 rounded"></div><button type="submit" class="mt-3 bg-teal-600 text-white px-6 py-2 rounded">Add Staff</button></form></div>`; document.getElementById("mainContent").innerHTML=html; document.getElementById("dgStaffForm").addEventListener("submit",(e)=>{ e.preventDefault(); let name=document.getElementById("staffName").value.trim(), section=document.getElementById("staffSection").value.trim(), subject=document.getElementById("staffSubject").value.trim(); if(name){ schoolData.teachers.push({ empId:`TCH${Date.now()}`, name, section:section||"General", subject:subject||"Islamic Studies", rating:"Good", salary:100000 }); alert(`Staff ${name} added`); refreshCurrentView(); } else alert("Name required"); }); }
-        function renderParentChildren(){ let children=schoolData.students.filter(s=>currentUser.linkedChildren?.includes(s.id)); let html=`<div class="bg-white p-5 rounded-xl shadow"><h2>My Children</h2>${children.map(c=>{ let avg=Math.round(SUBJECTS.reduce((a,sub)=>a+(c.grades[sub]||0),0)/SUBJECTS.length); return `<p>${c.name} - Average Grade: ${avg}%</p>`; }).join('')}</div>`; document.getElementById("mainContent").innerHTML=html; }
-        function renderParentPayments(){ let payments=schoolData.feeTransactions.filter(t=>currentUser.linkedChildren?.includes(t.studentId)); document.getElementById("mainContent").innerHTML=`<div class="bg-white p-5 rounded-xl shadow"><h2>Payment History</h2><ul>${payments.map(p=>`<li>${p.studentName} - ₦${p.amount}</li>`).join('')}</ul></div>`; }
-        
-        function refreshCurrentView(){ let active=document.querySelector('.nav-link.bg-white\\/10'); let view=active?active.getAttribute('data-view'):"dashboard"; const fns={ dashboard:renderDashboard, students:renderAllStudents, "enroll-student":renderDGEnrollStudent, teachers:renderTeachers, "enroll-staff":renderDGEnrollStaff, fees:renderFeeManagement, boarding:renderBoarding, "payment-report":renderPaymentReport, "teachers-payroll":renderTeachersPayroll, "budget-report":renderBudgetReport, "budget-management":renderBudgetManagement, "academic-performance":renderAcademicPerformance, "section-analysis":renderSectionAnalysis, "research-notes":renderResearchNotes, "grade-students":renderGradeStudentsDRPA, "my-class":renderTeacherClass, attendance:renderAttendanceView, "section-students":renderHeadTeacherSection, "section-fees":renderHeadTeacherFees, "my-children":renderParentChildren, "payment-history":renderParentPayments, "grade-students-teacher":renderGradeStudentsTeacher }; (fns[view]||renderDashboard)(); }
-        function renderNav(){ const labels={ dashboard:"🏠 Dashboard", students:"📚 Students", "enroll-student":"🎓 Enroll Student", teachers:"👥 Staff", "enroll-staff":"👤 Enroll Staff", fees:"💰 Fee Mgt", boarding:"🏠 Boarding", "payment-report":"📄 Payments", "teachers-payroll":"💰 Payroll", "budget-report":"📊 Budget", "budget-management":"✍️ Write Budget", "academic-performance":"📈 Performance", "section-analysis":"📊 Analysis", "research-notes":"📝 Research", "grade-students":"✏️ Grades (All)", "my-class":"📌 My Class", attendance:"✅ Attendance", "section-students":"📖 My Section", "section-fees":"⏳ Fees", "my-children":"👨‍👧 Children", "payment-history":"💸 History", "grade-students-teacher":"✍️ Grade Subjects" }; let items=getNavItems(); let html=items.map(v=>`<a href="#" data-view="${v}" class="nav-link flex items-center space-x-3 px-4 py-2.5 rounded-lg text-slate-200 hover:bg-white/10 transition"><i class="fas ${v==='dashboard'?'fa-tachometer-alt':v.includes('grade')?'fa-pen':'fa-folder'} w-5"></i><span>${labels[v]||v}</span></a>`).join(''); document.getElementById("dynamicNav").innerHTML=html; document.querySelectorAll('.nav-link').forEach(link=>link.addEventListener('click',(e)=>{ e.preventDefault(); renderContentView(link.getAttribute('data-view')); document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('bg-white/10','border-l-4','border-amber-400')); link.classList.add('bg-white/10','border-l-4','border-amber-400'); })); if(items.length) (window.renderContentView=(view)=>{ const fns={ dashboard:renderDashboard, students:renderAllStudents, "enroll-student":renderDGEnrollStudent, teachers:renderTeachers, "enroll-staff":renderDGEnrollStaff, fees:renderFeeManagement, boarding:renderBoarding, "payment-report":renderPaymentReport, "teachers-payroll":renderTeachersPayroll, "budget-report":renderBudgetReport, "budget-management":renderBudgetManagement, "academic-performance":renderAcademicPerformance, "section-analysis":renderSectionAnalysis, "research-notes":renderResearchNotes, "grade-students":renderGradeStudentsDRPA, "my-class":renderTeacherClass, attendance:renderAttendanceView, "section-students":renderHeadTeacherSection, "section-fees":renderHeadTeacherFees, "my-children":renderParentChildren, "payment-history":renderParentPayments, "grade-students-teacher":renderGradeStudentsTeacher }; (fns[view]||renderDashboard)(); })(); renderContentView(items[0]); }
-        
-        function initApp(){ generateMockData(); buildSlideshow(); resetAutoSlide(); document.getElementById('prevSlide')?.addEventListener('click',prevSlide); document.getElementById('nextSlide')?.addEventListener('click',nextSlide); const landing=document.getElementById('landingPage'), loginScreen=document.getElementById('loginScreen'), appContainer=document.getElementById('appContainer'); document.getElementById('loginBtnHero')?.addEventListener('click',()=>{ landing.style.display='none'; loginScreen.style.display='flex'; }); document.getElementById('loginBtnFooter')?.addEventListener('click',()=>{ landing.style.display='none'; loginScreen.style.display='flex'; }); document.getElementById('closeLoginBtn')?.addEventListener('click',()=>{ loginScreen.style.display='none'; landing.style.display='block'; }); document.getElementById('loginForm')?.addEventListener('submit',(e)=>{ e.preventDefault(); let role=document.getElementById('loginRole').value, uname=document.getElementById('loginUsername').value, pwd=document.getElementById('loginPassword').value; if(handleLogin(role,uname,pwd)){ loginScreen.style.display='none'; landing.style.display='none'; appContainer.classList.remove('hidden'); document.getElementById('userRoleDisplay').innerText=currentUser.role.toUpperCase(); document.getElementById('userNameDisplay').innerText=currentUser.name; renderNav(); } else alert("Invalid credentials"); }); document.getElementById('logoutBtn')?.addEventListener('click',()=>{ currentUser=null; appContainer.classList.add('hidden'); landing.style.display='block'; loginScreen.style.display='none'; }); }
-        function updateDateTime(){ let now=new Date(); if(document.getElementById('liveTime')) document.getElementById('liveTime').innerText=now.toLocaleTimeString('en-NG'); if(document.getElementById('liveDate')) document.getElementById('liveDate').innerText=now.toLocaleDateString('en-NG',{weekday:'long',year:'numeric',month:'long',day:'numeric'}); }
+        function updateDateTime() { let now=new Date(); if(document.getElementById('liveTime')) document.getElementById('liveTime').innerText=now.toLocaleTimeString('en-NG'); if(document.getElementById('liveDate')) document.getElementById('liveDate').innerText=now.toLocaleDateString('en-NG',{weekday:'long',year:'numeric',month:'long',day:'numeric'}); }
         setInterval(updateDateTime,1000); updateDateTime();
-        if(navigator.geolocation){ navigator.geolocation.getCurrentPosition(async(pos)=>{ try{ let res=await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${pos.coords.latitude}&longitude=${pos.coords.longitude}&current_weather=true`); let data=await res.json(); if(document.getElementById('weatherTemp')) document.getElementById('weatherTemp').innerText=Math.round(data.current_weather.temperature); let desc=data.current_weather.weathercode>70?"Rainy":(data.current_weather.weathercode>50?"Cloudy":"Clear"); document.getElementById('weatherDesc').innerText=desc; } catch(e){} }); }
-        window.payFeeAction=(sid)=>{ let s=schoolData.students.find(s=>s.id===sid); if(s && s.feeStatus!=="Paid"){ s.feeStatus="Paid"; schoolData.feeTransactions.push({ id:"TRX"+Date.now(), studentId:s.id, studentName:s.name, date:new Date().toISOString().slice(0,10), amount:25000 }); alert("Payment recorded ✅"); refreshCurrentView(); } };
+        if(navigator.geolocation) { navigator.geolocation.getCurrentPosition(async(pos)=>{ try{ let res=await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${pos.coords.latitude}&longitude=${pos.coords.longitude}&current_weather=true`); let data=await res.json(); if(document.getElementById('weatherTemp')) document.getElementById('weatherTemp').innerText=Math.round(data.current_weather.temperature); document.getElementById('weatherDesc') && (document.getElementById('weatherDesc').innerText=data.current_weather.weathercode>60?"Rainy":"Clear"); } catch(e){} }); }
+        
+        function initApp() {
+            generateMockData();
+            // Initialize Slideshow
+            buildSlideshow();
+            document.getElementById('prevSlide')?.addEventListener('click', prevSlide);
+            document.getElementById('nextSlide')?.addEventListener('click', nextSlide);
+            resetAutoSlide();
+            
+            const landing = document.getElementById('landingPage'), loginScreen = document.getElementById('loginScreen'), appContainer = document.getElementById('appContainer');
+            document.getElementById('loginBtnHero')?.addEventListener('click', ()=>{ landing.style.display='none'; loginScreen.style.display='flex'; });
+            document.getElementById('loginBtnFooter')?.addEventListener('click', ()=>{ landing.style.display='none'; loginScreen.style.display='flex'; });
+            document.getElementById('closeLoginBtn')?.addEventListener('click', ()=>{ loginScreen.style.display='none'; landing.style.display='block'; });
+            document.getElementById('loginForm')?.addEventListener('submit', (e)=>{ e.preventDefault(); let role=document.getElementById('loginRole').value, uname=document.getElementById('loginUsername').value, pwd=document.getElementById('loginPassword').value; if(handleLogin(role,uname,pwd)) { loginScreen.style.display='none'; landing.style.display='none'; appContainer.classList.remove('hidden'); document.getElementById('userRoleDisplay').innerText=currentUser.role; document.getElementById('userNameDisplay').innerText=currentUser.name; renderNav(); } else alert("Invalid credentials"); });
+            document.getElementById('logoutBtn')?.addEventListener('click', ()=>{ currentUser=null; appContainer.classList.add('hidden'); landing.style.display='block'; loginScreen.style.display='none'; });
+        }
         initApp();
     </script>
 </body>
