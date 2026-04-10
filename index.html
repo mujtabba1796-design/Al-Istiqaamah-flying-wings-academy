@@ -10,7 +10,6 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <script>
-        // ==================== SUPABASE INITIALIZATION ====================
         const SUPABASE_URL = 'https://augotskuooscydobopqa.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_4497fWO5PVe2uYrZ2ES3Jw_kI5ZcskB';
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -42,6 +41,9 @@
         .carousel-btn:hover { background: rgba(0,0,0,0.8); }
         .dot { transition: all 0.2s; cursor: pointer; }
         .grade-input { width: 70px; padding: 4px; border-radius: 6px; border: 1px solid #ccc; text-align: center; }
+        .logo-img { height: 60px; width: auto; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); }
+        .sidebar-logo { height: 40px; margin-bottom: 1rem; display: block; margin-left: auto; margin-right: auto; }
+        .slide-thumb { width: 80px; height: 60px; object-fit: cover; border-radius: 8px; }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -53,9 +55,11 @@
             <div class="relative container mx-auto px-6 py-20 md:py-28">
                 <div class="flex flex-col lg:flex-row justify-between items-start gap-10">
                     <div class="max-w-2xl">
-                        <div class="flex items-center gap-3 mb-4">
-                            <i class="fas fa-school text-4xl text-amber-400"></i>
-                            <h1 class="text-3xl md:text-4xl font-bold">Al‑Istiqaamah <span class="text-amber-300">Flying Wings Academy</span></h1>
+                        <div class="flex items-center gap-4 mb-4">
+                            <img src="./logo.png" alt="Al‑Istiqaamah Flying Wings Academy Logo" class="logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x200?text=Logo+Placeholder';">
+                            <div>
+                                <h1 class="text-3xl md:text-4xl font-bold">Al‑Istiqaamah <span class="text-amber-300">Flying Wings Academy</span></h1>
+                            </div>
                         </div>
                         <div class="bg-amber-900/30 border-l-4 border-amber-400 p-3 rounded-r-xl mb-3">
                             <p class="text-sm italic">“The best of mankind are those who are most beneficial to humanity.”</p>
@@ -88,7 +92,7 @@
             </div>
         </div>
 
-        <!-- Slideshow with real images -->
+        <!-- Slideshow (dynamic, managed by CEO) -->
         <div class="container mx-auto px-6 py-12"><div class="text-center mb-6"><h2 class="text-3xl font-bold text-gray-800">📸 Our Campus <span class="text-amber-600">in Focus</span></h2></div>
         <div class="relative rounded-2xl overflow-hidden shadow-2xl bg-gray-900"><div id="slidesContainer" class="relative h-96 md:h-[500px] w-full"></div>
         <button id="prevSlide" class="carousel-btn absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-3xl p-2 rounded-full w-10 h-10 flex items-center justify-center z-10"><i class="fas fa-chevron-left"></i></button>
@@ -154,8 +158,15 @@
 
     <!-- DASHBOARD APP -->
     <div id="appContainer" class="hidden flex h-screen w-full fixed inset-0 z-40 bg-white overflow-hidden">
-        <aside class="sidebar text-white w-80 flex flex-col"><div class="p-5 border-b border-white/20"><p class="text-sm"><i class="fas fa-user-tie"></i> Role: <span id="userRoleDisplay" class="font-bold"></span></p><p class="text-lg font-semibold mt-1">Welcome, <span id="userNameDisplay"></span></p></div>
-        <nav id="dynamicNav" class="flex-1 px-3 mt-4 space-y-1"></nav><div class="p-4 border-t border-white/20"><button id="logoutBtn" class="w-full bg-red-700 hover:bg-red-800 py-2 rounded-lg transition"><i class="fas fa-sign-out-alt mr-2"></i>Logout</button></div></aside>
+        <aside class="sidebar text-white w-80 flex flex-col">
+            <div class="p-4 border-b border-white/20 text-center">
+                <img src="./logo.png" alt="School Logo" class="sidebar-logo" onerror="this.onerror=null; this.src='https://placehold.co/200x80?text=Logo';">
+                <p class="text-sm"><i class="fas fa-user-tie"></i> Role: <span id="userRoleDisplay" class="font-bold"></span></p>
+                <p class="text-lg font-semibold mt-1">Welcome, <span id="userNameDisplay"></span></p>
+            </div>
+            <nav id="dynamicNav" class="flex-1 px-3 mt-4 space-y-1"></nav>
+            <div class="p-4 border-t border-white/20"><button id="logoutBtn" class="w-full bg-red-700 hover:bg-red-800 py-2 rounded-lg transition"><i class="fas fa-sign-out-alt mr-2"></i>Logout</button></div>
+        </aside>
         <main class="flex-1 overflow-auto bg-gray-100 p-6" id="mainContent"></main>
     </div>
 
@@ -168,7 +179,168 @@
         };
         let currentUser = null;
 
-        // Helper: generate random grades
+        // ==================== SLIDESHOW MANAGEMENT (with localStorage) ====================
+        let slidesData = [];  // will load from localStorage or defaults
+
+        function loadSlidesFromStorage() {
+            const stored = localStorage.getItem('academy_slides');
+            if (stored) {
+                slidesData = JSON.parse(stored);
+            } else {
+                // Default slides (image URLs + captions)
+                slidesData = [
+                    { url: "https://picsum.photos/id/20/1200/600", caption: "Modern Classrooms" },
+                    { url: "https://picsum.photos/id/30/1200/600", caption: "Qur’an Memorization" },
+                    { url: "https://picsum.photos/id/40/1200/600", caption: "Science Lab" }
+                ];
+                saveSlidesToStorage();
+            }
+        }
+
+        function saveSlidesToStorage() {
+            localStorage.setItem('academy_slides', JSON.stringify(slidesData));
+        }
+
+        function rebuildSlideshow() {
+            const container = document.getElementById('slidesContainer');
+            const dotsContainer = document.getElementById('dotsContainer');
+            if (!container) return;
+            container.innerHTML = '';
+            dotsContainer.innerHTML = '';
+            slidesData.forEach((slide, idx) => {
+                let div = document.createElement('div');
+                div.className = `carousel-slide absolute inset-0 w-full h-full transition-opacity duration-500 ${idx === currentSlideIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'}`;
+                div.style.backgroundImage = `linear-gradient(0deg, rgba(0,0,0,0.4), rgba(0,0,0,0.2)), url('${slide.url}')`;
+                div.style.backgroundSize = 'cover';
+                div.style.backgroundPosition = 'center';
+                let cap = document.createElement('div');
+                cap.className = 'absolute bottom-0 left-0 right-0 bg-black/60 text-white p-4 text-center text-lg font-semibold';
+                cap.innerText = slide.caption;
+                div.appendChild(cap);
+                container.appendChild(div);
+                
+                let dot = document.createElement('button');
+                dot.className = `dot w-3 h-3 rounded-full mx-1 ${idx === currentSlideIndex ? 'bg-amber-400 w-4' : 'bg-white/60'}`;
+                dot.setAttribute('data-index', idx);
+                dot.addEventListener('click', () => goToSlide(idx));
+                dotsContainer.appendChild(dot);
+            });
+        }
+
+        let currentSlideIndex = 0;
+        let slideInterval;
+
+        function goToSlide(index) {
+            let slides = document.querySelectorAll('#slidesContainer .carousel-slide');
+            let dots = document.querySelectorAll('#dotsContainer .dot');
+            if (!slides.length) return;
+            if (index < 0) index = slides.length - 1;
+            if (index >= slides.length) index = 0;
+            slides[currentSlideIndex]?.classList.remove('opacity-100', 'z-10');
+            slides[currentSlideIndex]?.classList.add('opacity-0', 'z-0');
+            slides[index]?.classList.remove('opacity-0', 'z-0');
+            slides[index]?.classList.add('opacity-100', 'z-10');
+            if (dots[currentSlideIndex]) {
+                dots[currentSlideIndex].classList.remove('bg-amber-400', 'w-4');
+                dots[currentSlideIndex].classList.add('bg-white/60');
+            }
+            if (dots[index]) {
+                dots[index].classList.remove('bg-white/60');
+                dots[index].classList.add('bg-amber-400', 'w-4');
+            }
+            currentSlideIndex = index;
+            resetAutoSlide();
+        }
+
+        function nextSlide() { goToSlide(currentSlideIndex + 1); }
+        function prevSlide() { goToSlide(currentSlideIndex - 1); }
+        function resetAutoSlide() { if (slideInterval) clearInterval(slideInterval); if(slidesData.length > 1) slideInterval = setInterval(() => nextSlide(), 5000); }
+
+        // CEO function: add a new slide from image file
+        function addSlideFromFile(file, caption) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const dataUrl = e.target.result;
+                    slidesData.push({ url: dataUrl, caption: caption || "Uploaded Image" });
+                    saveSlidesToStorage();
+                    rebuildSlideshow();
+                    resetAutoSlide();
+                    resolve();
+                };
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function deleteSlide(index) {
+            if (index >= 0 && index < slidesData.length) {
+                slidesData.splice(index, 1);
+                saveSlidesToStorage();
+                rebuildSlideshow();
+                if (currentSlideIndex >= slidesData.length) currentSlideIndex = slidesData.length - 1;
+                if (currentSlideIndex < 0) currentSlideIndex = 0;
+                goToSlide(currentSlideIndex);
+                resetAutoSlide();
+            }
+        }
+
+        // Render Slide Manager UI (for CEO)
+        function renderSlideManager() {
+            let html = `
+                <div class="bg-white p-6 rounded-xl shadow-lg max-w-4xl mx-auto">
+                    <h2 class="text-2xl font-bold mb-4">📸 Manage Slideshow Images</h2>
+                    <div class="mb-6 p-4 border-2 border-dashed border-gray-300 rounded-lg">
+                        <label class="block font-semibold mb-2">Upload New Slide Image (JPG, PNG, GIF)</label>
+                        <input type="file" id="slideImageInput" accept="image/*" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100">
+                        <input type="text" id="slideCaption" placeholder="Caption (optional)" class="mt-3 w-full border rounded-lg p-2">
+                        <button id="uploadSlideBtn" class="mt-3 bg-emerald-600 text-white px-6 py-2 rounded-lg font-semibold">➕ Add to Slideshow</button>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Current Slides (${slidesData.length})</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        ${slidesData.map((slide, idx) => `
+                            <div class="border rounded-lg overflow-hidden shadow-sm bg-gray-50">
+                                <img src="${slide.url}" class="slide-thumb w-full h-32 object-cover" alt="slide">
+                                <div class="p-2">
+                                    <p class="text-sm font-medium truncate">${slide.caption}</p>
+                                    <button onclick="window.deleteSlideFromManager(${idx})" class="mt-2 bg-red-500 text-white text-xs px-3 py-1 rounded w-full">Delete</button>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    ${slidesData.length === 0 ? '<p class="text-center text-gray-500 mt-4">No slides. Upload some images!</p>' : ''}
+                </div>
+            `;
+            document.getElementById("mainContent").innerHTML = html;
+            document.getElementById("uploadSlideBtn")?.addEventListener("click", async () => {
+                const fileInput = document.getElementById("slideImageInput");
+                const caption = document.getElementById("slideCaption").value.trim();
+                if (!fileInput.files || fileInput.files.length === 0) {
+                    alert("Please select an image file.");
+                    return;
+                }
+                const file = fileInput.files[0];
+                if (!file.type.startsWith("image/")) {
+                    alert("Only image files are allowed.");
+                    return;
+                }
+                try {
+                    await addSlideFromFile(file, caption || "New Slide");
+                    alert("Slide added successfully!");
+                    renderSlideManager(); // refresh the list
+                } catch (err) {
+                    alert("Error uploading image.");
+                }
+            });
+            window.deleteSlideFromManager = (idx) => {
+                if (confirm("Delete this slide?")) {
+                    deleteSlide(idx);
+                    renderSlideManager();
+                }
+            };
+        }
+
+        // ==================== MOCK DATA GENERATION ====================
         function getRandomGrade(){ return 65 + Math.floor(Math.random() * 30); }
         
         function generateMockData(){
@@ -224,9 +396,7 @@
                 if (error) throw error;
                 const { data: profile, error: pError } = await supabaseClient.from('profiles').select('*').eq('id', data.user.id).single();
                 if (pError) throw pError;
-                // Augment profile with role-specific attributes for dashboard rendering
                 currentUser = { ...profile, full_name: profile.full_name, name: profile.full_name };
-                // Add extra fields based on role for seamless UI
                 if (currentUser.role === 'teacher') currentUser.assignedSection = "Regular Islamiya";
                 else if (currentUser.role === 'headteacher') currentUser.section = "Regular Islamiya";
                 else if (currentUser.role === 'parent') currentUser.linkedChildren = ["STU1001", "STU1002"];
@@ -276,7 +446,7 @@
         // ==================== RENDER FUNCTIONS (Dashboard Views) ====================
         function getNavItems(){
             const role = currentUser.role;
-            if(role === "dg_ceo" || role === "umc") return ["dashboard","students","enroll-student","teachers","enroll-staff","fees","boarding","payment-report","budget-report","budget-management"];
+            if(role === "dg_ceo" || role === "umc") return ["dashboard","students","enroll-student","teachers","enroll-staff","fees","boarding","payment-report","budget-report","budget-management","manage-slides"];
             if(role === "daf") return ["dashboard","fees","payment-report","teachers-payroll","boarding","budget-report"];
             if(role === "drpa") return ["dashboard","students","academic-performance","section-analysis","research-notes","grade-students"];
             if(role === "do") return ["dashboard","fees","boarding","teachers"];
@@ -288,13 +458,13 @@
         }
 
         function renderDashboard(){ let total=schoolData.students.length, teachers=schoolData.teachers.length; document.getElementById("mainContent").innerHTML=`<div class="bg-white p-6 rounded-xl shadow"><h2 class="text-2xl font-bold">Welcome ${currentUser.full_name}</h2><div class="grid grid-cols-2 gap-4 mt-6"><div class="p-5 bg-emerald-50 rounded-2xl text-center"><i class="fas fa-users text-3xl text-emerald-600"></i><p class="text-2xl font-bold mt-2">${total}</p><p>Students</p></div><div class="p-5 bg-amber-50 rounded-2xl text-center"><i class="fas fa-chalkboard-user text-3xl text-amber-600"></i><p class="text-2xl font-bold mt-2">${teachers}</p><p>Staff</p></div></div></div>`; }
-        function renderAllStudents(){ let html=`<div class="bg-white p-5 rounded-xl shadow"><h2 class="text-xl font-bold mb-3">📋 All Students</h2><div class="overflow-x-auto"><table class="w-full text-sm"><thead class="bg-gray-100"><tr><th>Name</th><th>Section</th><th>Level</th><th>Fee</th><th>Avg Grade</th></tr></thead><tbody>${schoolData.students.map(s=>{ let avg=Math.round(SUBJECTS.reduce((a,sub)=>a+(s.grades[sub]||0),0)/SUBJECTS.length); return `<tr><td>${s.name}</td><td>${s.section}</td><td>${s.level}</td><td class="${s.feeStatus==='Paid'?'text-green-600':'text-red-500'}">${s.feeStatus}</td><td>${avg}%</td></tr>`; }).join('')}</tbody></table></div></div>`; document.getElementById("mainContent").innerHTML=html; }
+        function renderAllStudents(){ let html=`<div class="bg-white p-5 rounded-xl shadow"><h2 class="text-xl font-bold mb-3">📋 All Students</h2><div class="overflow-x-auto"><table class="w-full text-sm"><thead class="bg-gray-100"><tr><th>Name</th><th>Section</th><th>Level</th><th>Fee</th><th>Avg Grade</th></tr></thead><tbody>${schoolData.students.map(s=>{ let avg=Math.round(SUBJECTS.reduce((a,sub)=>a+(s.grades[sub]||0),0)/SUBJECTS.length); return `<tr><td>${s.name}</td><td>${s.section}</td><td>${s.level}</td><td class="${s.feeStatus==='Paid'?'text-green-600':'text-red-500'}">${s.feeStatus}</td><td>${avg}%</td></tr>`; }).join('')}</tbody>}</div></div>`; document.getElementById("mainContent").innerHTML=html; }
         function renderDGEnrollStudent(){ const sections=["Regular Islamiya","Regular Memorization","Intensive Program","Islamic Integration","Advanced Class","Women Class"]; let html=`<div class="bg-white p-6 rounded-xl max-w-2xl mx-auto shadow"><h2>Enroll Student</h2><form id="dgStudentForm"><div><label>Name</label><input id="dgStName" class="w-full border p-2 rounded"></div><div><label>Section</label><select id="dgStSection" class="w-full border p-2 rounded">${sections.map(s=>`<option>${s}</option>`).join('')}</select></div><div><label>Level</label><input id="dgStLevel" type="number" class="w-full border p-2 rounded"></div><div><label>Fee Status</label><select id="dgStFee" class="w-full border p-2 rounded"><option>Pending</option><option>Paid</option></select></div><div><label>Boarding</label><select id="dgStBoard" class="w-full border p-2 rounded"><option value="false">Day</option><option value="true">Boarder</option></select></div><button type="submit" class="mt-3 bg-emerald-600 text-white px-6 py-2 rounded">Register</button></form></div>`; document.getElementById("mainContent").innerHTML=html; document.getElementById("dgStudentForm")?.addEventListener("submit",(e)=>{ e.preventDefault(); let name=document.getElementById("dgStName").value, section=document.getElementById("dgStSection").value, level=parseInt(document.getElementById("dgStLevel").value), fee=document.getElementById("dgStFee").value, board=document.getElementById("dgStBoard").value==='true'; if(addStudentLogic(name,section,level,fee,board)) renderAllStudents(); }); }
-        function renderTeachers(){ let html=`<div class="bg-white p-5 rounded-xl shadow"><h2>👥 Staff</h2><table class="w-full"><thead><tr><th>Name</th><th>Section</th><th>Subject</th></tr></thead><tbody>${schoolData.teachers.map(t=>`<tr><td>${t.name}</td><td>${t.section}</td><td>${t.subject}</td></tr>`).join('')}</tbody></table></div>`; document.getElementById("mainContent").innerHTML=html; }
+        function renderTeachers(){ let html=`<div class="bg-white p-5 rounded-xl shadow"><h2>👥 Staff</h2><table class="w-full"><thead><tr><th>Name</th><th>Section</th><th>Subject</th></tr></thead><tbody>${schoolData.teachers.map(t=>`<tr><td>${t.name}</td><td>${t.section}</td><td>${t.subject}</td></tr>`).join('')}</tbody>}</div>`; document.getElementById("mainContent").innerHTML=html; }
         function renderFeeManagement(){ let pending=schoolData.students.filter(s=>s.feeStatus==="Pending"); let html=`<div class="bg-white p-5 rounded-xl shadow"><h2>💰 Pending Fees (${pending.length})</h2><ul>${pending.map(s=>`<li class="flex justify-between">${s.name} <button onclick="window.payFeeAction('${s.id}')" class="bg-amber-500 text-white px-3 py-1 rounded text-sm">Mark Paid</button></li>`).join('')}</ul></div>`; document.getElementById("mainContent").innerHTML=html; }
         function renderPaymentReport(){ document.getElementById("mainContent").innerHTML=`<div class="bg-white p-5 rounded-xl shadow"><h2>📄 Fee Transactions</h2><ul>${schoolData.feeTransactions.map(t=>`<li>${t.studentName} - ₦${t.amount} on ${t.date}</li>`).join('')}</ul></div>`; }
         function renderBoarding(){ let boarders=schoolData.students.filter(s=>s.boarding); let html=`<div class="bg-white p-5 rounded-xl shadow"><h2>🏠 Boarding (${boarders.length})</h2><ul>${boarders.map(b=>`<li>${b.name}</li>`).join('')}</ul><h3>Dorms</h3>${Object.entries(schoolData.boarderDorms).map(([n,d])=>`<p>${n}: ${d.occupied}/${d.capacity}</p>`).join('')}</div>`; document.getElementById("mainContent").innerHTML=html; }
-        function renderTeachersPayroll(){ let totalPayroll=schoolData.teachers.reduce((s,t)=>s+(t.salary||100000),0); let html=`<div class="bg-white p-5 rounded-xl shadow"><h2>💰 Payroll</h2><table class="w-full"><thead><tr><th>Name</th><th>Salary</th></tr></thead><tbody>${schoolData.teachers.map(t=>`<tr><td>${t.name}</td><td>₦${(t.salary||100000).toLocaleString()}</td></tr>`).join('')}</tbody></table><div class="mt-2 font-bold">Total: ₦${totalPayroll.toLocaleString()}</div></div>`; document.getElementById("mainContent").innerHTML=html; }
+        function renderTeachersPayroll(){ let totalPayroll=schoolData.teachers.reduce((s,t)=>s+(t.salary||100000),0); let html=`<div class="bg-white p-5 rounded-xl shadow"><h2>💰 Payroll</h2><table class="w-full"><thead><tr><th>Name</th><th>Salary</th></tr></thead><tbody>${schoolData.teachers.map(t=>`<tr><td>${t.name}</td><td>₦${(t.salary||100000).toLocaleString()}</td></tr>`).join('')}</tbody>}</div><div class="mt-2 font-bold">Total: ₦${totalPayroll.toLocaleString()}</div></div>`; document.getElementById("mainContent").innerHTML=html; }
         function renderBudgetReport(){ let b=schoolData.operationalBudgets[0]; let html=`<div class="bg-white p-5 rounded-xl shadow"><h2>📊 Budget Report</h2><p>Year: ${b.year}</p><p>Allocation: ₦${b.allocation.toLocaleString()}</p><p>Spent: ₦${b.spent.toLocaleString()}</p><p>Remaining: ₦${(b.allocation-b.spent).toLocaleString()}</p><div class="w-full bg-gray-200 rounded-full h-2.5"><div class="bg-emerald-600 h-2.5 rounded-full" style="width:${(b.spent/b.allocation)*100}%"></div></div></div>`; document.getElementById("mainContent").innerHTML=html; }
         function renderBudgetManagement(){ let budget = schoolData.operationalBudgets[0]; let html = `<div class="bg-white p-6 rounded-xl shadow max-w-2xl mx-auto"><h2 class="text-2xl font-bold mb-4">✍️ Write School Budget</h2><form id="budgetForm"><div class="mb-4"><label>Fiscal Year</label><input type="number" id="budgetYear" value="${budget.year}" class="w-full border p-2 rounded"></div><div class="mb-4"><label>Total Allocation (₦)</label><input type="number" id="budgetAlloc" value="${budget.allocation}" class="w-full border p-2 rounded"></div><div class="mb-4"><label>Total Spent (₦)</label><input type="number" id="budgetSpent" value="${budget.spent}" class="w-full border p-2 rounded"></div><button type="submit" class="bg-emerald-600 text-white px-6 py-2 rounded">Update Budget</button></form></div>`; document.getElementById("mainContent").innerHTML = html; document.getElementById("budgetForm")?.addEventListener("submit",(e)=>{ e.preventDefault(); let year=parseInt(document.getElementById("budgetYear").value), alloc=parseInt(document.getElementById("budgetAlloc").value), spent=parseInt(document.getElementById("budgetSpent").value); if(!isNaN(alloc) && !isNaN(spent)){ schoolData.operationalBudgets[0] = { year, allocation: alloc, spent: spent }; alert("Budget updated"); renderBudgetManagement(); } }); }
         function renderAcademicPerformance(){ let overall=0; schoolData.students.forEach(s=>{ let avg=SUBJECTS.reduce((a,sub)=>a+(s.grades[sub]||0),0)/SUBJECTS.length; overall+=avg; }); overall=(overall/schoolData.students.length).toFixed(1); document.getElementById("mainContent").innerHTML=`<div class="bg-white p-5 rounded-xl shadow"><h2>📈 Academic Performance</h2><p>Overall Avg: ${overall}%</p><p>Research: Tafsir integration ongoing.</p></div>`; }
@@ -302,7 +472,7 @@
         function renderResearchNotes(){ document.getElementById("mainContent").innerHTML=`<div class="bg-white p-5 rounded-xl shadow"><h2>📝 Research Notes</h2><p>Blended learning, STEM-Islamic integration plan.</p></div>`; }
         function renderGradeStudentsDRPA(){ let html=`<div class="bg-white p-5 rounded-xl shadow"><h2>Grade Students</h2>${schoolData.students.map(s=>`<div>${s.name}: ${SUBJECTS.map(sub=>`${sub}:<input type="number" id="g_${s.id}_${sub}" value="${s.grades[sub]}" class="grade-input mx-1">`).join('')}<button onclick="updateGrades('${s.id}')" class="bg-blue-500 text-white px-2 py-1 rounded">Save</button></div>`).join('')}</div>`; document.getElementById("mainContent").innerHTML=html; window.updateGrades=(sid)=>{ let student=schoolData.students.find(s=>s.id===sid); SUBJECTS.forEach(sub=>{ let val=document.getElementById(`g_${sid}_${sub}`).value; if(val) student.grades[sub]=parseInt(val); }); alert("Updated"); renderGradeStudentsDRPA(); }; }
         function renderTeacherClass(){ let stu=schoolData.students.filter(s=>s.section===currentUser.assignedSection); let html=`<div class="bg-white p-5 rounded-xl shadow"><h2>My Class</h2>${stu.map(s=>`<p>📘 ${s.name} - Avg: ${Math.round(SUBJECTS.reduce((a,sub)=>a+(s.grades[sub]||0),0)/SUBJECTS.length)}%</p>`).join('')}</div>`; document.getElementById("mainContent").innerHTML=html; }
-        function renderAttendanceView(){ let students=schoolData.students.filter(s=>s.section===currentUser.assignedSection); let today=new Date().toISOString().slice(0,10); let existing=schoolData.attendanceRecords.filter(r=>r.date===today); let statusMap={}; existing.forEach(r=>statusMap[r.studentId]=r.status==='present'); let html=`<div class="bg-white p-5 rounded-xl shadow"><h2>📆 Mark Attendance</h2><table class="w-full"><thead><tr><th>Student</th><th>Present</th></tr></thead><tbody>${students.map(s=>`<tr><td>${s.name}</td><td class="text-center"><input type="checkbox" class="att-check" data-id="${s.id}" ${statusMap[s.id]?'checked':''}></td></tr>`).join('')}</tbody></table><button id="saveAttBtn" class="mt-4 bg-emerald-600 text-white px-4 py-2 rounded">Save</button></div>`; document.getElementById("mainContent").innerHTML=html; document.getElementById("saveAttBtn")?.addEventListener("click",()=>{ let checks=document.querySelectorAll(".att-check"); checks.forEach(cb=>{ let sid=cb.dataset.id; let rec=schoolData.attendanceRecords.find(r=>r.studentId===sid && r.date===today); if(rec) rec.status=cb.checked?'present':'absent'; else schoolData.attendanceRecords.push({ studentId:sid, date:today, status:cb.checked?'present':'absent' }); }); alert("Attendance saved"); renderAttendanceView(); }); }
+        function renderAttendanceView(){ let students=schoolData.students.filter(s=>s.section===currentUser.assignedSection); let today=new Date().toISOString().slice(0,10); let existing=schoolData.attendanceRecords.filter(r=>r.date===today); let statusMap={}; existing.forEach(r=>statusMap[r.studentId]=r.status==='present'); let html=`<div class="bg-white p-5 rounded-xl shadow"><h2>📆 Mark Attendance</h2><table class="w-full"><thead><tr><th>Student</th><th>Present</th></tr></thead><tbody>${students.map(s=>`<tr><td>${s.name}</td><td class="text-center"><input type="checkbox" class="att-check" data-id="${s.id}" ${statusMap[s.id]?'checked':''}></td></tr>`).join('')}</tbody>}</div><button id="saveAttBtn" class="mt-4 bg-emerald-600 text-white px-4 py-2 rounded">Save</button>`; document.getElementById("mainContent").innerHTML=html; document.getElementById("saveAttBtn")?.addEventListener("click",()=>{ let checks=document.querySelectorAll(".att-check"); checks.forEach(cb=>{ let sid=cb.dataset.id; let rec=schoolData.attendanceRecords.find(r=>r.studentId===sid && r.date===today); if(rec) rec.status=cb.checked?'present':'absent'; else schoolData.attendanceRecords.push({ studentId:sid, date:today, status:cb.checked?'present':'absent' }); }); alert("Attendance saved"); renderAttendanceView(); }); }
         function renderHeadTeacherSection(){ let stu=schoolData.students.filter(s=>s.section===currentUser.section); document.getElementById("mainContent").innerHTML=`<div class="bg-white p-5 rounded-xl shadow"><h2>${currentUser.section} Students</h2><ul>${stu.map(s=>`<li>${s.name}</li>`).join('')}</ul></div>`; }
         function renderHeadTeacherFees(){ let pending=schoolData.students.filter(s=>s.section===currentUser.section && s.feeStatus==="Pending"); document.getElementById("mainContent").innerHTML=`<div class="bg-white p-5 rounded-xl shadow"><h2>Pending Fees</h2><ul>${pending.map(s=>`<li>${s.name}</li>`).join('')}</ul></div>`; }
         function renderHeadTeacherEnroll(){ let html=`<div class="bg-white p-6 rounded-xl max-w-2xl mx-auto"><h2>Enroll Student - ${currentUser.section}</h2><form id="htForm"><input id="htName" placeholder="Name" class="w-full border p-2 mb-2"><input id="htLevel" type="number" placeholder="Level" class="w-full border p-2 mb-2"><select id="htFee" class="w-full border p-2 mb-2"><option>Pending</option><option>Paid</option></select><select id="htBoard" class="w-full border p-2 mb-2"><option value="false">Day</option><option value="true">Boarder</option></select><button type="submit" class="bg-emerald-600 text-white px-4 py-2 rounded">Register</button></form></div>`; document.getElementById("mainContent").innerHTML=html; document.getElementById("htForm")?.addEventListener("submit",(e)=>{ e.preventDefault(); addStudentLogic(document.getElementById("htName").value, currentUser.section, parseInt(document.getElementById("htLevel").value), document.getElementById("htFee").value, document.getElementById("htBoard").value==='true'); renderHeadTeacherSection(); }); }
@@ -312,20 +482,10 @@
         
         window.payFeeAction=(sid)=>{ let s=schoolData.students.find(s=>s.id===sid); if(s && s.feeStatus!=="Paid"){ s.feeStatus="Paid"; schoolData.feeTransactions.push({ id:"TRX"+Date.now(), studentId:s.id, studentName:s.name, date:new Date().toISOString().slice(0,10), amount:25000 }); alert("Payment recorded ✅"); renderFeeManagement(); } };
         
-        function renderNav(){ const labels={ dashboard:"🏠 Dashboard", students:"📚 Students","enroll-student":"🎓 Enroll", teachers:"👥 Staff","enroll-staff":"➕ Staff", fees:"💰 Fees", boarding:"🏠 Boarding","payment-report":"📄 Payments","teachers-payroll":"💰 Payroll","budget-report":"📊 Budget","budget-management":"✍️ Write Budget","academic-performance":"📈 Performance","section-analysis":"📊 Analysis","research-notes":"📝 Research","grade-students":"✏️ Grades","my-class":"📌 My Class", attendance:"✅ Attendance","section-students":"📖 Section","section-fees":"⏳ Fees","my-children":"👨‍👧 Children","payment-history":"💸 History","grade-students-teacher":"✍️ Grade Subjects" }; let items=getNavItems(); let html=items.map(v=>`<a href="#" data-view="${v}" class="nav-link flex items-center space-x-3 px-4 py-2.5 rounded-lg text-slate-200 hover:bg-white/10 transition"><i class="fas ${v==='dashboard'?'fa-tachometer-alt':'fa-folder'} w-5"></i><span>${labels[v]||v}</span></a>`).join(''); document.getElementById("dynamicNav").innerHTML=html; document.querySelectorAll('.nav-link').forEach(link=>link.addEventListener('click',(e)=>{ e.preventDefault(); let view=link.getAttribute('data-view'); const fns={ dashboard:renderDashboard, students:renderAllStudents, "enroll-student":renderDGEnrollStudent, teachers:renderTeachers, "enroll-staff":renderDGEnrollStaff, fees:renderFeeManagement, boarding:renderBoarding, "payment-report":renderPaymentReport, "teachers-payroll":renderTeachersPayroll, "budget-report":renderBudgetReport, "budget-management":renderBudgetManagement, "academic-performance":renderAcademicPerformance, "section-analysis":renderSectionAnalysis, "research-notes":renderResearchNotes, "grade-students":renderGradeStudentsDRPA, "my-class":renderTeacherClass, attendance:renderAttendanceView, "section-students":renderHeadTeacherSection, "section-fees":renderHeadTeacherFees, "my-children":renderParentChildren, "payment-history":renderParentPayments, "grade-students-teacher":renderGradeStudentsTeacher }; (fns[view]||renderDashboard)(); document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('bg-white/10','border-l-4','border-amber-400')); link.classList.add('bg-white/10','border-l-4','border-amber-400'); })); if(items.length) renderDashboard(); }
+        function renderNav(){ const labels={ dashboard:"🏠 Dashboard", students:"📚 Students","enroll-student":"🎓 Enroll", teachers:"👥 Staff","enroll-staff":"➕ Staff", fees:"💰 Fees", boarding:"🏠 Boarding","payment-report":"📄 Payments","teachers-payroll":"💰 Payroll","budget-report":"📊 Budget","budget-management":"✍️ Write Budget","academic-performance":"📈 Performance","section-analysis":"📊 Analysis","research-notes":"📝 Research","grade-students":"✏️ Grades","my-class":"📌 My Class", attendance:"✅ Attendance","section-students":"📖 Section","section-fees":"⏳ Fees","my-children":"👨‍👧 Children","payment-history":"💸 History","grade-students-teacher":"✍️ Grade Subjects","manage-slides":"🖼️ Manage Slides" }; let items=getNavItems(); let html=items.map(v=>`<a href="#" data-view="${v}" class="nav-link flex items-center space-x-3 px-4 py-2.5 rounded-lg text-slate-200 hover:bg-white/10 transition"><i class="fas ${v==='dashboard'?'fa-tachometer-alt':v==='manage-slides'?'fa-images':'fa-folder'} w-5"></i><span>${labels[v]||v}</span></a>`).join(''); document.getElementById("dynamicNav").innerHTML=html; document.querySelectorAll('.nav-link').forEach(link=>link.addEventListener('click',(e)=>{ e.preventDefault(); let view=link.getAttribute('data-view'); const fns={ dashboard:renderDashboard, students:renderAllStudents, "enroll-student":renderDGEnrollStudent, teachers:renderTeachers, "enroll-staff":renderDGEnrollStaff, fees:renderFeeManagement, boarding:renderBoarding, "payment-report":renderPaymentReport, "teachers-payroll":renderTeachersPayroll, "budget-report":renderBudgetReport, "budget-management":renderBudgetManagement, "academic-performance":renderAcademicPerformance, "section-analysis":renderSectionAnalysis, "research-notes":renderResearchNotes, "grade-students":renderGradeStudentsDRPA, "my-class":renderTeacherClass, attendance:renderAttendanceView, "section-students":renderHeadTeacherSection, "section-fees":renderHeadTeacherFees, "my-children":renderParentChildren, "payment-history":renderParentPayments, "grade-students-teacher":renderGradeStudentsTeacher, "manage-slides":renderSlideManager }; (fns[view]||renderDashboard)(); document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('bg-white/10','border-l-4','border-amber-400')); link.classList.add('bg-white/10','border-l-4','border-amber-400'); })); if(items.length) renderDashboard(); }
         function renderDGEnrollStaff(){ let html=`<div class="bg-white p-6 rounded-xl max-w-2xl mx-auto shadow"><h2>Enroll Staff</h2><form id="dgStaffForm"><input id="staffName" placeholder="Name" class="w-full border p-2 mb-2"><input id="staffSection" placeholder="Section" class="w-full border p-2 mb-2"><input id="staffSubject" placeholder="Subject" class="w-full border p-2 mb-2"><button type="submit" class="bg-teal-600 text-white px-6 py-2 rounded">Add</button></form></div>`; document.getElementById("mainContent").innerHTML=html; document.getElementById("dgStaffForm")?.addEventListener("submit",(e)=>{ e.preventDefault(); let name=document.getElementById("staffName").value.trim(); if(name){ schoolData.teachers.push({ empId:`TCH${Date.now()}`, name, section:document.getElementById("staffSection").value||"General", subject:document.getElementById("staffSubject").value||"Islamic", salary:100000 }); alert("Staff added"); renderTeachers(); } }); }
 
-        // ==================== SLIDESHOW & UI HELPERS ====================
-        const slidesData = [
-            { url: "https://picsum.photos/id/20/1200/600", caption: "Modern Classrooms" },
-            { url: "https://picsum.photos/id/30/1200/600", caption: "Qur’an Memorization" },
-            { url: "https://picsum.photos/id/40/1200/600", caption: "Science Lab" }
-        ];
-        let currentIndex=0, slideInterval;
-        function buildSlideshow(){ const container=document.getElementById('slidesContainer'); if(!container) return; container.innerHTML=''; const dotsContainer=document.getElementById('dotsContainer'); dotsContainer.innerHTML=''; slidesData.forEach((slide,idx)=>{ let div=document.createElement('div'); div.className=`carousel-slide absolute inset-0 w-full h-full transition-opacity duration-500 ${idx===currentIndex?'opacity-100 z-10':'opacity-0 z-0'}`; div.style.backgroundImage=`linear-gradient(0deg, rgba(0,0,0,0.4), rgba(0,0,0,0.2)), url('${slide.url}')`; div.style.backgroundSize='cover'; div.style.backgroundPosition='center'; let cap=document.createElement('div'); cap.className='absolute bottom-0 left-0 right-0 bg-black/60 text-white p-4 text-center text-lg font-semibold'; cap.innerText=slide.caption; div.appendChild(cap); container.appendChild(div); let dot=document.createElement('button'); dot.className=`dot w-3 h-3 rounded-full mx-1 ${idx===currentIndex?'bg-amber-400 w-4':'bg-white/60'}`; dot.setAttribute('data-index',idx); dot.addEventListener('click',()=>goToSlide(idx)); dotsContainer.appendChild(dot); }); }
-        function goToSlide(index){ let slides=document.querySelectorAll('#slidesContainer .carousel-slide'); let dots=document.querySelectorAll('#dotsContainer .dot'); if(!slides.length) return; if(index<0) index=slides.length-1; if(index>=slides.length) index=0; slides[currentIndex].classList.remove('opacity-100','z-10'); slides[currentIndex].classList.add('opacity-0','z-0'); slides[index].classList.remove('opacity-0','z-0'); slides[index].classList.add('opacity-100','z-10'); if(dots[currentIndex]){ dots[currentIndex].classList.remove('bg-amber-400','w-4'); dots[currentIndex].classList.add('bg-white/60'); } if(dots[index]){ dots[index].classList.remove('bg-white/60'); dots[index].classList.add('bg-amber-400','w-4'); } currentIndex=index; resetAutoSlide(); }
-        function nextSlide(){ goToSlide(currentIndex+1); } function prevSlide(){ goToSlide(currentIndex-1); } function resetAutoSlide(){ if(slideInterval) clearInterval(slideInterval); slideInterval=setInterval(()=>nextSlide(),5000); }
-        
+        // ==================== UTILITIES ====================
         function updateDateTime(){ let now=new Date(); if(document.getElementById('liveTime')) document.getElementById('liveTime').innerText=now.toLocaleTimeString('en-NG'); if(document.getElementById('liveDate')) document.getElementById('liveDate').innerText=now.toLocaleDateString('en-NG',{weekday:'long',year:'numeric',month:'long',day:'numeric'}); }
         setInterval(updateDateTime,1000); updateDateTime();
         if(navigator.geolocation){ navigator.geolocation.getCurrentPosition(async(pos)=>{ try{ let res=await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${pos.coords.latitude}&longitude=${pos.coords.longitude}&current_weather=true`); let data=await res.json(); if(document.getElementById('weatherTemp')) document.getElementById('weatherTemp').innerText=Math.round(data.current_weather.temperature); let desc=data.current_weather.weathercode>70?"Rainy":(data.current_weather.weathercode>50?"Cloudy":"Clear"); document.getElementById('weatherDesc').innerText=desc; } catch(e){} }); }
@@ -338,7 +498,12 @@
         document.getElementById('toggleAuthMode')?.addEventListener('click',()=>{ let isLogin=document.getElementById('authTitle').innerText.includes('Login'); document.getElementById('authTitle').innerText=isLogin?'Create Account':'Staff / Admin Login'; document.getElementById('authSubmitBtn').innerText=isLogin?'Register':'Login'; document.getElementById('regFields').classList.toggle('hidden',!isLogin); document.getElementById('toggleText').innerText=isLogin?"Already have an account?":"Don't have an account?"; document.getElementById('toggleAuthMode').innerText=isLogin?"Login":"Sign Up"; });
         document.getElementById('authForm')?.addEventListener('submit',async(e)=>{ e.preventDefault(); let email=document.getElementById('authEmail').value, pwd=document.getElementById('authPassword').value; let isLoginMode=document.getElementById('authTitle').innerText.includes('Login'); if(isLoginMode){ await loginUser(email,pwd); } else { let name=document.getElementById('regFullName').value, role=document.getElementById('authRole').value; if(name) await registerUser(email,pwd,name,role); else alert("Full name required"); } });
         window.resetPasswordAction = resetPasswordAction;
-        generateMockData(); buildSlideshow(); resetAutoSlide(); document.getElementById('prevSlide')?.addEventListener('click',prevSlide); document.getElementById('nextSlide')?.addEventListener('click',nextSlide);
+        generateMockData();
+        loadSlidesFromStorage();
+        rebuildSlideshow();
+        resetAutoSlide();
+        document.getElementById('prevSlide')?.addEventListener('click',prevSlide);
+        document.getElementById('nextSlide')?.addEventListener('click',nextSlide);
         checkSession();
     </script>
 </body>
