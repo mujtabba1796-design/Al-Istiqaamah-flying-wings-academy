@@ -1,29 +1,26 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <link rel="icon" href="./favicon.ico">
-    <link rel="stylesheet" href="./css/custom.css">
     
     <!-- Supabase JS Library -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
     <script>
         const SUPABASE_URL = 'https://irqawrkepensxnbpedza.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_sEj3WcVjg51g4K81QLGl9A_kHyc5Apt';
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     </script>
     
-    <!-- SEO & OpenGraph Tags -->
+    <!-- SEO & OpenGraph -->
     <title>Al‑Istiqaamah Flying Wings Academy | Advanced Portal</title>
     <meta name="description" content="Al‑Istiqaamah Flying Wings Academy – nurturing faith, knowledge, and leadership in Samaru, Zaria, Kaduna State.">
     <meta property="og:title" content="Al‑Istiqaamah Flying Wings Academy">
     <meta property="og:description" content="Official portal for staff, parents, and administrators. Academic management, attendance, fees, and multi‑subject grading.">
     <meta property="og:image" content="https://picsum.photos/id/20/1200/630.jpg">
-    <meta property="og:url" content="https://YOUR_USERNAME.github.io/YOUR_REPO_NAME/">
     <meta property="og:type" content="website">
-    <meta name="twitter:card" content="summary_large_image">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -40,48 +37,20 @@
         .carousel-btn { background: rgba(0,0,0,0.5); transition: all 0.2s; }
         .carousel-btn:hover { background: rgba(0,0,0,0.8); }
         .dot { transition: all 0.2s; cursor: pointer; }
-        .grade-input { width: 70px; padding: 4px; border-radius: 6px; border: 1px solid #ccc; text-align: center; }
+        .grade-input { width: 80px; padding: 6px; border-radius: 6px; border: 1px solid #ccc; text-align: center; }
         .logo-img { height: 60px; width: auto; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); }
         .sidebar-logo { height: 40px; margin-bottom: 1rem; display: block; margin-left: auto; margin-right: auto; }
-        .slide-thumb { width: 80px; height: 60px; object-fit: cover; border-radius: 8px; }
-        /* Top logout button style */
-        .top-logout-btn {
-            position: fixed;
-            top: 20px;
-            right: 25px;
-            z-index: 100;
-            background: rgba(0,0,0,0.7);
-            backdrop-filter: blur(8px);
-            border-radius: 40px;
-            padding: 8px 20px;
-            color: white;
-            font-weight: 600;
-            border: 1px solid rgba(255,255,255,0.3);
-            transition: all 0.2s;
-        }
-        .top-logout-btn:hover {
-            background: #dc2626;
-            border-color: #dc2626;
-            transform: scale(1.02);
-        }
-        @media (max-width: 640px) {
-            .top-logout-btn { top: 12px; right: 12px; padding: 6px 14px; font-size: 0.8rem; }
-        }
-        .apply-btn {
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            transition: all 0.3s ease;
-        }
-        .apply-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px -5px rgba(245, 158, 11, 0.4);
-        }
+        .top-logout-btn { position: fixed; top: 20px; right: 25px; z-index: 100; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); border-radius: 40px; padding: 8px 20px; color: white; font-weight: 600; border: 1px solid rgba(255,255,255,0.3); transition: all 0.2s; }
+        .top-logout-btn:hover { background: #dc2626; transform: scale(1.02); }
+        .apply-btn { background: linear-gradient(135deg, #f59e0b, #d97706); transition: all 0.3s ease; }
+        .apply-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px -5px rgba(245, 158, 11, 0.4); }
+        @media (max-width: 640px) { .top-logout-btn { top: 12px; right: 12px; padding: 6px 14px; font-size: 0.8rem; } }
     </style>
 </head>
 <body class="bg-gray-50">
 
-    <!-- LANDING PAGE -->
+    <!-- LANDING PAGE (FORMAL LAYOUT) -->
     <div id="landingPage" class="min-h-screen relative">
-        <!-- GLOBAL LOGOUT BUTTON (visible on landing when logged in) -->
         <div id="globalLogoutBtn" class="top-logout-btn hidden cursor-pointer" onclick="performGlobalLogout()">
             <i class="fas fa-sign-out-alt mr-2"></i> Logout
         </div>
@@ -92,7 +61,6 @@
                 <div class="flex flex-col lg:flex-row justify-between items-start gap-10">
                     <div class="max-w-2xl">
                         <div class="flex items-center gap-4 mb-4">
-                            <!-- REPLACED: logo.png used directly -->
                             <img src="logo.png" alt="Al‑Istiqaamah Flying Wings Academy Logo" class="logo-img" onerror="this.onerror=null; this.src='https://placehold.co/400x200?text=Logo+Placeholder';">
                             <div>
                                 <h1 class="text-3xl md:text-4xl font-bold">Al‑Istiqaamah <span class="text-amber-300">Flying Wings Academy</span></h1>
@@ -153,7 +121,6 @@
                     <button id="loginBtnFooter" class="border-2 border-amber-400 hover:bg-amber-400 hover:text-gray-900 px-6 py-3 rounded-full font-semibold transition">
                         <i class="fas fa-chalkboard-user"></i> Staff Dashboard
                     </button>
-                    <!-- APPLY BUTTON ADDED -->
                     <button id="applyNowBtn" class="apply-btn bg-amber-500 text-gray-900 font-bold px-8 py-3 rounded-full shadow-lg transition inline-flex items-center gap-2">
                         <i class="fas fa-pen-alt"></i> Apply Now
                     </button>
@@ -163,7 +130,7 @@
         <footer class="bg-slate-900 text-gray-400 py-8 text-center text-sm"><p>© 2025 Al‑Istiqaamah Flying Wings Academy — No. 10 Federal Government Layout, Samaru, Zaria, Kaduna State. RC: 1983033</p></footer>
     </div>
 
-    <!-- LOGIN MODAL (Supabase Integration) - NO ROLE SELECTION, PURE EMAIL/PASSWORD LOGIN -->
+    <!-- LOGIN MODAL -->
     <div id="loginScreen" class="fixed inset-0 z-50 flex items-center justify-center p-4" style="display: none; background: rgba(0,0,0,0.7);">
         <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 relative">
             <div class="text-center mb-4">
@@ -171,19 +138,10 @@
                 <h2 class="text-2xl font-bold">Staff / Admin Login</h2>
                 <p class="text-sm text-gray-500 mt-1">Sign in with your registered email</p>
             </div>
-            
             <form id="authForm">
-                <div>
-                    <label class="font-medium text-gray-700">Email Address</label>
-                    <input type="email" id="authEmail" class="w-full border border-gray-300 rounded-lg p-2 mb-3 focus:ring-2 focus:ring-amber-400 focus:border-transparent" required placeholder="staff@academy.edu">
-                </div>
-                <div>
-                    <label class="font-medium text-gray-700">Password</label>
-                    <input type="password" id="authPassword" class="w-full border border-gray-300 rounded-lg p-2 mb-1 focus:ring-2 focus:ring-amber-400" required>
-                </div>
-                <div class="mb-5 text-right">
-                    <button type="button" onclick="resetPasswordAction()" class="text-xs text-amber-600 hover:underline">Forgot Password?</button>
-                </div>
+                <div><label class="font-medium text-gray-700">Email Address</label><input type="email" id="authEmail" class="w-full border border-gray-300 rounded-lg p-2 mb-3" required placeholder="staff@academy.edu"></div>
+                <div><label class="font-medium text-gray-700">Password</label><input type="password" id="authPassword" class="w-full border border-gray-300 rounded-lg p-2 mb-1" required></div>
+                <div class="mb-5 text-right"><button type="button" onclick="resetPasswordAction()" class="text-xs text-amber-600 hover:underline">Forgot Password?</button></div>
                 <button type="submit" id="authSubmitBtn" class="w-full bg-amber-600 hover:bg-amber-700 text-white py-2 rounded-lg font-bold transition shadow-md">Login to Dashboard</button>
             </form>
             <p class="text-center text-xs text-gray-400 mt-5">Access is role-based according to your profile</p>
@@ -195,7 +153,6 @@
     <div id="appContainer" class="hidden flex h-screen w-full fixed inset-0 z-40 bg-white overflow-hidden">
         <aside class="sidebar text-white w-80 flex flex-col">
             <div class="p-4 border-b border-white/20 text-center">
-                <!-- Sidebar logo also using logo.png -->
                 <img src="logo.png" alt="School Logo" class="sidebar-logo" onerror="this.onerror=null; this.src='https://placehold.co/200x80?text=Logo';">
                 <p class="text-sm"><i class="fas fa-user-tie"></i> Role: <span id="userRoleDisplay" class="font-bold"></span></p>
                 <p class="text-lg font-semibold mt-1">Welcome, <span id="userNameDisplay"></span></p>
@@ -209,34 +166,23 @@
     <script>
         // ==================== GLOBALS ====================
         const SUBJECTS = ["Quran", "Fiqh", "Arabic", "English", "Mathematics", "Science"];
-        let schoolData = {
-            students: [],
-            teachers: [],
-            feeTransactions: [],
-            attendanceRecords: [],
-            operationalBudgets: [{ year: 2025, allocation: 7500000, spent: 3200000 }]
-        };
+        let schoolData = { students: [], teachers: [], feeTransactions: [], attendanceRecords: [], operationalBudgets: [] };
         let currentUser = null;
+        let slidesData = [];
+        let currentSlideIndex = 0, slideInterval;
 
         // ==================== SUPABASE DATA LAYER ====================
         async function refreshSchoolData() {
-            const { data: students, error: sErr } = await supabaseClient.from('students').select('*');
-            if (!sErr && students) {
-                schoolData.students = students.map(s => ({
-                    ...s,
-                    feeStatus: s.fee_status,
-                    attendance: s.attendance_pct || 0,
-                    grades: s.grades || {}
-                }));
-            }
-            const { data: teachers, error: tErr } = await supabaseClient.from('teachers').select('*');
-            if (!tErr && teachers) schoolData.teachers = teachers;
-            const { data: fees, error: fErr } = await supabaseClient.from('fee_transactions').select('*');
-            if (!fErr && fees) schoolData.feeTransactions = fees;
-            const { data: attendance, error: aErr } = await supabaseClient.from('attendance_records').select('*');
-            if (!aErr && attendance) schoolData.attendanceRecords = attendance;
-            const { data: budget, error: bErr } = await supabaseClient.from('operational_budgets').select('*').limit(1);
-            if (!bErr && budget && budget.length) schoolData.operationalBudgets = budget;
+            const { data: students } = await supabaseClient.from('students').select('*');
+            if (students) schoolData.students = students.map(s => ({ ...s, feeStatus: s.fee_status, attendance: s.attendance_pct || 0, grades: s.grades || {} }));
+            const { data: teachers } = await supabaseClient.from('teachers').select('*');
+            if (teachers) schoolData.teachers = teachers;
+            const { data: fees } = await supabaseClient.from('fee_transactions').select('*');
+            if (fees) schoolData.feeTransactions = fees;
+            const { data: attendance } = await supabaseClient.from('attendance_records').select('*');
+            if (attendance) schoolData.attendanceRecords = attendance;
+            const { data: budgets } = await supabaseClient.from('operational_budgets').select('*');
+            if (budgets) schoolData.operationalBudgets = budgets;
             for (let student of schoolData.students) {
                 const records = schoolData.attendanceRecords.filter(r => r.student_id === student.id);
                 const presentCount = records.filter(r => r.status === 'present').length;
@@ -248,134 +194,58 @@
         async function addStudentLogic(name, section, level, payment, boarding) {
             if (!name || name.trim().length < 3) { alert("Student name min 3 chars."); return false; }
             if (isNaN(level) || level < 1 || level > 12) { alert("Level 1-12."); return false; }
+            const gradesMeta = { class_name: `${section} - Level ${level}` };
             const { error } = await supabaseClient.from('students').insert([{
                 name: name.trim(), section, level: parseInt(level), fee_status: payment,
                 boarding: boarding === true || boarding === 'true',
-                attendance_pct: 0, grades: {}
+                attendance_pct: 0, grades: gradesMeta
             }]);
             if (error) { alert("Error: " + error.message); return false; }
             await refreshSchoolData();
             return true;
         }
 
-        async function updateStudentGrades(studentId, grades) {
-            await supabaseClient.from('students').update({ grades }).eq('id', studentId);
-            await refreshSchoolData();
-        }
+        async function updateStudentGrades(studentId, grades) { await supabaseClient.from('students').update({ grades }).eq('id', studentId); await refreshSchoolData(); }
+        async function saveAttendance(attendances) { const today = new Date().toISOString().slice(0,10); for (let att of attendances) { await supabaseClient.from('attendance_records').upsert({ student_id: att.studentId, date: today, status: att.status }, { onConflict: 'student_id,date' }); } await refreshSchoolData(); }
+        async function recordFeePayment(studentId, amount) { const student = schoolData.students.find(s => s.id === studentId); if(!student) return; await supabaseClient.from('students').update({ fee_status: 'Paid' }).eq('id', studentId); await supabaseClient.from('fee_transactions').insert([{ student_id: studentId, student_name: student.name, amount: parseFloat(amount), date: new Date().toISOString().slice(0,10) }]); await refreshSchoolData(); }
 
-        async function saveAttendance(attendances) {
-            const today = new Date().toISOString().slice(0,10);
-            for (let att of attendances) {
-                await supabaseClient.from('attendance_records').upsert({ student_id: att.studentId, date: today, status: att.status }, { onConflict: 'student_id,date' });
-            }
-            await refreshSchoolData();
-        }
-
-        // ==================== AUTH (ONLY LOGIN, ROLE FETCHED FROM SUPABASE PROFILES) ====================
+        // ==================== AUTH ====================
         async function loginUser(email, password) {
             try {
                 const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
                 if (error) throw error;
                 const { data: profile, error: pError } = await supabaseClient.from('profiles').select('*').eq('id', data.user.id).single();
                 if (pError) throw pError;
-                if (!profile.role) throw new Error("No role assigned to this user. Contact admin.");
-                currentUser = { 
-                    ...profile, 
-                    full_name: profile.full_name, 
-                    name: profile.full_name,
-                    role: profile.role
-                };
+                if (!profile.role) throw new Error("No role assigned");
+                currentUser = { ...profile, full_name: profile.full_name, name: profile.full_name, role: profile.role };
                 if (currentUser.role === 'teacher') currentUser.assignedSection = "Regular Islamiya";
-                else if (currentUser.role === 'headteacher') currentUser.section = "Regular Islamiya";
-                else if (currentUser.role === 'parent') currentUser.linkedChildren = ["STU1001", "STU1002"];
                 await refreshSchoolData();
                 showDashboard();
             } catch (error) { alert("Login failed: " + error.message); }
         }
 
-        async function logoutUser() {
-            await supabaseClient.auth.signOut();
-            currentUser = null;
-            document.getElementById('appContainer').classList.add('hidden');
-            document.getElementById('landingPage').style.display = 'block';
-            document.getElementById('loginScreen').style.display = 'none';
-            updateGlobalLogoutButton();
-        }
-
+        async function logoutUser() { await supabaseClient.auth.signOut(); currentUser = null; document.getElementById('appContainer').classList.add('hidden'); document.getElementById('landingPage').style.display = 'block'; document.getElementById('loginScreen').style.display = 'none'; updateGlobalLogoutButton(); }
         window.performGlobalLogout = logoutUser;
+        async function resetPasswordAction() { const email = document.getElementById('authEmail').value; if(!email) { alert("Enter your email address"); return; } const { error } = await supabaseClient.auth.resetPasswordForEmail(email); if (error) alert(error.message); else alert("Password reset link sent to your email!"); }
+        function updateGlobalLogoutButton() { const btn = document.getElementById('globalLogoutBtn'); if (currentUser && document.getElementById('landingPage').style.display !== 'none') btn.classList.remove('hidden'); else btn.classList.add('hidden'); }
+        async function checkSession() { const { data: { session } } = await supabaseClient.auth.getSession(); if (session) { const { data: profile } = await supabaseClient.from('profiles').select('*').eq('id', session.user.id).single(); if (profile && profile.role) { currentUser = { ...profile, full_name: profile.full_name, name: profile.full_name, role: profile.role }; await refreshSchoolData(); showDashboard(); return; } } document.getElementById('landingPage').style.display = 'block'; document.getElementById('appContainer').classList.add('hidden'); updateGlobalLogoutButton(); }
+        function showDashboard() { document.getElementById('loginScreen').style.display = 'none'; document.getElementById('landingPage').style.display = 'none'; document.getElementById('appContainer').classList.remove('hidden'); document.getElementById('userRoleDisplay').innerText = currentUser.role.toUpperCase(); document.getElementById('userNameDisplay').innerText = currentUser.full_name; renderNav(); updateGlobalLogoutButton(); }
 
-        async function resetPasswordAction() {
-            const email = document.getElementById('authEmail').value;
-            if(!email) { alert("Enter your email address"); return; }
-            const { error } = await supabaseClient.auth.resetPasswordForEmail(email);
-            if (error) alert(error.message);
-            else alert("Password reset link sent to your email!");
-        }
-
-        function updateGlobalLogoutButton() {
-            const btn = document.getElementById('globalLogoutBtn');
-            if (currentUser && document.getElementById('landingPage').style.display !== 'none') {
-                btn.classList.remove('hidden');
-            } else {
-                btn.classList.add('hidden');
-            }
-        }
-
-        async function checkSession() {
-            const { data: { session } } = await supabaseClient.auth.getSession();
-            if (session) {
-                const { data: profile } = await supabaseClient.from('profiles').select('*').eq('id', session.user.id).single();
-                if (profile && profile.role) {
-                    currentUser = { ...profile, full_name: profile.full_name, name: profile.full_name, role: profile.role };
-                    if (currentUser.role === 'teacher') currentUser.assignedSection = "Regular Islamiya";
-                    else if (currentUser.role === 'headteacher') currentUser.section = "Regular Islamiya";
-                    else if (currentUser.role === 'parent') currentUser.linkedChildren = ["STU1001", "STU1002"];
-                    await refreshSchoolData();
-                    showDashboard();
-                    return;
-                }
-            }
-            document.getElementById('landingPage').style.display = 'block';
-            document.getElementById('appContainer').classList.add('hidden');
-            updateGlobalLogoutButton();
-        }
-
-        function showDashboard() {
-            document.getElementById('loginScreen').style.display = 'none';
-            document.getElementById('landingPage').style.display = 'none';
-            document.getElementById('appContainer').classList.remove('hidden');
-            document.getElementById('userRoleDisplay').innerText = currentUser.role.toUpperCase();
-            document.getElementById('userNameDisplay').innerText = currentUser.full_name;
-            renderNav();
-            updateGlobalLogoutButton();
-        }
-
-        // ==================== NAVIGATION & RENDER FUNCTIONS ====================
+        // ==================== NAVIGATION ====================
         function renderNav() {
             const role = currentUser.role;
             let items = [];
-            if(role === "dg_ceo" || role === "umc") items = ["dashboard","students","enroll-student","teachers","enroll-staff","fees","boarding","payment-report","budget-report","budget-management","manage-slides"];
+            if(role === "dg_ceo" || role === "umc") items = ["dashboard","students","enroll-student","teachers","fees","boarding","payment-report","budget-report","budget-management","manage-slides"];
             else if(role === "daf") items = ["dashboard","fees","payment-report","teachers-payroll","boarding","budget-report"];
-            else if(role === "drpa") items = ["dashboard","students","academic-performance","section-analysis","research-notes","grade-students"];
-            else if(role === "do") items = ["dashboard","fees","boarding","teachers"];
-            else if(role === "der") items = ["dashboard","students","teachers","section-analysis"];
-            else if(role === "headteacher") items = ["dashboard","section-students","section-fees","enroll-student"];
+            else if(role === "drpa") items = ["dashboard","students","academic-performance","grade-students-teacher","attendance"];
+            else if(role === "headteacher") items = ["dashboard","section-students","section-fees","enroll-student","attendance"];
             else if(role === "teacher") items = ["dashboard","my-class","grade-students-teacher","attendance"];
             else if(role === "parent") items = ["my-children","payment-history"];
             else items = ["dashboard"];
-            
-            const labels = { dashboard:"🏠 Dashboard", students:"📚 Students","enroll-student":"🎓 Enroll", teachers:"👥 Staff","enroll-staff":"➕ Staff", fees:"💰 Fees", boarding:"🏠 Boarding","payment-report":"📄 Payments","teachers-payroll":"💰 Payroll","budget-report":"📊 Budget","budget-management":"✍️ Write Budget","academic-performance":"📈 Performance","section-analysis":"📊 Analysis","research-notes":"📝 Research","grade-students":"✏️ Grades","my-class":"📌 My Class", attendance:"✅ Attendance","section-students":"📖 Section","section-fees":"⏳ Fees","my-children":"👨‍👧 Children","payment-history":"💸 History","grade-students-teacher":"✍️ Grade Subjects","manage-slides":"🖼️ Manage Slides" };
+            const labels = { dashboard:"🏠 Dashboard", students:"📚 Students","enroll-student":"🎓 Enroll", teachers:"👥 Staff", fees:"💰 Fees", boarding:"🏠 Boarding","payment-report":"📄 Payments","budget-report":"📊 Budget","budget-management":"✍️ Write Budget","academic-performance":"📈 Performance","grade-students-teacher":"✏️ Grade Subjects","attendance":"✅ Attendance","section-students":"📖 Section","section-fees":"⏳ Fees","my-class":"📌 My Class","my-children":"👨‍👧 Children","payment-history":"💸 History","manage-slides":"🖼️ Manage Slides" };
             const html = items.map(v=>`<a href="#" data-view="${v}" class="nav-link flex items-center space-x-3 px-4 py-2.5 rounded-lg text-slate-200 hover:bg-white/10 transition"><i class="fas ${v==='dashboard'?'fa-tachometer-alt':v==='manage-slides'?'fa-images':'fa-folder'} w-5"></i><span>${labels[v]||v}</span></a>`).join('');
             document.getElementById("dynamicNav").innerHTML = html;
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const view = link.getAttribute('data-view');
-                    renderContentView(view);
-                    document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('bg-white/10','border-l-4','border-amber-400'));
-                    link.classList.add('bg-white/10','border-l-4','border-amber-400');
-                });
-            });
+            document.querySelectorAll('.nav-link').forEach(link => { link.addEventListener('click', (e) => { e.preventDefault(); const view = link.getAttribute('data-view'); renderContentView(view); document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('bg-white/10','border-l-4','border-amber-400')); link.classList.add('bg-white/10','border-l-4','border-amber-400'); }); });
             if(items.length) renderContentView(items[0]);
         }
 
@@ -386,21 +256,23 @@
                 "enroll-student":()=>{ let sections = ["Regular Islamiya","Regular Memorization","Intensive Program"]; document.getElementById("mainContent").innerHTML=`<div class="bg-white p-6 rounded-xl"><form id="enrollForm"><input id="name" placeholder="Student Name" class="border p-2 w-full mb-2"><select id="section">${sections.map(s=>`<option>${s}</option>`)}</select><input id="level" placeholder="Level (1-12)" class="border p-2 w-full mt-2"><select id="fee"><option>Pending</option><option>Paid</option></select><select id="board"><option value="false">Day</option><option value="true">Boarder</option></select><button type="submit" class="bg-emerald-600 text-white p-2 mt-3 rounded">Register</button></form></div>`;
                 document.getElementById("enrollForm")?.addEventListener("submit", async(e)=>{ e.preventDefault(); if(await addStudentLogic(document.getElementById("name").value, document.getElementById("section").value, document.getElementById("level").value, document.getElementById("fee").value, document.getElementById("board").value==='true')) renderContentView("students"); }); },
                 "manage-slides":()=>{ renderSlideManager(); },
-                fees:()=>{ let pending = schoolData.students.filter(s => s.feeStatus === "Pending"); document.getElementById("mainContent").innerHTML=`<div class="bg-white p-5 rounded-xl shadow"><h2>💰 Pending Fees</h2><ul>${pending.map(s=>`<li class="flex justify-between">${s.name} <button onclick="window.payFeeAction('${s.id}')" class="bg-amber-500 text-white px-3 py-1 rounded text-sm">Mark Paid</button></li>`).join('')}</ul></div>`; }
+                fees:()=>{ let pending = schoolData.students.filter(s => s.feeStatus === "Pending"); document.getElementById("mainContent").innerHTML=`<div class="bg-white p-5 rounded-xl shadow"><h2>💰 Pending Fees</h2><ul>${pending.map(s=>`<li class="flex justify-between">${s.name} <button onclick="window.payFeeAction('${s.id}')" class="bg-amber-500 text-white px-3 py-1 rounded text-sm">Mark Paid</button></li>`).join('')}</ul></div>`; },
+                "grade-students-teacher":()=>{ let studentsList = schoolData.students.filter(s => s.section === (currentUser.assignedSection || "Regular Islamiya")); document.getElementById("mainContent").innerHTML=`<div class="bg-white p-6 rounded-xl"><h2>✏️ Grade Students</h2><select id="gradeStudentSelect" class="border p-2 rounded w-full mb-4"><option value="">Select Student</option>${studentsList.map(s=>`<option value="${s.id}">${s.name}</option>`)}</select><div id="gradePanel" class="hidden"><div class="grid grid-cols-2 gap-3">${SUBJECTS.map(sub=>`<div><label>${sub}</label><input type="number" id="grade_${sub}" class="grade-input" min="0" max="100"></div>`).join('')}</div><button id="saveGradesBtn" class="bg-amber-600 text-white px-4 py-2 rounded mt-3">Save</button></div></div>`;
+                const sel = document.getElementById("gradeStudentSelect"); const panel = document.getElementById("gradePanel"); sel?.addEventListener("change",()=>{ if(sel.value) panel.classList.remove("hidden"); else panel.classList.add("hidden"); }); document.getElementById("saveGradesBtn")?.addEventListener("click",async()=>{ let grades={}; SUBJECTS.forEach(sub=>{ let v=document.getElementById(`grade_${sub}`).value; if(v) grades[sub.toLowerCase()]=parseInt(v); }); await updateStudentGrades(sel.value, grades); alert("Saved"); }); },
+                attendance:()=>{ let list = schoolData.students.filter(s=>s.section === (currentUser.assignedSection || "Regular Islamiya")); document.getElementById("mainContent").innerHTML=`<div class="bg-white p-6 rounded-xl"><h2>✅ Attendance</h2><div>${list.map(s=>`<div class="flex gap-3 py-2"><span class="w-48">${s.name}</span><label><input type="checkbox" class="att-check" data-id="${s.id}"> Present</label></div>`).join('')}</div><button id="attSubmit" class="bg-emerald-600 text-white px-4 py-2 rounded mt-3">Save</button></div>`;
+                document.getElementById("attSubmit")?.addEventListener("click",async()=>{ let payload=[]; document.querySelectorAll('.att-check').forEach(cb=>{ payload.push({ studentId: cb.dataset.id, status: cb.checked ? 'present' : 'absent' }); }); await saveAttendance(payload); alert("Recorded"); renderContentView("attendance"); }); }
             };
             if(fns[view]) fns[view](); else document.getElementById("mainContent").innerHTML = `<div class="bg-white p-6 rounded-xl"><p>Module: ${view}</p></div>`;
         }
 
-        // Slide Manager
-        let slidesData = [], currentSlideIndex = 0, slideInterval;
+        // Slide Manager & Carousel
         function loadSlidesFromStorage() { const stored = localStorage.getItem('academy_slides'); slidesData = stored ? JSON.parse(stored) : [{ url: "https://picsum.photos/id/20/1200/600", caption: "Modern Classrooms" },{ url: "https://picsum.photos/id/30/1200/600", caption: "Qur’an Memorization" }]; rebuildSlideshow(); }
-        function saveSlidesToStorage() { localStorage.setItem('academy_slides', JSON.stringify(slidesData)); }
+        function saveSlidesToStorage() { localStorage.setItem('academy_slides', JSON.stringify(slidesData)); rebuildSlideshow(); }
         function rebuildSlideshow() { const container = document.getElementById('slidesContainer'); const dots = document.getElementById('dotsContainer'); if(!container) return; container.innerHTML = ''; dots.innerHTML = ''; slidesData.forEach((slide,idx)=>{ let div = document.createElement('div'); div.className = `carousel-slide absolute inset-0 w-full h-full transition-opacity duration-500 ${idx===currentSlideIndex?'opacity-100 z-10':'opacity-0 z-0'}`; div.style.backgroundImage = `linear-gradient(0deg, rgba(0,0,0,0.4), rgba(0,0,0,0.2)), url('${slide.url}')`; div.style.backgroundSize='cover'; let cap=document.createElement('div'); cap.className='absolute bottom-0 bg-black/60 text-white p-2 w-full text-center'; cap.innerText=slide.caption; div.appendChild(cap); container.appendChild(div); let dot=document.createElement('button'); dot.className=`dot w-3 h-3 rounded-full mx-1 ${idx===currentSlideIndex?'bg-amber-400 w-4':'bg-white/60'}`; dot.addEventListener('click',()=>goToSlide(idx)); dots.appendChild(dot); }); resetAutoSlide(); }
         function goToSlide(index) { let slides = document.querySelectorAll('#slidesContainer .carousel-slide'); if(!slides.length) return; if(index<0) index=slides.length-1; if(index>=slides.length) index=0; slides[currentSlideIndex]?.classList.remove('opacity-100','z-10'); slides[currentSlideIndex]?.classList.add('opacity-0','z-0'); slides[index]?.classList.remove('opacity-0','z-0'); slides[index]?.classList.add('opacity-100','z-10'); document.querySelectorAll('#dotsContainer .dot').forEach((d,i)=>{ if(i===index) d.classList.add('bg-amber-400','w-4'); else d.classList.remove('bg-amber-400','w-4'); }); currentSlideIndex=index; resetAutoSlide(); }
         function resetAutoSlide() { if(slideInterval) clearInterval(slideInterval); if(slidesData.length>1) slideInterval = setInterval(()=>goToSlide(currentSlideIndex+1),5000); }
-        function renderSlideManager() { let html = `<div class="bg-white p-6 rounded-xl"><h2 class="text-2xl font-bold">Manage Slideshow</h2><input type="file" id="slideFile" accept="image/*"><input id="slideCap" placeholder="Caption" class="border p-2 w-full mt-2"><button id="uploadSlideBtn" class="bg-emerald-600 text-white p-2 rounded mt-2">Upload</button><div class="grid grid-cols-2 gap-2 mt-4">${slidesData.map((s,i)=>`<div><img src="${s.url}" class="h-20 object-cover w-full"><p class="text-xs">${s.caption}</p><button onclick="deleteSlideIdx(${i})" class="bg-red-500 text-white text-xs p-1 w-full">Delete</button></div>`).join('')}</div></div>`; document.getElementById("mainContent").innerHTML = html; document.getElementById("uploadSlideBtn")?.addEventListener("click",()=>{ let file = document.getElementById("slideFile").files[0]; if(file){ let reader=new FileReader(); reader.onload=e=>{ slidesData.push({url:e.target.result, caption:document.getElementById("slideCap").value||"Slide"}); saveSlidesToStorage(); rebuildSlideshow(); renderSlideManager(); }; reader.readAsDataURL(file); } }); window.deleteSlideIdx=(i)=>{ slidesData.splice(i,1); saveSlidesToStorage(); rebuildSlideshow(); renderSlideManager(); }; }
-        
-        window.payFeeAction = async (sid) => { let student = schoolData.students.find(s=>s.id===sid); if(!student||student.feeStatus==='Paid') return; await supabaseClient.from('students').update({fee_status:'Paid'}).eq('id',sid); await supabaseClient.from('fee_transactions').insert([{student_id:sid, student_name:student.name, amount:25000, date:new Date().toISOString().slice(0,10)}]); await refreshSchoolData(); alert("Payment recorded ✅"); renderContentView("fees"); };
+        function renderSlideManager() { let html = `<div class="bg-white p-6 rounded-xl"><h2 class="text-2xl font-bold">Manage Slideshow</h2><input type="file" id="slideFile" accept="image/*"><input id="slideCap" placeholder="Caption" class="border p-2 w-full mt-2"><button id="uploadSlideBtn" class="bg-emerald-600 text-white p-2 rounded mt-2">Upload</button><div class="grid grid-cols-2 gap-2 mt-4">${slidesData.map((s,i)=>`<div><img src="${s.url}" class="h-20 object-cover w-full"><p class="text-xs">${s.caption}</p><button onclick="deleteSlideIdx(${i})" class="bg-red-500 text-white text-xs p-1 w-full">Delete</button></div>`).join('')}</div></div>`; document.getElementById("mainContent").innerHTML = html; document.getElementById("uploadSlideBtn")?.addEventListener("click",()=>{ let file = document.getElementById("slideFile").files[0]; if(file){ let reader=new FileReader(); reader.onload=e=>{ slidesData.push({url:e.target.result, caption:document.getElementById("slideCap").value||"Slide"}); saveSlidesToStorage(); renderSlideManager(); }; reader.readAsDataURL(file); } }); window.deleteSlideIdx=(i)=>{ slidesData.splice(i,1); saveSlidesToStorage(); rebuildSlideshow(); renderSlideManager(); }; }
+        window.payFeeAction = async (sid) => { await recordFeePayment(sid, 25000); renderContentView("fees"); };
         
         // Event bindings
         document.getElementById('loginBtnHero')?.addEventListener('click',()=>{ document.getElementById('landingPage').style.display='none'; document.getElementById('loginScreen').style.display='flex'; });
@@ -421,3 +293,4 @@
     </script>
 </body>
 </html>
+```
